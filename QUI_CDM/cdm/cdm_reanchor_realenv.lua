@@ -950,6 +950,17 @@ function CDMReanchorRealEnv.BuildEnv(ctx)
         return true
     end
 
+    local function shouldRetainAuraMirror(containerKey, placementKey)
+        if canConfigureAuras() then return false end
+        local container = getContainerFor(containerKey)
+        local pool = dynamicAuraPools[container]
+        if pool and pool.recordsByPlacement[placementKey] then return true end
+        for _, manager in pairs(auraMirrors) do
+            if manager:ShouldRetainPlacement(container, placementKey) then return true end
+        end
+        return false
+    end
+
     local function acquireAuraMirror(entry, containerKey, placementKey, options)
         if not (ns.CDMManagedAuraMirrors and ns.CDMManagedAuraMirrors.New) then return nil end
         local swipe = ns._OwnedSwipe and ns._OwnedSwipe.GetSettings
@@ -1060,6 +1071,15 @@ function CDMReanchorRealEnv.BuildEnv(ctx)
         return true
     end
 
+    local function refreshAuraMirrors(unit)
+        for _, manager in pairs(auraMirrors) do manager:Refresh(unit) end
+        for _, pool in pairs(dynamicAuraPools) do
+            for _, run in ipairs(pool.runs) do
+                if run.host:GetUnit() == unit then run.host:UpdateAllAuras() end
+            end
+        end
+    end
+
     return {
         CDMReanchor        = ns.CDMReanchor,
         CDMReanchorWiring  = ns.CDMReanchorWiring,
@@ -1167,8 +1187,10 @@ function CDMReanchorRealEnv.BuildEnv(ctx)
         positionClickSlot = positionClickSlot,
         beginAuraMirrorPass = beginAuraMirrorPass,
         acquireAuraMirror = acquireAuraMirror,
+        shouldRetainAuraMirror = shouldRetainAuraMirror,
         positionAuraMirror = positionAuraMirror,
         endAuraMirrorPass = endAuraMirrorPass,
+        refreshAuraMirrors = refreshAuraMirrors,
         ensureLiveTooltip = ensureLiveTooltip,
         hideLiveTooltip = hideLiveTooltip,
         updateClickOverlay = updateClickOverlay,

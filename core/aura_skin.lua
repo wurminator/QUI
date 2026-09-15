@@ -306,7 +306,7 @@ local Helpers = ns.Helpers
 local function StylePandemic(button, glow)
     local texture = button._quiPandemic
     if not texture then return end
-    local color = type(glow) == "table" and type(glow.color) == "table" and glow.color
+    local color = type(glow) == "table" and not glow.glowType and type(glow.color) == "table" and glow.color
     local style = color and glow.style or "steady"
     local add = style == "pulse" and button.AddPandemicActiveAnimation
         or style == "flash" and button.AddPandemicEnterAnimation
