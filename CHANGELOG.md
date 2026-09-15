@@ -116,6 +116,92 @@ hardening.
   suppresses native buff bars before data readiness, avoiding tainted callbacks
   and startup flicker.
 
+## v5.3.1 - 2026-09-14
+
+> ⚠️ **WoW 12.1 ONLY.** This build targets patch 12.1 (interface 120100) and
+> will not load on the 12.0.x client.
+
+QUI 5.3.1 brings the beta improvements to the stable release, including defensive
+reminders, Bonus Roll filters, and more reliable cooldown, aura, chat, and raid UI.
+
+### Added
+
+- **Optional defensive Reminders** suggest a ready defensive from your per-spec
+  priority list when BigWigs, DBM, or Blizzard's encounter timeline announces an
+  upcoming boss ability. Enable the module under Module Addons and preview it
+  with `/qui reminders test`.
+- **Bonus Roll filters** can hide prompts by raid difficulty, boss, dungeon,
+  Delve, or minimum Mythic+ key level. Recover an unexpired hidden offer with
+  `/qui bonusroll show`, its chat link, or the settings page.
+- **Group Frames can hide tooltips during combat and raid groups 7 and 8 in
+  Mythic raids.**
+
+### Improved
+
+- **Options load on demand and Group Frames allocate raid headers as needed**,
+  reducing repeated startup and roster styling work.
+- **Cooldown Manager custom auras use native tracking and rendering**, with
+  improved refresh handling and reusable glow animations. Native aura sound and
+  text-to-speech settings remain managed through Blizzard's Cooldown Manager.
+
+### Fixed
+
+- **Cooldown Manager preserves distinct native buff slots, centered aura rows,
+  and group spacing through combat.** Target and focus auras refresh when units
+  change, pandemic glows honor settings, and Rotation Helper clears stale hints.
+- **Chat preserves native whisper recipients, reply routing, realm formatting,
+  and achievement links** when WoW restricts message information. Input follows
+  the active QUI window, and channel menus create filtered chat tabs.
+- **Castbar and minimap anchors retain their intended behavior**, including
+  protected followers, Danders frames, frame scale, and saved datatext positions.
+- **New raid members use configured frame dimensions**, arena target health
+  bars retain class colors, and click-cast editing preserves imported macro names.
+- **Bags preserve item levels for upgraded variants**, and pinning unchanged
+  settings avoids unnecessary full-addon refreshes.
+
+## v5.3.1-beta11 - 2026-09-14
+
+> ⚠️ **WoW 12.1 ONLY.** This build targets patch 12.1 (interface 120100) and
+> will not load on the 12.0.x client.
+
+### Changed
+
+- **Release version updated to 5.3.1-beta11.** This build contains the same
+  runtime changes as beta10.
+
+## v5.3.1-beta10 - 2026-09-13
+
+> ⚠️ **WoW 12.1 ONLY.** This build targets patch 12.1 (interface 120100) and
+> will not load on the 12.0.x client.
+
+### Fixed
+
+- **New raid members use the configured Group Frame dimensions** when joining
+  an active roster.
+- **Cooldown Manager native glows avoid errors from restricted frame sizes**,
+  preserving the selected style and offsets.
+- **Cooldown Manager keeps distinct native buff slots visible and correctly
+  placed through combat**, while hiding duplicate base icons.
+- **Bags preserve the correct item level for upgraded item variants** instead
+  of reusing cached information from another version of the same item.
+- **Click-cast bindings preserve imported macro names** when editing or saving.
+
+## v5.3.1-beta9 - 2026-09-12
+
+> ⚠️ **WoW 12.1 ONLY.** This build targets patch 12.1 (interface 120100) and
+> will not load on the 12.0.x client.
+
+### Fixed
+
+- **Cooldown Manager buff rows avoid duplicate aura icons** during combat and
+  stay centered as the number of visible native and custom auras changes.
+- **Target and focus auras refresh when you switch units**, including built-in
+  and custom Cooldown Manager tracking.
+- **Pandemic glows follow the selected style and settings**, including changes
+  made during an active pandemic window.
+- **Chat sender names honor the realm-name setting** when WoW restricts sender
+  information.
+
 ## v5.3.1-beta8 - 2026-09-12
 
 > ⚠️ **WoW 12.1 ONLY.** This build targets patch 12.1 (interface 120100) and

@@ -3665,10 +3665,10 @@ local function UpdateCooldownContainerVisibility(icon, entry, containerDB, editM
         return
     end
 
-    if isHiddenOverride then
+    if isHiddenOverride or icon._quiManagedAuraProxy then
         if icon:IsShown() then icon:Hide() end
         if _G.QUI_CDM_ICON_DEBUG and CDMIcons.DebugIconEvent then
-            CDMIcons.DebugIconEvent(icon, "hidden-override",
+            CDMIcons.DebugIconEvent(icon, isHiddenOverride and "hidden-override" or "native-aura-proxy",
                 "auraActive=", tostring(icon._auraActive == true),
                 "shown=", tostring(icon:IsShown()))
         end
@@ -4294,6 +4294,7 @@ cdEventFrame:RegisterEvent("BAG_UPDATE_DELAYED")
 cdEventFrame:RegisterEvent("ITEM_COUNT_CHANGED")
 cdEventFrame:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
 cdEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+cdEventFrame:RegisterEvent("PLAYER_FOCUS_CHANGED")
 cdEventFrame:RegisterEvent("PLAYER_SOFT_ENEMY_CHANGED")
 cdEventFrame:RegisterEvent("PLAYER_SOFT_FRIEND_CHANGED")
 cdEventFrame:RegisterUnitEvent("UNIT_FACTION", "target")
@@ -4646,9 +4647,13 @@ do
                 and icon._auraActive == true
                 and icon._auraUnit == "player"
         end,
-        refreshCustomAuraTargets = function(identityChanged)
+        refreshCustomAuraTargets = function(identityChanged, unit)
             if ns.CDMCustomAuraRuns and ns.CDMCustomAuraRuns.RefreshTargets then
-                ns.CDMCustomAuraRuns.RefreshTargets(identityChanged)
+                ns.CDMCustomAuraRuns.RefreshTargets(identityChanged, unit)
+            end
+            local boot = ns._cdmBoot
+            if identityChanged and boot and boot.RefreshAuraMirrors then
+                boot:RefreshAuraMirrors(unit)
             end
         end,
         refreshPendingSecureAttributes = function()
