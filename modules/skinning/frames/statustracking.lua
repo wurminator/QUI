@@ -405,8 +405,8 @@ if ns.Registry then
 end
 
 local initFrame = CreateFrame("Frame")
-initFrame:RegisterEvent("ADDON_LOADED")
-initFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+pcall(initFrame.RegisterEvent, initFrame, "ADDON_LOADED")
+pcall(initFrame.RegisterEvent, initFrame, "PLAYER_ENTERING_WORLD")
 initFrame:SetScript("OnEvent", function(_, event, arg1)
     if event == "ADDON_LOADED" and arg1 == "Blizzard_ActionBar" then
         RunAfterFirstFrame(function()

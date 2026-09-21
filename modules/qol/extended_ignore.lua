@@ -68,7 +68,7 @@ local function InstallChatFilters()
 end
 
 local tradeWatcher = CreateFrame("Frame")
-tradeWatcher:RegisterEvent("TRADE_SHOW")
+pcall(tradeWatcher.RegisterEvent, tradeWatcher, "TRADE_SHOW")
 tradeWatcher:SetScript("OnEvent", function()
     local partner = GetUnitName("NPC")
     if partner and ns.ShouldAutoDeclineFrom(partner) then

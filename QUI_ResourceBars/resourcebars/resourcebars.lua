@@ -304,7 +304,7 @@ do
     end
 
     local wwFrame = CreateFrame("Frame")
-    wwFrame:RegisterEvent("ADDON_LOADED")
+    pcall(wwFrame.RegisterEvent, wwFrame, "ADDON_LOADED")
     wwFrame:SetScript("OnEvent", function(self, event, ...)
         if event == "ADDON_LOADED" then
             local addonName = ...
@@ -318,9 +318,9 @@ do
             -- @secret-policy: collapse-only — secret class takes the unregister/Reset branch
             if issecretvalue and issecretvalue(class) then class = nil end
             if class == "WARRIOR" and spec == 2 then
-                self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "player")
-                self:RegisterEvent("PLAYER_DEAD")
-                self:RegisterEvent("PLAYER_REGEN_ENABLED")
+                pcall(self.RegisterUnitEvent, self, "UNIT_SPELLCAST_SUCCEEDED", "player")
+                pcall(self.RegisterEvent, self, "PLAYER_DEAD")
+                pcall(self.RegisterEvent, self, "PLAYER_REGEN_ENABLED")
             else
                 self:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
                 self:UnregisterEvent("PLAYER_DEAD")
@@ -339,8 +339,8 @@ do
             wipe(seenGUID)
         end
     end)
-    wwFrame:RegisterEvent("ACTIVE_PLAYER_SPECIALIZATION_CHANGED")
-    wwFrame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
+    pcall(wwFrame.RegisterEvent, wwFrame, "ACTIVE_PLAYER_SPECIALIZATION_CHANGED")
+    pcall(wwFrame.RegisterEvent, wwFrame, "PLAYER_SPECIALIZATION_CHANGED")
 end
 
 local function SetupDebugInstrumentation()
@@ -431,7 +431,7 @@ do
     end
 
     local tipFrame = CreateFrame("Frame")
-    tipFrame:RegisterEvent("ADDON_LOADED")
+    pcall(tipFrame.RegisterEvent, tipFrame, "ADDON_LOADED")
     tipFrame:SetScript("OnEvent", function(self, event, ...)
         if event == "ADDON_LOADED" then
             local addonName = ...
@@ -445,8 +445,8 @@ do
             -- @secret-policy: collapse-only — secret class takes the unregister/Reset branch
             if issecretvalue and issecretvalue(class) then class = nil end
             if class == "HUNTER" and spec == 3 then
-                self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "player")
-                self:RegisterEvent("PLAYER_DEAD")
+                pcall(self.RegisterUnitEvent, self, "UNIT_SPELLCAST_SUCCEEDED", "player")
+                pcall(self.RegisterEvent, self, "PLAYER_DEAD")
             else
                 self:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
                 self:UnregisterEvent("PLAYER_DEAD")
@@ -461,8 +461,8 @@ do
             TipOfTheSpearTracker:Reset()
         end
     end)
-    tipFrame:RegisterEvent("ACTIVE_PLAYER_SPECIALIZATION_CHANGED")
-    tipFrame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
+    pcall(tipFrame.RegisterEvent, tipFrame, "ACTIVE_PLAYER_SPECIALIZATION_CHANGED")
+    pcall(tipFrame.RegisterEvent, tipFrame, "PLAYER_SPECIALIZATION_CHANGED")
 end
 
 local MaelstromWeaponTracker = {}
@@ -530,7 +530,7 @@ do
     end
 
     local mwFrame = CreateFrame("Frame")
-    mwFrame:RegisterEvent("ADDON_LOADED")
+    pcall(mwFrame.RegisterEvent, mwFrame, "ADDON_LOADED")
     mwFrame:SetScript("OnEvent", function(self, event, ...)
         if event == "ADDON_LOADED" then
             local addonName = ...
@@ -544,9 +544,9 @@ do
             -- @secret-policy: collapse-only — secret class takes the unregister/Reset branch
             if issecretvalue and issecretvalue(class) then class = nil end
             if class == "SHAMAN" and spec == 2 then
-                self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "player")
-                self:RegisterEvent("PLAYER_DEAD")
-                self:RegisterEvent("PLAYER_REGEN_ENABLED")
+                pcall(self.RegisterUnitEvent, self, "UNIT_SPELLCAST_SUCCEEDED", "player")
+                pcall(self.RegisterEvent, self, "PLAYER_DEAD")
+                pcall(self.RegisterEvent, self, "PLAYER_REGEN_ENABLED")
                 MaelstromWeaponTracker:Resync()
             else
                 self:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED")
@@ -565,8 +565,8 @@ do
             MaelstromWeaponTracker:Resync()
         end
     end)
-    mwFrame:RegisterEvent("ACTIVE_PLAYER_SPECIALIZATION_CHANGED")
-    mwFrame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
+    pcall(mwFrame.RegisterEvent, mwFrame, "ACTIVE_PLAYER_SPECIALIZATION_CHANGED")
+    pcall(mwFrame.RegisterEvent, mwFrame, "PLAYER_SPECIALIZATION_CHANGED")
 end
 
 local VDH_SOUL_FRAGMENTS_POWER = (Enum.PowerType and type(Enum.PowerType.SoulFragments) == "number") and Enum.PowerType.SoulFragments or nil
@@ -727,7 +727,8 @@ local function AdvanceRenewingMistRecharge(seconds)
 end
 
 local tocVersion = select(4, GetBuildInfo())
-local isModern = (tonumber(tocVersion) or 0) >= 120000 or tocVersion == 16001 or (QUI and QUI.FOREVER)
+local tocNum = tonumber(tocVersion) or 0
+local isModern = tocNum >= 120000 or (tocNum >= 16000 and tocNum < 17000) or (QUI and QUI.FOREVER)
 local HAS_UNIT_POWER_PERCENT = type(UnitPowerPercent) == "function"
 
 local function GetPowerPct(unit, powerType, usePredicted)
@@ -4015,9 +4016,9 @@ local function InitializeResourceBars(self)
 
     self._resourceBarsInitialized = true
 
-    self:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED", "OnSpecChanged")
-    self:RegisterEvent("UPDATE_SHAPESHIFT_FORM", "OnShapeshiftChanged")
-    self:RegisterEvent("PLAYER_ENTERING_WORLD", function()
+    pcall(self.RegisterEvent, self, "PLAYER_SPECIALIZATION_CHANGED", "OnSpecChanged")
+    pcall(self.RegisterEvent, self, "UPDATE_SHAPESHIFT_FORM", "OnShapeshiftChanged")
+    pcall(self.RegisterEvent, self, "PLAYER_ENTERING_WORLD", function()
         EnsureDemonHunterSoulBar()
         self:OnUnitPower()
         ScheduleSwapBootstrap()
@@ -4030,16 +4031,16 @@ local function InitializeResourceBars(self)
     end)
 
     local powerEventFrame = CreateFrame("Frame")
-    powerEventFrame:RegisterUnitEvent("UNIT_POWER_FREQUENT", "player")
-    powerEventFrame:RegisterUnitEvent("UNIT_POWER_UPDATE", "player")
-    powerEventFrame:RegisterUnitEvent("UNIT_MAXPOWER", "player")
-    powerEventFrame:RegisterUnitEvent("UNIT_DISPLAYPOWER", "player")
-    powerEventFrame:RegisterUnitEvent("UNIT_AURA", "player")
-    powerEventFrame:RegisterEvent("UNIT_POWER_POINT_CHARGE")
-    powerEventFrame:RegisterEvent("SPELL_UPDATE_CHARGES")
-    powerEventFrame:RegisterEvent("SPELL_UPDATE_COOLDOWN")
-    powerEventFrame:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "player")
-    powerEventFrame:RegisterEvent("RUNE_POWER_UPDATE")
+    pcall(powerEventFrame.RegisterUnitEvent, powerEventFrame, "UNIT_POWER_FREQUENT", "player")
+    pcall(powerEventFrame.RegisterUnitEvent, powerEventFrame, "UNIT_POWER_UPDATE", "player")
+    pcall(powerEventFrame.RegisterUnitEvent, powerEventFrame, "UNIT_MAXPOWER", "player")
+    pcall(powerEventFrame.RegisterUnitEvent, powerEventFrame, "UNIT_DISPLAYPOWER", "player")
+    pcall(powerEventFrame.RegisterUnitEvent, powerEventFrame, "UNIT_AURA", "player")
+    pcall(powerEventFrame.RegisterEvent, powerEventFrame, "UNIT_POWER_POINT_CHARGE")
+    pcall(powerEventFrame.RegisterEvent, powerEventFrame, "SPELL_UPDATE_CHARGES")
+    pcall(powerEventFrame.RegisterEvent, powerEventFrame, "SPELL_UPDATE_COOLDOWN")
+    pcall(powerEventFrame.RegisterUnitEvent, powerEventFrame, "UNIT_SPELLCAST_SUCCEEDED", "player")
+    pcall(powerEventFrame.RegisterEvent, powerEventFrame, "RUNE_POWER_UPDATE")
     powerEventFrame:SetScript("OnEvent", function(_, event, unit, ...)
         if event == "RUNE_POWER_UPDATE" then
             self:OnRunePowerUpdate()
@@ -4070,12 +4071,12 @@ local function InitializeResourceBars(self)
         end
     end)
 
-    self:RegisterEvent("PLAYER_REGEN_DISABLED", "OnUnitPower")
-    self:RegisterEvent("PLAYER_REGEN_ENABLED", "OnUnitPower")
+    pcall(self.RegisterEvent, self, "PLAYER_REGEN_DISABLED", "OnUnitPower")
+    pcall(self.RegisterEvent, self, "PLAYER_REGEN_ENABLED", "OnUnitPower")
 
-    self:RegisterEvent("PLAYER_TARGET_CHANGED", "OnUnitPower")
+    pcall(self.RegisterEvent, self, "PLAYER_TARGET_CHANGED", "OnUnitPower")
 
-    self:RegisterEvent("PLAYER_MOUNT_DISPLAY_CHANGED", "OnShapeshiftChanged")
+    pcall(self.RegisterEvent, self, "PLAYER_MOUNT_DISPLAY_CHANGED", "OnShapeshiftChanged")
 
     EnsureDemonHunterSoulBar()
 

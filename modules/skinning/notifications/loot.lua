@@ -874,7 +874,7 @@ local pendingRefreshBlizzard = false
 local DisableBlizzardLoot, EnableBlizzardLoot
 
 local combatDeferFrame = CreateFrame("Frame")
-combatDeferFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(combatDeferFrame.RegisterEvent, combatDeferFrame, "PLAYER_REGEN_ENABLED")
 combatDeferFrame:SetScript("OnEvent", function(self, event)
     if event == "PLAYER_REGEN_ENABLED" then
         if pendingLootFrameHeight and lootFrame then
@@ -959,10 +959,10 @@ EnableBlizzardLoot = function()
     end
 
     if not InCombatLockdown() then
-        LootFrame:RegisterEvent("LOOT_OPENED")
-        LootFrame:RegisterEvent("LOOT_SLOT_CLEARED")
-        LootFrame:RegisterEvent("LOOT_SLOT_CHANGED")
-        LootFrame:RegisterEvent("LOOT_CLOSED")
+        pcall(LootFrame.RegisterEvent, LootFrame, "LOOT_OPENED")
+        pcall(LootFrame.RegisterEvent, LootFrame, "LOOT_SLOT_CLEARED")
+        pcall(LootFrame.RegisterEvent, LootFrame, "LOOT_SLOT_CHANGED")
+        pcall(LootFrame.RegisterEvent, LootFrame, "LOOT_CLOSED")
     end
 
     if GroupLootContainer then
@@ -1009,11 +1009,11 @@ function Loot:Initialize()
     end
 
     local eventFrame = CreateFrame("Frame")
-    eventFrame:RegisterEvent("LOOT_OPENED")
-    eventFrame:RegisterEvent("LOOT_SLOT_CLEARED")
-    eventFrame:RegisterEvent("LOOT_CLOSED")
-    eventFrame:RegisterEvent("START_LOOT_ROLL")
-    eventFrame:RegisterEvent("CANCEL_LOOT_ROLL")
+    pcall(eventFrame.RegisterEvent, eventFrame, "LOOT_OPENED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "LOOT_SLOT_CLEARED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "LOOT_CLOSED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "START_LOOT_ROLL")
+    pcall(eventFrame.RegisterEvent, eventFrame, "CANCEL_LOOT_ROLL")
 
     eventFrame:SetScript("OnEvent", function(self, event, ...)
         local db = GetDB()
@@ -1389,7 +1389,7 @@ function Loot:HookBlizzardEditMode()
         core:RegisterEditModeExit(function()
             if InCombatLockdown() then
                 local f = CreateFrame("Frame")
-                f:RegisterEvent("PLAYER_REGEN_ENABLED")
+                pcall(f.RegisterEvent, f, "PLAYER_REGEN_ENABLED")
                 f:SetScript("OnEvent", function(ef)
                     ef:UnregisterAllEvents()
                     self:DisableEditMode()

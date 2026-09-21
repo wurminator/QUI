@@ -13,10 +13,13 @@ local LSM = LibStub("LibSharedMedia-3.0", true)
 ns.LSM = LSM
 
 Helpers.AssetPath = "Interface\\AddOns\\" .. ADDON_NAME .. "\\assets\\"
-Helpers.FOREVER = select(4, GetBuildInfo()) == 16001
+local buildVersion = select(4, GetBuildInfo())
+Helpers.FOREVER = buildVersion >= 16000 and buildVersion < 17000
 function Helpers.IsForeverClient()
     return Helpers.FOREVER
 end
+Helpers.SafeRegisterEvent = ns.SafeRegisterEvent
+Helpers.SafeRegisterUnitEvent = ns.SafeRegisterUnitEvent
 
 local issecretvalue = _G.issecretvalue
 local canaccesstable = _G.canaccesstable
@@ -1405,7 +1408,7 @@ local function QueueCombatHide(frame, clearAlpha)
         _combatHideFrame = CreateFrame("Frame")
         _combatHideFrame:SetScript("OnEvent", FlushCombatHideQueue)
     end
-    _combatHideFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+    pcall(_combatHideFrame.RegisterEvent, _combatHideFrame, "PLAYER_REGEN_ENABLED")
 end
 
 function Helpers.DeferredHideOnShow(frame, opts)

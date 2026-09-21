@@ -756,10 +756,10 @@ end
 local castTraceFrame = CreateFrame("Frame")
 local function SetCastTraceRegistered(enabled)
     if enabled then
-        castTraceFrame:RegisterUnitEvent("UNIT_SPELLCAST_SENT", "player")
-        castTraceFrame:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "player")
-        castTraceFrame:RegisterUnitEvent("UNIT_SPELLCAST_FAILED", "player")
-        castTraceFrame:RegisterUnitEvent("UNIT_SPELLCAST_FAILED_QUIET", "player")
+        pcall(castTraceFrame.RegisterUnitEvent, castTraceFrame, "UNIT_SPELLCAST_SENT", "player")
+        pcall(castTraceFrame.RegisterUnitEvent, castTraceFrame, "UNIT_SPELLCAST_SUCCEEDED", "player")
+        pcall(castTraceFrame.RegisterUnitEvent, castTraceFrame, "UNIT_SPELLCAST_FAILED", "player")
+        pcall(castTraceFrame.RegisterUnitEvent, castTraceFrame, "UNIT_SPELLCAST_FAILED_QUIET", "player")
     else
         castTraceFrame:UnregisterAllEvents()
     end
@@ -779,10 +779,10 @@ castTraceFrame:SetScript("OnEvent", function(_, event, _, _, arg3, arg4)
 end)
 
 local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterEvent("PLAYER_LOGIN")
-eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-eventFrame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
-eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_LOGIN")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ENTERING_WORLD")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_SPECIALIZATION_CHANGED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_ENABLED")
 eventFrame:SetScript("OnEvent", function(self, event)
     if event == "PLAYER_LOGIN" then
         InstallGSEHooks()

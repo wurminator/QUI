@@ -41,8 +41,8 @@ local function RecordBlock(eventKind, addonFunc)
 end
 
 local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterEvent("ADDON_ACTION_BLOCKED")
-eventFrame:RegisterEvent("ADDON_ACTION_FORBIDDEN")
+pcall(eventFrame.RegisterEvent, eventFrame, "ADDON_ACTION_BLOCKED")
+pcall(eventFrame.RegisterEvent, eventFrame, "ADDON_ACTION_FORBIDDEN")
 eventFrame:SetScript("OnEvent", function(_, event, addonName, addonFunc)
     if addonName ~= DIAGNOSE_ADDON_NAME then return end
     local kind = (event == "ADDON_ACTION_BLOCKED") and "BLOCKED" or "FORBIDDEN"

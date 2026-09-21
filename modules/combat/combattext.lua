@@ -207,8 +207,8 @@ local function ApplyScrollingCombatText(fromOnChange)
 end
 
 local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
-eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_DISABLED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_ENABLED")
 eventFrame:SetScript("OnEvent", function(self, event, ...)
     if event == "PLAYER_REGEN_DISABLED" then
         OnCombatStart()

@@ -289,10 +289,10 @@ local function OnEvent(self, event, arg1)
 end
 
 eventFrame:SetScript("OnEvent", OnEvent)
-eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-eventFrame:RegisterEvent("ADDON_LOADED")
-eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-eventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ENTERING_WORLD")
+pcall(eventFrame.RegisterEvent, eventFrame, "ADDON_LOADED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_ENABLED")
+pcall(eventFrame.RegisterEvent, eventFrame, "GROUP_ROSTER_UPDATE")
 
 local initialized = false
 

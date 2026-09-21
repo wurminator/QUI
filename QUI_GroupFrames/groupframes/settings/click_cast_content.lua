@@ -1797,9 +1797,9 @@ local function BuildClickCastBindings(L, content, cc, refreshClickCast, state)
 
     local function RegisterSpecListener()
         if specListener._quiRegistered then return end
-        specListener:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
-        specListener:RegisterEvent("TRAIT_CONFIG_UPDATED")
-        specListener:RegisterEvent("ACTIVE_COMBAT_CONFIG_CHANGED")
+        pcall(specListener.RegisterEvent, specListener, "PLAYER_SPECIALIZATION_CHANGED")
+        pcall(specListener.RegisterEvent, specListener, "TRAIT_CONFIG_UPDATED")
+        pcall(specListener.RegisterEvent, specListener, "ACTIVE_COMBAT_CONFIG_CHANGED")
         specListener._quiRegistered = true
     end
 

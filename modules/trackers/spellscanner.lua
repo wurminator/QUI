@@ -706,10 +706,10 @@ function SpellScanner.ScanSpell(spellID, itemID)
 end
 
 local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-eventFrame:RegisterEvent("BAG_UPDATE_COOLDOWN")
-eventFrame:RegisterUnitEvent("UNIT_AURA", "player")
-eventFrame:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "player")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_ENABLED")
+pcall(eventFrame.RegisterEvent, eventFrame, "BAG_UPDATE_COOLDOWN")
+pcall(eventFrame.RegisterUnitEvent, eventFrame, "UNIT_AURA", "player")
+pcall(eventFrame.RegisterUnitEvent, eventFrame, "UNIT_SPELLCAST_SUCCEEDED", "player")
 
 if ns.WhenLoggedIn then
     ns.WhenLoggedIn(GetDB)

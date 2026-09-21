@@ -117,7 +117,7 @@ if _G.CreateFrame then
     local valid = _G.C_EventUtils and _G.C_EventUtils.IsEventValid
     for i = 1, #REFRESH_EVENTS do
         if not valid or valid(REFRESH_EVENTS[i]) then
-            eventFrame:RegisterEvent(REFRESH_EVENTS[i])
+            pcall(eventFrame.RegisterEvent, eventFrame, REFRESH_EVENTS[i])
         end
     end
     eventFrame:SetScript("OnEvent", function()

@@ -439,7 +439,7 @@ COMBAT_FADE_BARS = {
 }
 
 combatFadeFrame = CreateFrame("Frame")
-combatFadeFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(combatFadeFrame.RegisterEvent, combatFadeFrame, "PLAYER_REGEN_ENABLED")
 
 combatFadeFrame:SetScript("OnEvent", function(self, event)
     local fadeSettings = GetFadeSettings()

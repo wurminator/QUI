@@ -276,16 +276,16 @@ end
 QUI_DamageMeter.ResolveCurrentViewDuration = ResolveCurrentViewDuration
 
 Data._eventFrame = CreateFrame("Frame")
-Data._eventFrame:RegisterEvent("DAMAGE_METER_COMBAT_SESSION_UPDATED")
-Data._eventFrame:RegisterEvent("DAMAGE_METER_CURRENT_SESSION_UPDATED")
-Data._eventFrame:RegisterEvent("DAMAGE_METER_RESET")
-Data._eventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
-Data._eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-Data._eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-Data._eventFrame:RegisterEvent("UNIT_FLAGS")
-Data._eventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-Data._eventFrame:RegisterEvent("ENCOUNTER_START")
-Data._eventFrame:RegisterEvent("ENCOUNTER_END")
+pcall(Data._eventFrame.RegisterEvent, Data._eventFrame, "DAMAGE_METER_COMBAT_SESSION_UPDATED")
+pcall(Data._eventFrame.RegisterEvent, Data._eventFrame, "DAMAGE_METER_CURRENT_SESSION_UPDATED")
+pcall(Data._eventFrame.RegisterEvent, Data._eventFrame, "DAMAGE_METER_RESET")
+pcall(Data._eventFrame.RegisterEvent, Data._eventFrame, "PLAYER_REGEN_DISABLED")
+pcall(Data._eventFrame.RegisterEvent, Data._eventFrame, "PLAYER_REGEN_ENABLED")
+pcall(Data._eventFrame.RegisterEvent, Data._eventFrame, "PLAYER_ENTERING_WORLD")
+pcall(Data._eventFrame.RegisterEvent, Data._eventFrame, "UNIT_FLAGS")
+pcall(Data._eventFrame.RegisterEvent, Data._eventFrame, "GROUP_ROSTER_UPDATE")
+pcall(Data._eventFrame.RegisterEvent, Data._eventFrame, "ENCOUNTER_START")
+pcall(Data._eventFrame.RegisterEvent, Data._eventFrame, "ENCOUNTER_END")
 Data._eventFrame:SetScript("OnEvent", function(_, event, arg1, arg2)
     if event == "DAMAGE_METER_COMBAT_SESSION_UPDATED" then
         for sessionType = 0, 2 do
@@ -3726,9 +3726,9 @@ function WindowManager:ApplyChallengeModeReset()
 end
 
 local challengeModeFrame = CreateFrame("Frame")
-challengeModeFrame:RegisterEvent("CHALLENGE_MODE_START")
-challengeModeFrame:RegisterEvent("CHALLENGE_MODE_COMPLETED")
-challengeModeFrame:RegisterEvent("CHALLENGE_MODE_RESET")
+pcall(challengeModeFrame.RegisterEvent, challengeModeFrame, "CHALLENGE_MODE_START")
+pcall(challengeModeFrame.RegisterEvent, challengeModeFrame, "CHALLENGE_MODE_COMPLETED")
+pcall(challengeModeFrame.RegisterEvent, challengeModeFrame, "CHALLENGE_MODE_RESET")
 challengeModeFrame:SetScript("OnEvent", function(_, event)
     if event == "CHALLENGE_MODE_START" then
         WindowManager:ApplyChallengeModeStart()
@@ -3766,7 +3766,7 @@ local function QueueOrRun(fn)
 end
 
 local lockdownFrame = CreateFrame("Frame")
-lockdownFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(lockdownFrame.RegisterEvent, lockdownFrame, "PLAYER_REGEN_ENABLED")
 lockdownFrame:SetScript("OnEvent", function()
     if #pendingCombatWrites == 0 then return end
     local q = pendingCombatWrites

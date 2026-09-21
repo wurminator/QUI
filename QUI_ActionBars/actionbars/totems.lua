@@ -485,7 +485,7 @@ local function Enable()
     PositionContainer()
     if not container:IsShown() then container:Show() end
 
-    container:RegisterEvent("PLAYER_TOTEM_UPDATE")
+    pcall(container.RegisterEvent, container, "PLAYER_TOTEM_UPDATE")
     UpdateTotems()
 end
 
@@ -640,9 +640,9 @@ if ns.Registry then
 end
 
 local initFrame = CreateFrame("Frame")
-initFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-initFrame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
-initFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(initFrame.RegisterEvent, initFrame, "PLAYER_ENTERING_WORLD")
+pcall(initFrame.RegisterEvent, initFrame, "PLAYER_SPECIALIZATION_CHANGED")
+pcall(initFrame.RegisterEvent, initFrame, "PLAYER_REGEN_ENABLED")
 initFrame:SetScript("OnEvent", function(self, event)
     if event == "PLAYER_REGEN_ENABLED" then
         if pendingReconcile and TotemBar.enabled then

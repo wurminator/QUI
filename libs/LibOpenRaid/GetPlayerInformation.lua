@@ -82,13 +82,13 @@ local isTimewalkWoW = function()
 end
 
 local IsTWWExpansion = function()
-    if (buildInfo >= 110000 or buildInfo == 16001) then
+    if (buildInfo >= 110000 or (buildInfo >= 16000 and buildInfo < 17000)) then
         return true
     end
 end
 
 local IsDragonflight = function() --and beyond
-	return (buildInfo >= 100000 and buildInfo < 120000) or buildInfo == 16001
+	return (buildInfo >= 100000 and buildInfo < 120000) or (buildInfo >= 16000 and buildInfo < 17000)
 end
 
 local IsShadowlands = function()
@@ -132,7 +132,7 @@ end
 function openRaidLib.GetTalentVersion()
     local _, _, _, buildInfo = GetBuildInfo()
 
-    if (buildInfo == 16001) then
+    if (buildInfo >= 16000 and buildInfo < 17000) then
         return CONST_TALENT_VERSION_DRAGONFLIGHT
     end
 
@@ -1080,7 +1080,7 @@ do
             }
 
             local auraFrameEvent = CreateFrame("frame")
-            auraFrameEvent:RegisterUnitEvent("UNIT_AURA", unitId)
+            pcall(auraFrameEvent.RegisterUnitEvent, auraFrameEvent, "UNIT_AURA", unitId)
 
             auraFrameEvent:SetScript("OnEvent", function()
                 openRaidLib.AuraTracker.ScanUnitAuras(unitId)

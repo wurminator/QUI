@@ -71,8 +71,8 @@ Datatexts:Register("reputation", {
 
         frame.Update = Update
 
-        frame:RegisterEvent("UPDATE_FACTION")
-        frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+        pcall(frame.RegisterEvent, frame, "UPDATE_FACTION")
+        pcall(frame.RegisterEvent, frame, "PLAYER_ENTERING_WORLD")
         frame:SetScript("OnEvent", Update)
 
         slotFrame:EnableMouse(true)
@@ -165,9 +165,9 @@ Datatexts:Register("vault", {
 
         frame.Update = Update
 
-        frame:RegisterEvent("WEEKLY_REWARDS_UPDATE")
-        frame:RegisterEvent("CHALLENGE_MODE_COMPLETED")
-        frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+        pcall(frame.RegisterEvent, frame, "WEEKLY_REWARDS_UPDATE")
+        pcall(frame.RegisterEvent, frame, "CHALLENGE_MODE_COMPLETED")
+        pcall(frame.RegisterEvent, frame, "PLAYER_ENTERING_WORLD")
         frame:SetScript("OnEvent", Update)
 
         slotFrame:EnableMouse(true)
@@ -252,9 +252,9 @@ Datatexts:Register("mail", {
 
         frame.Update = Update
 
-        frame:RegisterEvent("UPDATE_PENDING_MAIL")
-        frame:RegisterEvent("MAIL_INBOX_UPDATE")
-        frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+        pcall(frame.RegisterEvent, frame, "UPDATE_PENDING_MAIL")
+        pcall(frame.RegisterEvent, frame, "MAIL_INBOX_UPDATE")
+        pcall(frame.RegisterEvent, frame, "PLAYER_ENTERING_WORLD")
         frame:SetScript("OnEvent", Update)
 
         slotFrame:EnableMouse(true)
@@ -339,8 +339,8 @@ Datatexts:Register("professions", {
 
         frame.Update = Update
 
-        frame:RegisterEvent("SKILL_LINES_CHANGED")
-        frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+        pcall(frame.RegisterEvent, frame, "SKILL_LINES_CHANGED")
+        pcall(frame.RegisterEvent, frame, "PLAYER_ENTERING_WORLD")
         frame:SetScript("OnEvent", Update)
 
         slotFrame:EnableMouse(true)
@@ -446,9 +446,9 @@ Datatexts:Register("omniumfolio", {
 
         frame.Update = Update
 
-        frame:RegisterEvent("PLAYER_ENTERING_WORLD")
-        frame:RegisterEvent("TRAIT_CONFIG_UPDATED")
-        frame:RegisterEvent("TRAIT_TREE_CURRENCY_INFO_UPDATED")
+        pcall(frame.RegisterEvent, frame, "PLAYER_ENTERING_WORLD")
+        pcall(frame.RegisterEvent, frame, "TRAIT_CONFIG_UPDATED")
+        pcall(frame.RegisterEvent, frame, "TRAIT_TREE_CURRENCY_INFO_UPDATED")
         frame:SetScript("OnEvent", Update)
 
         slotFrame:EnableMouse(true)
@@ -549,8 +549,8 @@ Datatexts:Register("catalyst", {
 
         frame.Update = Update
 
-        frame:RegisterEvent("CURRENCY_DISPLAY_UPDATE")
-        frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+        pcall(frame.RegisterEvent, frame, "CURRENCY_DISPLAY_UPDATE")
+        pcall(frame.RegisterEvent, frame, "PLAYER_ENTERING_WORLD")
         frame:SetScript("OnEvent", Update)
 
         slotFrame:EnableMouse(true)

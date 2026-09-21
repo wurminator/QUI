@@ -470,13 +470,13 @@ local function IsPreviewMode()
 end
 
 local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-eventFrame:RegisterEvent("ENCOUNTER_START")
-eventFrame:RegisterEvent("ENCOUNTER_END")
-eventFrame:RegisterEvent("CHALLENGE_MODE_START")
-eventFrame:RegisterEvent("CHALLENGE_MODE_COMPLETED")
-eventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
-eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ENTERING_WORLD")
+pcall(eventFrame.RegisterEvent, eventFrame, "ENCOUNTER_START")
+pcall(eventFrame.RegisterEvent, eventFrame, "ENCOUNTER_END")
+pcall(eventFrame.RegisterEvent, eventFrame, "CHALLENGE_MODE_START")
+pcall(eventFrame.RegisterEvent, eventFrame, "CHALLENGE_MODE_COMPLETED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_DISABLED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_ENABLED")
 
 eventFrame:SetScript("OnEvent", function(self, event, ...)
     if event == "PLAYER_ENTERING_WORLD" then

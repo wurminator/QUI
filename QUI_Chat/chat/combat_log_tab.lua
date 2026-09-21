@@ -59,7 +59,7 @@ local function QueueRegenCycle()
         if Sup and Sup.IsActive and not Sup.IsActive() then return end
         SecureShowCycle(_G.ChatFrame2)
     end)
-    combatWaiter:RegisterEvent("PLAYER_REGEN_ENABLED")
+    pcall(combatWaiter.RegisterEvent, combatWaiter, "PLAYER_REGEN_ENABLED")
 end
 
 function SecureShowCycle(cf)
@@ -134,9 +134,9 @@ function CombatLogTab.EnsureLoaded(cb)
                 if cb then cb() end
             end
         end)
-        loadWaiter:RegisterEvent("ADDON_LOADED")
-        loadWaiter:RegisterEvent("UPDATE_CHAT_WINDOWS")
-        loadWaiter:RegisterEvent("PLAYER_LOGIN")
+        pcall(loadWaiter.RegisterEvent, loadWaiter, "ADDON_LOADED")
+        pcall(loadWaiter.RegisterEvent, loadWaiter, "UPDATE_CHAT_WINDOWS")
+        pcall(loadWaiter.RegisterEvent, loadWaiter, "PLAYER_LOGIN")
     end
     return false
 end

@@ -147,8 +147,8 @@ local function EnsureHook()
 end
 
 local frame = CreateFrame("Frame")
-frame:RegisterEvent("SPELL_UPDATE_COOLDOWN")
-frame:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(frame.RegisterEvent, frame, "SPELL_UPDATE_COOLDOWN")
+pcall(frame.RegisterEvent, frame, "PLAYER_REGEN_ENABLED")
 frame:SetScript("OnEvent", function(_, event)
     if event ~= "PLAYER_REGEN_ENABLED" or cooldownRefreshPending then UpdateCooldowns() end
 end)

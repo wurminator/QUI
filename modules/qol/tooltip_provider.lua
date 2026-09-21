@@ -87,9 +87,9 @@ local function UpdateCachedUIScale()
 end
 
 local scaleEventFrame = CreateFrame("Frame")
-scaleEventFrame:RegisterEvent("UI_SCALE_CHANGED")
-scaleEventFrame:RegisterEvent("DISPLAY_SIZE_CHANGED")
-scaleEventFrame:RegisterEvent("ADDON_LOADED")
+pcall(scaleEventFrame.RegisterEvent, scaleEventFrame, "UI_SCALE_CHANGED")
+pcall(scaleEventFrame.RegisterEvent, scaleEventFrame, "DISPLAY_SIZE_CHANGED")
+pcall(scaleEventFrame.RegisterEvent, scaleEventFrame, "ADDON_LOADED")
 scaleEventFrame:SetScript("OnEvent", function()
     UpdateCachedUIScale()
 end)

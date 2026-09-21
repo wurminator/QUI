@@ -126,7 +126,7 @@ local function SetScenarioObjectiveTrackerSuppressed(suppressed)
                 SetScenarioObjectiveTrackerSuppressed(shouldSuppress)
             end)
         end
-        objectiveTrackerSuppressionDeferral:RegisterEvent("PLAYER_REGEN_ENABLED")
+        pcall(objectiveTrackerSuppressionDeferral.RegisterEvent, objectiveTrackerSuppressionDeferral, "PLAYER_REGEN_ENABLED")
         return
     end
     pendingObjectiveTrackerSuppressed = nil
@@ -1809,17 +1809,17 @@ local function OnEvent(self, event, arg1, ...)
 end
 
 eventFrame:SetScript("OnEvent", OnEvent)
-eventFrame:RegisterEvent("ADDON_LOADED")
-eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-eventFrame:RegisterEvent("CHALLENGE_MODE_START")
-eventFrame:RegisterEvent("CHALLENGE_MODE_COMPLETED")
-eventFrame:RegisterEvent("CHALLENGE_MODE_RESET")
-eventFrame:RegisterEvent("CHALLENGE_MODE_DEATH_COUNT_UPDATED")
-eventFrame:RegisterEvent("SCENARIO_CRITERIA_UPDATE")
-eventFrame:RegisterEvent("SCENARIO_POI_UPDATE")
-eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-eventFrame:RegisterEvent("ZONE_CHANGED")
-eventFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+pcall(eventFrame.RegisterEvent, eventFrame, "ADDON_LOADED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ENTERING_WORLD")
+pcall(eventFrame.RegisterEvent, eventFrame, "CHALLENGE_MODE_START")
+pcall(eventFrame.RegisterEvent, eventFrame, "CHALLENGE_MODE_COMPLETED")
+pcall(eventFrame.RegisterEvent, eventFrame, "CHALLENGE_MODE_RESET")
+pcall(eventFrame.RegisterEvent, eventFrame, "CHALLENGE_MODE_DEATH_COUNT_UPDATED")
+pcall(eventFrame.RegisterEvent, eventFrame, "SCENARIO_CRITERIA_UPDATE")
+pcall(eventFrame.RegisterEvent, eventFrame, "SCENARIO_POI_UPDATE")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_ENABLED")
+pcall(eventFrame.RegisterEvent, eventFrame, "ZONE_CHANGED")
+pcall(eventFrame.RegisterEvent, eventFrame, "ZONE_CHANGED_NEW_AREA")
 
 if ns.WhenLoggedIn then
     ns.WhenLoggedIn(function()

@@ -3235,7 +3235,7 @@ local function QueueReanchorHooksWhenCooldownViewerReady(markDirty)
     if not reanchorHooksReadyFrame then
         reanchorHooksReadyFrame = CreateFrame("Frame")
     end
-    reanchorHooksReadyFrame:RegisterEvent("COOLDOWN_VIEWER_DATA_LOADED")
+    pcall(reanchorHooksReadyFrame.RegisterEvent, reanchorHooksReadyFrame, "COOLDOWN_VIEWER_DATA_LOADED")
     reanchorHooksReadyFrame:SetScript("OnEvent", function(self, event)
         if event ~= "COOLDOWN_VIEWER_DATA_LOADED" then return end
         self:UnregisterEvent("COOLDOWN_VIEWER_DATA_LOADED")
@@ -3666,20 +3666,20 @@ function ownedEngine:Initialize()
 
     local eventFrame = CreateFrame("Frame")
     runtimeEventFrame = eventFrame
-    eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-    eventFrame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
-    eventFrame:RegisterEvent("TRAIT_CONFIG_UPDATED")
-    eventFrame:RegisterEvent("ACTIVE_COMBAT_CONFIG_CHANGED")
-    eventFrame:RegisterEvent("TRAIT_CONFIG_LIST_UPDATED")
-    eventFrame:RegisterEvent("PLAYER_TALENT_UPDATE")
-    eventFrame:RegisterEvent("SELECTED_LOADOUT_CHANGED")
-    eventFrame:RegisterEvent("SPECIALIZATION_CHANGE_CAST_FAILED")
-    eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-    eventFrame:RegisterEvent("CHALLENGE_MODE_START")
-    eventFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-    eventFrame:RegisterEvent("CINEMATIC_STOP")
-    eventFrame:RegisterEvent("STOP_MOVIE")
-    eventFrame:RegisterEvent("ADDON_LOADED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ENTERING_WORLD")
+    pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_SPECIALIZATION_CHANGED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "TRAIT_CONFIG_UPDATED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "ACTIVE_COMBAT_CONFIG_CHANGED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "TRAIT_CONFIG_LIST_UPDATED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_TALENT_UPDATE")
+    pcall(eventFrame.RegisterEvent, eventFrame, "SELECTED_LOADOUT_CHANGED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "SPECIALIZATION_CHANGE_CAST_FAILED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_ENABLED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "CHALLENGE_MODE_START")
+    pcall(eventFrame.RegisterEvent, eventFrame, "ZONE_CHANGED_NEW_AREA")
+    pcall(eventFrame.RegisterEvent, eventFrame, "CINEMATIC_STOP")
+    pcall(eventFrame.RegisterEvent, eventFrame, "STOP_MOVIE")
+    pcall(eventFrame.RegisterEvent, eventFrame, "ADDON_LOADED")
     RegisterClassTalentSwitchCallbacks()
 
     eventFrame:SetScript("OnEvent", function(self, event, arg1, arg2)
@@ -4231,7 +4231,7 @@ end
 ns.CDMProvider = CDMProvider
 
 local providerEventFrame = CreateFrame("Frame")
-providerEventFrame:RegisterEvent("ADDON_LOADED")
+pcall(providerEventFrame.RegisterEvent, providerEventFrame, "ADDON_LOADED")
 providerEventFrame:SetScript("OnEvent", function(self, event, addonName)
     if event == "ADDON_LOADED" and addonName == ADDON_NAME then
         self:UnregisterEvent("ADDON_LOADED")

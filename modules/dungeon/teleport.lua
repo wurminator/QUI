@@ -128,9 +128,9 @@ end
 local hooked = false
 
 local initFrame = CreateFrame("Frame")
-initFrame:RegisterEvent("ADDON_LOADED")
-initFrame:RegisterEvent("SPELL_UPDATE_COOLDOWN")
-initFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(initFrame.RegisterEvent, initFrame, "ADDON_LOADED")
+pcall(initFrame.RegisterEvent, initFrame, "SPELL_UPDATE_COOLDOWN")
+pcall(initFrame.RegisterEvent, initFrame, "PLAYER_REGEN_ENABLED")
 initFrame:SetScript("OnEvent", function(self, event, arg1)
     if event == "SPELL_UPDATE_COOLDOWN" or (event == "PLAYER_REGEN_ENABLED" and cooldownRefreshPending) then
         UpdateCooldowns()

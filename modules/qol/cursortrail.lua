@@ -124,8 +124,8 @@ local function Refresh()
 end
 
 local frame = CreateFrame("Frame")
-frame:RegisterEvent("PLAYER_REGEN_DISABLED")
-frame:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(frame.RegisterEvent, frame, "PLAYER_REGEN_DISABLED")
+pcall(frame.RegisterEvent, frame, "PLAYER_REGEN_ENABLED")
 frame:SetScript("OnEvent", function(_, event)
     inCombat = (event == "PLAYER_REGEN_DISABLED")
     Refresh()

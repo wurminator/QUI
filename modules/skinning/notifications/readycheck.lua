@@ -343,7 +343,7 @@ if Helpers and Helpers.BorderRegistry then
 end
 
 local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterEvent("READY_CHECK")
+pcall(eventFrame.RegisterEvent, eventFrame, "READY_CHECK")
 eventFrame:SetScript("OnEvent", function()
     if _G.ReadyCheckFrame then
         SkinReadyCheckFrame()

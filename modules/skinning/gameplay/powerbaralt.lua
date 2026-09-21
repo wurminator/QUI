@@ -182,10 +182,10 @@ local function CreateQUIAltPowerBar()
     bar:SetScript("OnEnter", OnEnter)
     bar:SetScript("OnLeave", OnLeave)
 
-    bar:RegisterUnitEvent("UNIT_POWER_UPDATE", "player")
-    bar:RegisterUnitEvent("UNIT_POWER_BAR_SHOW", "player")
-    bar:RegisterUnitEvent("UNIT_POWER_BAR_HIDE", "player")
-    bar:RegisterEvent("PLAYER_ENTERING_WORLD")
+    pcall(bar.RegisterUnitEvent, bar, "UNIT_POWER_UPDATE", "player")
+    pcall(bar.RegisterUnitEvent, bar, "UNIT_POWER_BAR_SHOW", "player")
+    pcall(bar.RegisterUnitEvent, bar, "UNIT_POWER_BAR_HIDE", "player")
+    pcall(bar.RegisterEvent, bar, "PLAYER_ENTERING_WORLD")
     bar:SetScript("OnEvent", OnEvent)
 
     return bar
@@ -233,7 +233,7 @@ local function CarryPowerBarWidgetContainer()
 
     if InCombatLockdown() then
         local waiter = CreateFrame("Frame")
-        waiter:RegisterEvent("PLAYER_REGEN_ENABLED")
+        pcall(waiter.RegisterEvent, waiter, "PLAYER_REGEN_ENABLED")
         waiter:SetScript("OnEvent", function(self)
             self:UnregisterAllEvents()
             CarryPowerBarWidgetContainer()

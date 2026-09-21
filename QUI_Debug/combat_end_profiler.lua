@@ -184,7 +184,7 @@ local function OpenWindow()
 end
 
 local combatFrame = CreateFrame("Frame")
-combatFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(combatFrame.RegisterEvent, combatFrame, "PLAYER_REGEN_ENABLED")
 combatFrame:SetScript("OnEvent", function()
     if enabled then OpenWindow() end
 end)

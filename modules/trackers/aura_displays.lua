@@ -2348,7 +2348,7 @@ function AD.Init()
     if eventFrame then return end
     eventFrame = CreateFrame("Frame")
     for i = 1, #WATCHED_EVENTS do
-        eventFrame:RegisterEvent(WATCHED_EVENTS[i])
+        pcall(eventFrame.RegisterEvent, eventFrame, WATCHED_EVENTS[i])
     end
     eventFrame:SetScript("OnEvent", OnEvent)
     local um = ns.QUI_LayoutMode

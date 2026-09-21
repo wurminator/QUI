@@ -660,7 +660,7 @@ ScheduleBackdropUpdate = function()
 end
 
 local protectedLayoutEventFrame = CreateFrame("Frame")
-protectedLayoutEventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(protectedLayoutEventFrame.RegisterEvent, protectedLayoutEventFrame, "PLAYER_REGEN_ENABLED")
 protectedLayoutEventFrame:SetScript("OnEvent", function()
     if not pendingProtectedLayoutUpdate then return end
     pendingProtectedLayoutUpdate = false
@@ -941,7 +941,7 @@ if ns.WhenLoggedIn then
         RunAfterFirstFrame(function()
             SkinObjectiveTracker()
             for _, trackEvent in ipairs(trackingEvents) do
-                frame:RegisterEvent(trackEvent)
+                pcall(frame.RegisterEvent, frame, trackEvent)
             end
         end, 0.2)
     end)

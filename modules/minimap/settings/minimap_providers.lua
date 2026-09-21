@@ -72,7 +72,7 @@ ProviderPanels:RegisterAfterLoad(function(ctx)
             rotateW:SetValue(C_CVar.GetCVarBool("rotateMinimap"), true)
         end
         rotateW:HookScript("OnShow", function(self)
-            self:RegisterEvent("CVAR_UPDATE")
+            pcall(self.RegisterEvent, self, "CVAR_UPDATE")
             UpdateRotation()
         end)
         rotateW:HookScript("OnHide", function(self)
@@ -81,7 +81,7 @@ ProviderPanels:RegisterAfterLoad(function(ctx)
         rotateW:SetScript("OnEvent", function(_, _, cvar)
             if cvar:lower() == "rotateminimap" then UpdateRotation() end
         end)
-        if rotateW:IsVisible() then rotateW:RegisterEvent("CVAR_UPDATE") end
+        if rotateW:IsVisible() then pcall(rotateW.RegisterEvent, rotateW, "CVAR_UPDATE") end
         UpdateRotation()
         local hideAddonW = GUI:CreateFormCheckbox(s1.frame, nil, "hideAddonButtons", mm, function()
             if _G.QUI_RefreshMinimapAddonButtons then _G.QUI_RefreshMinimapAddonButtons() end

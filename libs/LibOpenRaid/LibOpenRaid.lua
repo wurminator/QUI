@@ -453,7 +453,7 @@ end
     end
 
     if canRegisterEvents() then
-        openRaidLib.commHandler.eventFrame:RegisterEvent("CHAT_MSG_ADDON_LOGGED")
+        pcall(openRaidLib.commHandler.eventFrame.RegisterEvent, openRaidLib.commHandler.eventFrame, "CHAT_MSG_ADDON_LOGGED")
         openRaidLib.commHandler.eventFrame:SetScript("OnEvent", openRaidLib.commHandler.OnReceiveSafeComm)
     end
 
@@ -564,7 +564,7 @@ end
 
     local debugCommReception = CreateFrame("frame")
     if canRegisterEvents() then
-        debugCommReception:RegisterEvent("CHAT_MSG_ADDON_LOGGED")
+        pcall(debugCommReception.RegisterEvent, debugCommReception, "CHAT_MSG_ADDON_LOGGED")
     end
 
     debugCommReception:SetScript("OnEvent", function(self, event, prefix, text, channel, sender, target, zoneChannelID, localID, name, instanceID)
@@ -1147,8 +1147,8 @@ end
                         end
 
                         if canRegisterEvents() then
-                            detailsEventListener:RegisterEvent("UNIT_SPEC", "UnitSpecFound")
-                            detailsEventListener:RegisterEvent("UNIT_TALENTS", "UnitTalentsFound")
+                            pcall(detailsEventListener.RegisterEvent, detailsEventListener, "UNIT_SPEC", "UnitSpecFound")
+                            pcall(detailsEventListener.RegisterEvent, detailsEventListener, "UNIT_TALENTS", "UnitTalentsFound")
                         end
                     end
 
@@ -1236,7 +1236,7 @@ end
                 if (UnitExists("pet")) then
                     local petHealth = UnitHealth("pet")
                     if ((issecretvalue and issecretvalue(petHealth)) or petHealth >= 1) then
-                        eventFrame:RegisterUnitEvent("UNIT_FLAGS", "pet")
+                        pcall(eventFrame.RegisterUnitEvent, eventFrame, "UNIT_FLAGS", "pet")
                     end
                 end
             end
@@ -1267,7 +1267,7 @@ end
     openRaidLib.eventFunctions = eventFunctions
 
     if canRegisterEvents() then
-        eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+        pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ENTERING_WORLD")
     end
 
     eventFrame:SetScript("OnEvent", function(self, event, ...)
@@ -1278,28 +1278,28 @@ end
     --run when PLAYER_ENTERING_WORLD triggers, this avoid any attempt of getting information without the game has completed the load process
     function openRaidLib.OnEnterWorldRegisterEvents()
         if canRegisterEvents() then
-            eventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-            eventFrame:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "player", "pet")
-            eventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
-            eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-            eventFrame:RegisterEvent("UPDATE_INVENTORY_DURABILITY")
-            eventFrame:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
-            eventFrame:RegisterEvent("UNIT_PET")
-            eventFrame:RegisterEvent("PLAYER_DEAD")
-            eventFrame:RegisterEvent("PLAYER_ALIVE")
-            eventFrame:RegisterEvent("PLAYER_UNGHOST")
-            eventFrame:RegisterEvent("PLAYER_LOGOUT")
+            pcall(eventFrame.RegisterEvent, eventFrame, "GROUP_ROSTER_UPDATE")
+            pcall(eventFrame.RegisterUnitEvent, eventFrame, "UNIT_SPELLCAST_SUCCEEDED", "player", "pet")
+            pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_DISABLED")
+            pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_ENABLED")
+            pcall(eventFrame.RegisterEvent, eventFrame, "UPDATE_INVENTORY_DURABILITY")
+            pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_EQUIPMENT_CHANGED")
+            pcall(eventFrame.RegisterEvent, eventFrame, "UNIT_PET")
+            pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_DEAD")
+            pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ALIVE")
+            pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_UNGHOST")
+            pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_LOGOUT")
 
             if (checkClientVersion("retail")) then
-                eventFrame:RegisterEvent("PLAYER_TALENT_UPDATE")
-                eventFrame:RegisterEvent("PLAYER_PVP_TALENT_UPDATE")
-                eventFrame:RegisterEvent("ENCOUNTER_END")
-                eventFrame:RegisterEvent("CHALLENGE_MODE_START")
-                eventFrame:RegisterEvent("CHALLENGE_MODE_COMPLETED")
-                eventFrame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
-                eventFrame:RegisterEvent("TRAIT_TREE_CURRENCY_INFO_UPDATED")
-                eventFrame:RegisterEvent("TRAIT_CONFIG_UPDATED")
-                eventFrame:RegisterEvent("ENCOUNTER_START")
+                pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_TALENT_UPDATE")
+                pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_PVP_TALENT_UPDATE")
+                pcall(eventFrame.RegisterEvent, eventFrame, "ENCOUNTER_END")
+                pcall(eventFrame.RegisterEvent, eventFrame, "CHALLENGE_MODE_START")
+                pcall(eventFrame.RegisterEvent, eventFrame, "CHALLENGE_MODE_COMPLETED")
+                pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_SPECIALIZATION_CHANGED")
+                pcall(eventFrame.RegisterEvent, eventFrame, "TRAIT_TREE_CURRENCY_INFO_UPDATED")
+                pcall(eventFrame.RegisterEvent, eventFrame, "TRAIT_CONFIG_UPDATED")
+                pcall(eventFrame.RegisterEvent, eventFrame, "ENCOUNTER_START")
             end
         end
     end
@@ -3049,8 +3049,8 @@ openRaidLib.commHandler.RegisterORComm(CONST_COMM_COOLDOWNREQUEST_PREFIX, openRa
 
     local bagUpdateEventFrame = _G["OpenRaidBagUpdateFrame"] or CreateFrame("frame", "OpenRaidBagUpdateFrame")
     --if canRegisterEvents() then
-        bagUpdateEventFrame:RegisterEvent("BAG_UPDATE")
-        bagUpdateEventFrame:RegisterEvent("ITEM_CHANGED")
+        pcall(bagUpdateEventFrame.RegisterEvent, bagUpdateEventFrame, "BAG_UPDATE")
+        pcall(bagUpdateEventFrame.RegisterEvent, bagUpdateEventFrame, "ITEM_CHANGED")
     --end
 
     bagUpdateEventFrame:SetScript("OnEvent", function(bagUpdateEventFrame, event, ...)
@@ -3614,7 +3614,7 @@ openRaidLib.commHandler.RegisterORComm(CONST_COMM_COOLDOWNREQUEST_PREFIX, openRa
 local createLocalCooldownTracker = function()
     local cdTrackerFrame = CreateFrame("frame")
     if canRegisterEvents() then
-        cdTrackerFrame:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+        pcall(cdTrackerFrame.RegisterEvent, cdTrackerFrame, "UNIT_SPELLCAST_SUCCEEDED")
     end
     local allCooldownsFromLib = LIB_OPEN_RAID_COOLDOWNS_INFO
 

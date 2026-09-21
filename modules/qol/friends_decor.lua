@@ -91,7 +91,7 @@ end
 ns.RefreshFriendsDecor = RefreshFriendsDecor
 
 local watcher = CreateFrame("Frame")
-watcher:RegisterEvent("ADDON_LOADED")
+pcall(watcher.RegisterEvent, watcher, "ADDON_LOADED")
 watcher:SetScript("OnEvent", function(_, _, loadedAddon)
     if loadedAddon == "Blizzard_FriendsFrame" then
         InstallHook()

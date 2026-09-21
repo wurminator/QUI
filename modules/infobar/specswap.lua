@@ -82,9 +82,9 @@ Datatexts:Register("specswap", {
 
         frame.Update = Update
 
-        frame:RegisterEvent("PLAYER_ENTERING_WORLD")
-        frame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
-        frame:RegisterEvent("PLAYER_LOOT_SPEC_UPDATED")
+        pcall(frame.RegisterEvent, frame, "PLAYER_ENTERING_WORLD")
+        pcall(frame.RegisterEvent, frame, "PLAYER_SPECIALIZATION_CHANGED")
+        pcall(frame.RegisterEvent, frame, "PLAYER_LOOT_SPEC_UPDATED")
         frame:SetScript("OnEvent", function(_, event)
             if event == "PLAYER_SPECIALIZATION_CHANGED" then
                 C_Timer.After(0.1, Update)

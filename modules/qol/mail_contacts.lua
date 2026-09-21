@@ -236,8 +236,8 @@ local function InstallHooks()
 end
 
 local frame = CreateFrame("Frame")
-frame:RegisterEvent("MAIL_SHOW")
-frame:RegisterEvent("MAIL_CLOSED")
+pcall(frame.RegisterEvent, frame, "MAIL_SHOW")
+pcall(frame.RegisterEvent, frame, "MAIL_CLOSED")
 frame:SetScript("OnEvent", function(_, event)
     if event == "MAIL_SHOW" then
         InstallHooks()

@@ -685,7 +685,7 @@ local function QueueTrackedBarLayoutWhenReady()
         trackedBarReadyFrame = CreateFrame("Frame")
     end
 
-    trackedBarReadyFrame:RegisterEvent("COOLDOWN_VIEWER_DATA_LOADED")
+    pcall(trackedBarReadyFrame.RegisterEvent, trackedBarReadyFrame, "COOLDOWN_VIEWER_DATA_LOADED")
     trackedBarReadyFrame:SetScript("OnEvent", function(self)
         self:UnregisterEvent("COOLDOWN_VIEWER_DATA_LOADED")
         self:SetScript("OnEvent", nil)
@@ -1157,8 +1157,8 @@ local function Initialize()
 end
 
 local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterEvent("ADDON_LOADED")
-eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+pcall(eventFrame.RegisterEvent, eventFrame, "ADDON_LOADED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ENTERING_WORLD")
 eventFrame:SetScript("OnEvent", function(self, event, ...)
     if event == "ADDON_LOADED" then
         local addonName = ...

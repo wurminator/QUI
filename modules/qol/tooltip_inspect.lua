@@ -385,7 +385,7 @@ end
 
 do
     local ev = CreateFrame("Frame")
-    ev:RegisterEvent("ADDON_LOADED")
+    pcall(ev.RegisterEvent, ev, "ADDON_LOADED")
     ev:SetScript("OnEvent", function(_, _, addon)
         if addon == "Blizzard_InspectUI" then
             InstallInspectFrameOnShowGuard()
@@ -524,7 +524,7 @@ ProcessQueuedRequest = function()
 end
 
 local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterEvent("INSPECT_READY")
+pcall(eventFrame.RegisterEvent, eventFrame, "INSPECT_READY")
 eventFrame:SetScript("OnEvent", function(_, event, guid)
     if event ~= "INSPECT_READY" or not IsSafeGUID(guid) then
         if activeRequest and IsSafeGUID(activeRequest.guid) then

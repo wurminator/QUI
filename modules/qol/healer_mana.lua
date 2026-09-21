@@ -147,13 +147,13 @@ local function RebuildRoster()
 end
 
 local frame = CreateFrame("Frame")
-frame:RegisterEvent("GROUP_ROSTER_UPDATE")
-frame:RegisterEvent("PLAYER_ROLES_ASSIGNED")
-frame:RegisterEvent("PLAYER_ENTERING_WORLD")
-frame:RegisterEvent("PLAYER_REGEN_DISABLED")
-frame:RegisterEvent("PLAYER_REGEN_ENABLED")
-frame:RegisterEvent("UNIT_POWER_UPDATE")
-frame:RegisterEvent("UNIT_MAXPOWER")
+pcall(frame.RegisterEvent, frame, "GROUP_ROSTER_UPDATE")
+pcall(frame.RegisterEvent, frame, "PLAYER_ROLES_ASSIGNED")
+pcall(frame.RegisterEvent, frame, "PLAYER_ENTERING_WORLD")
+pcall(frame.RegisterEvent, frame, "PLAYER_REGEN_DISABLED")
+pcall(frame.RegisterEvent, frame, "PLAYER_REGEN_ENABLED")
+pcall(frame.RegisterEvent, frame, "UNIT_POWER_UPDATE")
+pcall(frame.RegisterEvent, frame, "UNIT_MAXPOWER")
 frame:SetScript("OnEvent", function(_, event, arg1)
     if event == "UNIT_POWER_UPDATE" or event == "UNIT_MAXPOWER" then
         if arg1 and tracked[arg1] then UpdateBar(arg1) end

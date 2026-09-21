@@ -228,14 +228,14 @@ if type(CreateFrame) == "function" then
         recording = false
         frame:UnregisterAllEvents()
         registeredAllEvents = false
-        frame:RegisterEvent("ADDON_LOADED")
+        pcall(frame.RegisterEvent, frame, "ADDON_LOADED")
     end
 
     local function record(event, ...)
         if recording then appendRecord(event, ...) end
     end
 
-    frame:RegisterEvent("ADDON_LOADED")
+    pcall(frame.RegisterEvent, frame, "ADDON_LOADED")
     if recording then registerAllEvents() end
 
     frame:SetScript("OnEvent", function(_, event, ...)

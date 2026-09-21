@@ -4860,7 +4860,7 @@ function _state.RegisterUnitEventsForUnit(unit)
     for i = 1, #_state.unitEventList do
         local event = _state.unitEventList[i]
         if active[event] then
-            frame:RegisterUnitEvent(event, unit)
+            pcall(frame.RegisterUnitEvent, frame, event, unit)
         else
             frame:UnregisterEvent(event)
         end
@@ -4875,7 +4875,7 @@ function _state.RegisterUnitEventsForUnit(unit)
         end)
         _state.rangeListenerFrames[unit] = rangeListener
     end
-    rangeListener:RegisterUnitEvent("UNIT_IN_RANGE_UPDATE", unit)
+    pcall(rangeListener.RegisterUnitEvent, rangeListener, "UNIT_IN_RANGE_UPDATE", unit)
     _state.unitEventRegistered[unit] = true
 end
 
@@ -4972,11 +4972,11 @@ end
 end
 
 local function RegisterEvents()
-    eventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-    eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-    eventFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-    eventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
-    eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "GROUP_ROSTER_UPDATE")
+    pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ENTERING_WORLD")
+    pcall(eventFrame.RegisterEvent, eventFrame, "ZONE_CHANGED_NEW_AREA")
+    pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_DISABLED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_ENABLED")
     if not _state.assistSweepTicker then
         _state.assistSweepTicker = C_Timer.NewTicker(5, _state.SweepTrackedSlotAssist)
     end
@@ -4984,21 +4984,21 @@ local function RegisterEvents()
     _state.unitEventRegistrationEnabled = true
     _state.RefreshUnitEventRegistrations()
 
-    eventFrame:RegisterEvent("UNIT_THREAT_SITUATION_UPDATE")
-    eventFrame:RegisterEvent("UNIT_FLAGS")
-    eventFrame:RegisterEvent("UNIT_PHASE")
-    eventFrame:RegisterEvent("UNIT_FACTION")
-    eventFrame:RegisterEvent("INCOMING_RESURRECT_CHANGED")
-    eventFrame:RegisterEvent("INCOMING_SUMMON_CHANGED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "UNIT_THREAT_SITUATION_UPDATE")
+    pcall(eventFrame.RegisterEvent, eventFrame, "UNIT_FLAGS")
+    pcall(eventFrame.RegisterEvent, eventFrame, "UNIT_PHASE")
+    pcall(eventFrame.RegisterEvent, eventFrame, "UNIT_FACTION")
+    pcall(eventFrame.RegisterEvent, eventFrame, "INCOMING_RESURRECT_CHANGED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "INCOMING_SUMMON_CHANGED")
 
-    eventFrame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
-    eventFrame:RegisterEvent("SPELLS_CHANGED")
-    eventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
-    eventFrame:RegisterEvent("READY_CHECK")
-    eventFrame:RegisterEvent("READY_CHECK_CONFIRM")
-    eventFrame:RegisterEvent("READY_CHECK_FINISHED")
-    eventFrame:RegisterEvent("RAID_TARGET_UPDATE")
-    eventFrame:RegisterEvent("PARTY_LEADER_CHANGED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_SPECIALIZATION_CHANGED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "SPELLS_CHANGED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_TARGET_CHANGED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "READY_CHECK")
+    pcall(eventFrame.RegisterEvent, eventFrame, "READY_CHECK_CONFIRM")
+    pcall(eventFrame.RegisterEvent, eventFrame, "READY_CHECK_FINISHED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "RAID_TARGET_UPDATE")
+    pcall(eventFrame.RegisterEvent, eventFrame, "PARTY_LEADER_CHANGED")
 end
 
 local function UnregisterEvents()
@@ -5039,7 +5039,7 @@ UpdateSelectiveEvents = function()
     local partyThreat = partyInd and partyInd.showThreatBorder ~= false
     local raidThreat = raidInd and raidInd.showThreatBorder ~= false
     if partyThreat or raidThreat then
-        eventFrame:RegisterEvent("UNIT_THREAT_SITUATION_UPDATE")
+        pcall(eventFrame.RegisterEvent, eventFrame, "UNIT_THREAT_SITUATION_UPDATE")
     else
         eventFrame:UnregisterEvent("UNIT_THREAT_SITUATION_UPDATE")
     end
@@ -5319,7 +5319,7 @@ function QUI_GF:Disable()
 end
 
 local initFrame = CreateFrame("Frame")
-initFrame:RegisterEvent("ADDON_LOADED")
+pcall(initFrame.RegisterEvent, initFrame, "ADDON_LOADED")
 
 initFrame:SetScript("OnEvent", function(self, event, arg1)
     if event == "ADDON_LOADED" then

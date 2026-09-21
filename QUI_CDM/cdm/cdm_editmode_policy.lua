@@ -98,7 +98,7 @@ function CDMEditModePolicy.Enforce()
 end
 
 local enforceFrame = CreateFrame("Frame")
-enforceFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+pcall(enforceFrame.RegisterEvent, enforceFrame, "PLAYER_ENTERING_WORLD")
 enforceFrame:SetScript("OnEvent", function(self, event)
     if event == "PLAYER_ENTERING_WORLD" then
         if self and self.UnregisterEvent then
@@ -106,7 +106,7 @@ enforceFrame:SetScript("OnEvent", function(self, event)
         end
         if _G.InCombatLockdown and _G.InCombatLockdown()
             and self and self.RegisterEvent then
-            self:RegisterEvent("PLAYER_REGEN_ENABLED")
+            pcall(self.RegisterEvent, self, "PLAYER_REGEN_ENABLED")
             return
         end
     elseif event == "PLAYER_REGEN_ENABLED" then

@@ -874,7 +874,7 @@ RequestHideConsumablesFrame = function()
             ConsumablesFrame:SetAlpha(0)
         end
         EnsureConsumableCombatDeferFrame()
-        consumableCombatDeferFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+        pcall(consumableCombatDeferFrame.RegisterEvent, consumableCombatDeferFrame, "PLAYER_REGEN_ENABLED")
         return
     end
 
@@ -1111,7 +1111,7 @@ HideConsumablePicker = function()
                     if pickerFrame then pickerFrame:Hide() end
                 end)
             end
-            pickerCombatHideFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+            pcall(pickerCombatHideFrame.RegisterEvent, pickerCombatHideFrame, "PLAYER_REGEN_ENABLED")
         else
             pickerFrame:Hide()
         end
@@ -1572,7 +1572,7 @@ ConsumablesFrame:SetScript("OnEvent", function(self, event)
 end)
 
 ConsumablesFrame:SetScript("OnShow", function(self)
-    self:RegisterUnitEvent("UNIT_AURA", "player")
+    pcall(self.RegisterUnitEvent, self, "UNIT_AURA", "player")
     local hasMainHandEnchant, _, _, mainHandEnchantID, hasOffHandEnchant, _, _, offHandEnchantID = GetWeaponEnchantInfo()
     lastMainHandEnchant = hasMainHandEnchant and mainHandEnchantID or nil
     lastOffHandEnchant = hasOffHandEnchant and offHandEnchantID or nil
@@ -1796,11 +1796,11 @@ local function OnInventoryPossiblyChanged()
 end
 
 local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterEvent("READY_CHECK")
-eventFrame:RegisterEvent("READY_CHECK_FINISHED")
-eventFrame:RegisterEvent("ADDON_LOADED")
-eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-eventFrame:RegisterEvent("PLAYER_ALIVE")
+pcall(eventFrame.RegisterEvent, eventFrame, "READY_CHECK")
+pcall(eventFrame.RegisterEvent, eventFrame, "READY_CHECK_FINISHED")
+pcall(eventFrame.RegisterEvent, eventFrame, "ADDON_LOADED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ENTERING_WORLD")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ALIVE")
 
 eventFrame:SetScript("OnEvent", function(self, event, ...)
     if event == "ADDON_LOADED" then
@@ -1839,10 +1839,10 @@ if ns.Storage and ns.Storage.Bus then
     ns.Storage.Bus.Subscribe("BagsChanged", OnInventoryPossiblyChanged)
     ns.Storage.Bus.Subscribe("EquippedChanged", OnInventoryPossiblyChanged)
 else
-    eventFrame:RegisterEvent("BAG_UPDATE_DELAYED")
-    eventFrame:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "BAG_UPDATE_DELAYED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_EQUIPMENT_CHANGED")
 end
-eventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
+pcall(eventFrame.RegisterEvent, eventFrame, "GROUP_ROSTER_UPDATE")
 
 if ns.WhenLoggedIn then
     ns.WhenLoggedIn(function()
@@ -1865,8 +1865,8 @@ if ns.WhenLoggedIn then
 end
 
 local combatFrame = CreateFrame("Frame")
-combatFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
-combatFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(combatFrame.RegisterEvent, combatFrame, "PLAYER_REGEN_DISABLED")
+pcall(combatFrame.RegisterEvent, combatFrame, "PLAYER_REGEN_ENABLED")
 combatFrame:SetScript("OnEvent", function(self, event)
     if event == "PLAYER_REGEN_DISABLED" then
         HideConsumablePicker()
@@ -1885,7 +1885,7 @@ combatFrame:SetScript("OnEvent", function(self, event)
 end)
 
 local zoneFrame = CreateFrame("Frame")
-zoneFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+pcall(zoneFrame.RegisterEvent, zoneFrame, "ZONE_CHANGED_NEW_AREA")
 zoneFrame:SetScript("OnEvent", function()
     C_Timer.After(2, function()
         if ns.Utils.IsInInstancedContent() then

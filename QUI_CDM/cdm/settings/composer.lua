@@ -2831,10 +2831,10 @@ if EventRegistry and EventRegistry.RegisterCallback then
 end
 
 local composerCDMEventFrame = CreateFrame("Frame")
-composerCDMEventFrame:RegisterEvent("COOLDOWN_VIEWER_TABLE_HOTFIXED")
-composerCDMEventFrame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
-composerCDMEventFrame:RegisterEvent("SPELLS_CHANGED")
-composerCDMEventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(composerCDMEventFrame.RegisterEvent, composerCDMEventFrame, "COOLDOWN_VIEWER_TABLE_HOTFIXED")
+pcall(composerCDMEventFrame.RegisterEvent, composerCDMEventFrame, "PLAYER_SPECIALIZATION_CHANGED")
+pcall(composerCDMEventFrame.RegisterEvent, composerCDMEventFrame, "SPELLS_CHANGED")
+pcall(composerCDMEventFrame.RegisterEvent, composerCDMEventFrame, "PLAYER_REGEN_ENABLED")
 composerCDMEventFrame:SetScript("OnEvent", function(_, event)
     if event == "PLAYER_SPECIALIZATION_CHANGED" or event == "SPELLS_CHANGED" then
         ScheduleComposerCDMRefresh(0.35)
@@ -2881,7 +2881,7 @@ local function BuildAddSection(parent)
     addPanel = container
 
     local auraRefreshPending = false
-    container:RegisterUnitEvent("UNIT_AURA", "player")
+    pcall(container.RegisterUnitEvent, container, "UNIT_AURA", "player")
     container:SetScript("OnEvent", function(self, event)
         if event == "UNIT_AURA"
            and (activeAddTab == "active_buffs" or activeAddTab == "active_debuffs")

@@ -120,7 +120,7 @@ local function RunRules()
 end
 
 local frame = CreateFrame("Frame")
-frame:RegisterEvent("MERCHANT_SHOW")
+pcall(frame.RegisterEvent, frame, "MERCHANT_SHOW")
 frame:SetScript("OnEvent", function()
     C_Timer.After(0, RunRules)
 end)

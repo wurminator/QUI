@@ -234,7 +234,7 @@ local function Build()
     win:SetScript("OnEvent", function(_, event)
         if event == "PLAYER_REGEN_DISABLED" then FinishInteraction() end
     end)
-    win:RegisterEvent("PLAYER_REGEN_DISABLED")
+    pcall(win.RegisterEvent, win, "PLAYER_REGEN_DISABLED")
 
     win._bg = win:CreateTexture(nil, "BACKGROUND")
     win._bg:SetAllPoints()

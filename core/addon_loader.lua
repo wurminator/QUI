@@ -112,7 +112,7 @@ function AddonLoader:LoadEnabledLODModules()
                 regenResumeFrame = CreateFrame("Frame")
             end
             i = i - 1
-            regenResumeFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+            pcall(regenResumeFrame.RegisterEvent, regenResumeFrame, "PLAYER_REGEN_ENABLED")
             regenResumeFrame:SetScript("OnEvent", function(self)
                 self:UnregisterEvent("PLAYER_REGEN_ENABLED")
                 C_Timer.After(0, step)

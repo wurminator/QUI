@@ -1413,14 +1413,14 @@ function MigrateProfileClickCastToChar()
 end
 
 local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
-eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-eventFrame:RegisterEvent("TRAIT_CONFIG_UPDATED")
-eventFrame:RegisterEvent("ACTIVE_COMBAT_CONFIG_CHANGED")
-eventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-eventFrame:RegisterEvent("PLAYER_TALENT_UPDATE")
-eventFrame:RegisterEvent("ACTIVE_PLAYER_SPECIALIZATION_CHANGED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_SPECIALIZATION_CHANGED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_ENABLED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ENTERING_WORLD")
+pcall(eventFrame.RegisterEvent, eventFrame, "TRAIT_CONFIG_UPDATED")
+pcall(eventFrame.RegisterEvent, eventFrame, "ACTIVE_COMBAT_CONFIG_CHANGED")
+pcall(eventFrame.RegisterEvent, eventFrame, "GROUP_ROSTER_UPDATE")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_TALENT_UPDATE")
+pcall(eventFrame.RegisterEvent, eventFrame, "ACTIVE_PLAYER_SPECIALIZATION_CHANGED")
 
 local loadoutDebounceTimer = nil
 local rosterDebounceTimer = nil

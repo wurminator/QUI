@@ -357,8 +357,8 @@ local function BuildModulesContent(content)
 
     if not content._combatWatcher then
         local combatWatcher = CreateFrame("Frame", nil, content)
-        combatWatcher:RegisterEvent("PLAYER_REGEN_DISABLED")
-        combatWatcher:RegisterEvent("PLAYER_REGEN_ENABLED")
+        pcall(combatWatcher.RegisterEvent, combatWatcher, "PLAYER_REGEN_DISABLED")
+        pcall(combatWatcher.RegisterEvent, combatWatcher, "PLAYER_REGEN_ENABLED")
         combatWatcher:SetScript("OnEvent", function()
             for _, rec in ipairs(content._panelRows or {}) do
                 if rec.entry.combatLocked and rec.pill and rec.pill._refresh then

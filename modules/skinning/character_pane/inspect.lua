@@ -37,7 +37,7 @@ local RefreshInspectUnitAfterRosterUpdate
 local InspectModeHandlers = {}
 
 local inspectCombatFrame = CreateFrame("Frame")
-inspectCombatFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(inspectCombatFrame.RegisterEvent, inspectCombatFrame, "PLAYER_REGEN_ENABLED")
 inspectCombatFrame:SetScript("OnEvent", function()
     if not pendingInspectMode and not pendingInspectScale and not pendingInspectLayout and not pendingInspectRosterRefresh then return end
     if not InspectFrame or not InspectFrame:IsShown() then
@@ -1691,9 +1691,9 @@ local function PatchInspectGuildNilGuard()
 end
 
 local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterEvent("ADDON_LOADED")
-eventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-eventFrame:RegisterEvent("INSPECT_READY")
+pcall(eventFrame.RegisterEvent, eventFrame, "ADDON_LOADED")
+pcall(eventFrame.RegisterEvent, eventFrame, "GROUP_ROSTER_UPDATE")
+pcall(eventFrame.RegisterEvent, eventFrame, "INSPECT_READY")
 
 eventFrame:SetScript("OnEvent", function(self, event, arg1)
     if event == "ADDON_LOADED" then

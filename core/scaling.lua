@@ -231,7 +231,7 @@ end
 local function DeferUIScaleToRegen(self)
     if not self._UIScalePending then
         self._UIScalePending = true
-        self:RegisterEvent('PLAYER_REGEN_ENABLED', function()
+        pcall(self.RegisterEvent, self, 'PLAYER_REGEN_ENABLED', function()
             self._UIScalePending = nil
             self:UnregisterEvent('PLAYER_REGEN_ENABLED')
             self:ApplyUIScale()
@@ -285,6 +285,6 @@ function QUICore:InitializePixelPerfect()
     self.physicalWidth, self.physicalHeight = GetPhysicalScreenSize()
     self.resolution = format('%dx%d', self.physicalWidth, self.physicalHeight)
     cachedPhysicalHeight = self.physicalHeight
-    self:RegisterEvent('UI_SCALE_CHANGED', 'PixelScaleChanged')
-    self:RegisterEvent('DISPLAY_SIZE_CHANGED', 'PixelScaleChanged')
+    pcall(self.RegisterEvent, self, 'UI_SCALE_CHANGED', 'PixelScaleChanged')
+    pcall(self.RegisterEvent, self, 'DISPLAY_SIZE_CHANGED', 'PixelScaleChanged')
 end

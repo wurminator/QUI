@@ -498,7 +498,7 @@ function BuildBar(barKey)
                 if needsReparent and InCombatLockdown() then
                     if not ActionBarsOwned._microDeferPending then
                         ActionBarsOwned._microDeferPending = true
-                        ns.Addon:RegisterEvent("PLAYER_REGEN_ENABLED", function()
+                        pcall(ns.Addon.RegisterEvent, ns.Addon, "PLAYER_REGEN_ENABLED", function()
                             ns.Addon:UnregisterEvent("PLAYER_REGEN_ENABLED")
                             ActionBarsOwned._microDeferPending = false
                             ReclaimMicroButtons()
@@ -532,7 +532,7 @@ function BuildBar(barKey)
                             f = CreateFrame("Frame")
                             ActionBarsOwned._microLayoutFrame = f
                         end
-                        f:RegisterEvent("PLAYER_REGEN_ENABLED")
+                        pcall(f.RegisterEvent, f, "PLAYER_REGEN_ENABLED")
                         f:SetScript("OnEvent", function(self)
                             self:UnregisterEvent("PLAYER_REGEN_ENABLED")
                             microCombatLayoutPending = false
@@ -621,7 +621,7 @@ function BuildBar(barKey)
 
             if C_PetBattles then
                 local petBattleFrame = CreateFrame("Frame")
-                petBattleFrame:RegisterEvent("PET_BATTLE_CLOSE")
+                pcall(petBattleFrame.RegisterEvent, petBattleFrame, "PET_BATTLE_CLOSE")
                 petBattleFrame:SetScript("OnEvent", function()
                     if not ActionBarsOwned.initialized then return end
                     ActionBarsOwned._microOwnedByUI = false

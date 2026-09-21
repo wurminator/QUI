@@ -9,7 +9,7 @@ local issecretvalue = _G.issecretvalue
 local SECTION_GAP = 14
 
 local itemInfoListener = CreateFrame("Frame")
-itemInfoListener:RegisterEvent("GET_ITEM_INFO_RECEIVED")
+pcall(itemInfoListener.RegisterEvent, itemInfoListener, "GET_ITEM_INFO_RECEIVED")
 local itemInfoListenerCallback = nil
 itemInfoListener:SetScript("OnEvent", function(_, event, itemID)
     if event == "GET_ITEM_INFO_RECEIVED" and itemID and itemInfoListenerCallback then
@@ -18,7 +18,7 @@ itemInfoListener:SetScript("OnEvent", function(_, event, itemID)
 end)
 
 local specChangeListener = CreateFrame("Frame")
-specChangeListener:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
+pcall(specChangeListener.RegisterEvent, specChangeListener, "PLAYER_SPECIALIZATION_CHANGED")
 local specChangeCallback = nil
 specChangeListener:SetScript("OnEvent", function(_, event, unit)
     if event == "PLAYER_SPECIALIZATION_CHANGED" and unit == "player" and specChangeCallback then

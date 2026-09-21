@@ -372,8 +372,8 @@ local function SelectDefaultTab(settings)
 end
 
 local defaultTabFrame = CreateFrame("Frame")
-defaultTabFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-defaultTabFrame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
+pcall(defaultTabFrame.RegisterEvent, defaultTabFrame, "PLAYER_ENTERING_WORLD")
+pcall(defaultTabFrame.RegisterEvent, defaultTabFrame, "PLAYER_SPECIALIZATION_CHANGED")
 defaultTabFrame:SetScript("OnEvent", function(self, event, arg1, arg2)
     local settings = I.GetSettings()
     if not (I.IsChatEnabled and I.IsChatEnabled(settings)) then return end

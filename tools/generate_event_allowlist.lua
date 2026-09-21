@@ -70,13 +70,19 @@ for _, path in ipairs(list_lua_files()) do
         for ev in body:gmatch('RegisterEvent%s*%(%s*["\']' .. EVENT_TOKEN .. '["\']') do
             add(ev)
         end
+        for ev in body:gmatch('RegisterEvent%s*,%s*[%a_][%w_.:]*%s*,%s*["\']' .. EVENT_TOKEN .. '["\']') do
+            add(ev)
+        end
         for ev in body:gmatch('RegisterUnitEvent%s*%(%s*["\']' .. EVENT_TOKEN .. '["\']') do
+            add(ev)
+        end
+        for ev in body:gmatch('RegisterUnitEvent%s*,%s*[%a_][%w_.:]*%s*,%s*["\']' .. EVENT_TOKEN .. '["\']') do
             add(ev)
         end
 
         -- (2) loop-register idiom: RegisterEvent(<identifier>)  — harvest every
         -- event-shaped quoted token in the file (the list lives in a table).
-        if body:match('RegisterEvent%s*%(%s*[%a_][%w_]*%s*%)') then
+        if body:match('RegisterEvent%s*%(%s*[%a_][%w_]*%s*%)') or body:match('RegisterEvent%s*,%s*[%a_][%w_.:]*%s*,%s*[%a_][%w_]*%s*%)') then
             for ev in body:gmatch('["\']' .. EVENT_TOKEN .. '["\']') do
                 add(ev)
             end

@@ -463,9 +463,9 @@ local function GetCenteredAuraRow(container, row)
         frame = CreateFrame("Frame", nil, container)
         frame.units = {}
         frame.bounds = CreateFrame("Frame", nil, frame, "DisableUntrustedLayoutScriptsTemplate")
-        frame:RegisterEvent("UNIT_AURA")
-        frame:RegisterEvent("PLAYER_TARGET_CHANGED")
-        frame:RegisterEvent("PLAYER_FOCUS_CHANGED")
+        pcall(frame.RegisterEvent, frame, "UNIT_AURA")
+        pcall(frame.RegisterEvent, frame, "PLAYER_TARGET_CHANGED")
+        pcall(frame.RegisterEvent, frame, "PLAYER_FOCUS_CHANGED")
         frame:SetScript("OnEvent", QueueCenteredAuraRow)
         frame:SetScript("OnShow", QueueCenteredAuraRow)
         frames[row] = frame

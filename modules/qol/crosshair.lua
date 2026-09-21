@@ -278,7 +278,7 @@ end
 local function SetEventRegistration(eventName, shouldRegister)
     local isRegistered = eventRegistrationState[eventName] == true
     if shouldRegister and not isRegistered then
-        eventFrame:RegisterEvent(eventName)
+        pcall(eventFrame.RegisterEvent, eventFrame, eventName)
         eventRegistrationState[eventName] = true
     elseif not shouldRegister and isRegistered then
         eventFrame:UnregisterEvent(eventName)

@@ -208,8 +208,8 @@ function QUICore:ApplyGlobalFont()
         end
 
         local chatFontEventFrame = CreateFrame("Frame")
-        chatFontEventFrame:RegisterEvent("UPDATE_CHAT_WINDOWS")
-        chatFontEventFrame:RegisterEvent("UPDATE_FLOATING_CHAT_WINDOWS")
+        pcall(chatFontEventFrame.RegisterEvent, chatFontEventFrame, "UPDATE_CHAT_WINDOWS")
+        pcall(chatFontEventFrame.RegisterEvent, chatFontEventFrame, "UPDATE_FLOATING_CHAT_WINDOWS")
         chatFontEventFrame:SetScript("OnEvent", function()
             if not QUICore.db or not QUICore.db.profile then return end
             if not IsGlobalFontEnabled() then return end

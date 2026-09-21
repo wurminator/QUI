@@ -354,7 +354,7 @@ if GameMenuFrame then
     Install()
 else
     local loader = CreateFrame("Frame")
-    loader:RegisterEvent("ADDON_LOADED")
+    pcall(loader.RegisterEvent, loader, "ADDON_LOADED")
     loader:SetScript("OnEvent", function(self)
         if GameMenuFrame then
             Install()

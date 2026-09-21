@@ -733,12 +733,12 @@ local function ScheduleXPTrackerStartup()
 end
 
 local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterEvent("ADDON_LOADED")
-eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-eventFrame:RegisterEvent("PLAYER_XP_UPDATE")
-eventFrame:RegisterEvent("PLAYER_LEVEL_UP")
-eventFrame:RegisterEvent("UPDATE_EXHAUSTION")
-eventFrame:RegisterEvent("PLAYER_UPDATE_RESTING")
+pcall(eventFrame.RegisterEvent, eventFrame, "ADDON_LOADED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ENTERING_WORLD")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_XP_UPDATE")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_LEVEL_UP")
+pcall(eventFrame.RegisterEvent, eventFrame, "UPDATE_EXHAUSTION")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_UPDATE_RESTING")
 eventFrame:SetScript("OnEvent", function(self, event, ...)
     if event == "ADDON_LOADED" then
         local addonName = ...

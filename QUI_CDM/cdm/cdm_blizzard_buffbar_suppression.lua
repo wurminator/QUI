@@ -281,12 +281,12 @@ end
 local eventFrame
 if CreateFrame then
     eventFrame = CreateFrame("Frame")
-    eventFrame:RegisterEvent("ADDON_LOADED")
-    eventFrame:RegisterEvent("DISPLAY_SIZE_CHANGED")
-    eventFrame:RegisterEvent("EDIT_MODE_LAYOUTS_UPDATED")
-    eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-    eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-    eventFrame:RegisterEvent("UI_SCALE_CHANGED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "ADDON_LOADED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "DISPLAY_SIZE_CHANGED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "EDIT_MODE_LAYOUTS_UPDATED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ENTERING_WORLD")
+    pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_ENABLED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "UI_SCALE_CHANGED")
     eventFrame:SetScript("OnEvent", function(_, event, arg1)
         if event == "PLAYER_REGEN_ENABLED" then
             Suppressor:FlushPendingRestore()
@@ -309,6 +309,6 @@ function Suppressor:_EnsureDataRetry()
     if self._dataRetryRegistered then return end
     self._dataRetryRegistered = true
     if eventFrame then
-        eventFrame:RegisterEvent("COOLDOWN_VIEWER_DATA_LOADED")
+        pcall(eventFrame.RegisterEvent, eventFrame, "COOLDOWN_VIEWER_DATA_LOADED")
     end
 end

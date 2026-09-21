@@ -20,7 +20,8 @@ InCombatLockdown = InCombatLockdown
 
 inInitSafeWindow = false
 
-local isForever = select(4, GetBuildInfo()) == 16001 or (QUI and QUI.FOREVER)
+local buildVersion = select(4, GetBuildInfo())
+local isForever = (buildVersion >= 16000 and buildVersion < 17000) or (QUI and QUI.FOREVER)
 IS_MIDNIGHT = select(4, GetBuildInfo()) >= 120000 or isForever
 
 TEXTURE_PATH = (ns.Helpers and ns.Helpers.AssetPath or [[Interface\AddOns\QUI\assets\]]) .. [[iconskin\]]

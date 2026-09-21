@@ -207,9 +207,9 @@ local function BuildActionBarsPreview(pv)
         end
     end)
 
-    pv:RegisterEvent("ACTIONBAR_SLOT_CHANGED")
-    pv:RegisterEvent("UPDATE_BINDINGS")
-    pv:RegisterEvent("PLAYER_ENTERING_WORLD")
+    pcall(pv.RegisterEvent, pv, "ACTIONBAR_SLOT_CHANGED")
+    pcall(pv.RegisterEvent, pv, "UPDATE_BINDINGS")
+    pcall(pv.RegisterEvent, pv, "PLAYER_ENTERING_WORLD")
     pv:SetScript("OnEvent", function(self)
         if self:IsVisible() and PreviewState.refresh then
             PreviewState.refresh()

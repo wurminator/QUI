@@ -502,9 +502,9 @@ end
 local function EnsureEventFrame()
     if eventFrame or type(CreateFrame) ~= "function" then return end
     eventFrame = CreateFrame("Frame")
-    eventFrame:RegisterEvent("ENCOUNTER_START")
-    eventFrame:RegisterEvent("ENCOUNTER_END")
-    eventFrame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "ENCOUNTER_START")
+    pcall(eventFrame.RegisterEvent, eventFrame, "ENCOUNTER_END")
+    pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_SPECIALIZATION_CHANGED")
     eventFrame:SetScript("OnEvent", OnGameEvent)
 end
 

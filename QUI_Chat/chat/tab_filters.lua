@@ -80,8 +80,8 @@ local function upgradeAllStoredEntries()
 end
 
 local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterEvent("ADDON_LOADED")
-eventFrame:RegisterEvent("PLAYER_LOGIN")
+pcall(eventFrame.RegisterEvent, eventFrame, "ADDON_LOADED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_LOGIN")
 eventFrame:SetScript("OnEvent", function(self, event, name)
     if event == "ADDON_LOADED" and name == ADDON_NAME then
         self:UnregisterEvent("ADDON_LOADED")

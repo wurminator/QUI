@@ -341,7 +341,7 @@ end
 local function EnsureRegenFrame()
     if _regenFrame or not CreateFrame then return end
     _regenFrame = CreateFrame("Frame")
-    _regenFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+    pcall(_regenFrame.RegisterEvent, _regenFrame, "PLAYER_REGEN_ENABLED")
     _regenFrame:SetScript("OnEvent", FlushPending)
 end
 

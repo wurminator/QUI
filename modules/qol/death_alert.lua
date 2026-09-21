@@ -391,10 +391,10 @@ local function RebuildRoster()
 end
 
 local frame = CreateFrame("Frame")
-frame:RegisterEvent("GROUP_ROSTER_UPDATE")
-frame:RegisterEvent("PLAYER_ENTERING_WORLD")
-frame:RegisterEvent("UNIT_HEALTH")
-frame:RegisterEvent("UNIT_FLAGS")
+pcall(frame.RegisterEvent, frame, "GROUP_ROSTER_UPDATE")
+pcall(frame.RegisterEvent, frame, "PLAYER_ENTERING_WORLD")
+pcall(frame.RegisterEvent, frame, "UNIT_HEALTH")
+pcall(frame.RegisterEvent, frame, "UNIT_FLAGS")
 frame:SetScript("OnEvent", function(_, event, arg1)
     if event == "UNIT_HEALTH" or event == "UNIT_FLAGS" then
         if arg1 then CheckUnit(arg1) end

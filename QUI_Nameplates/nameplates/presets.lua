@@ -385,11 +385,11 @@ NPPresets.AutoSwitch = AutoSwitch
 
 local eventFrame = CreateFrame("Frame")
 if eventFrame.RegisterUnitEvent then
-    eventFrame:RegisterUnitEvent("PLAYER_SPECIALIZATION_CHANGED", "player")
+    pcall(eventFrame.RegisterUnitEvent, eventFrame, "PLAYER_SPECIALIZATION_CHANGED", "player")
 else
-    eventFrame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_SPECIALIZATION_CHANGED")
 end
-eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ENTERING_WORLD")
 eventFrame:SetScript("OnEvent", function(_, event, arg1)
     if event == "PLAYER_ENTERING_WORLD" then
         if arg1 == true then

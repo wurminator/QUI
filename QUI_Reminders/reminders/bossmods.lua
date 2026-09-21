@@ -408,7 +408,7 @@ function BossMods.EnsureHooks()
     HookTimeline()
     if AllHooked() or watchFrame or type(CreateFrame) ~= "function" then return end
     watchFrame = CreateFrame("Frame")
-    watchFrame:RegisterEvent("ADDON_LOADED")
+    pcall(watchFrame.RegisterEvent, watchFrame, "ADDON_LOADED")
     watchFrame:SetScript("OnEvent", function(self)
         HookBigWigs()
         HookDBM()

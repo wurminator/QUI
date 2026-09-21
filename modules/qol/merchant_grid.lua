@@ -186,8 +186,8 @@ function MerchantGrid.Refresh()
 end
 
 local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterEvent("MERCHANT_SHOW")
-eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(eventFrame.RegisterEvent, eventFrame, "MERCHANT_SHOW")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_ENABLED")
 eventFrame:SetScript("OnEvent", function(_, event)
     if event == "MERCHANT_SHOW" then
         if ClampedConfig() then

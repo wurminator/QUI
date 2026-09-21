@@ -92,7 +92,7 @@ local regenWatcher
 local function EnsureRegenWatcher()
     if regenWatcher or not _G.CreateFrame then return end
     regenWatcher = CreateFrame("Frame")
-    regenWatcher:RegisterEvent("PLAYER_REGEN_ENABLED")
+    pcall(regenWatcher.RegisterEvent, regenWatcher, "PLAYER_REGEN_ENABLED")
     regenWatcher:SetScript("OnEvent", function()
         if not pendingGeometryRegen then return end
         pendingGeometryRegen = false

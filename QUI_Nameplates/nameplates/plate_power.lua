@@ -265,12 +265,12 @@ function NPPower.AttachToTarget()
 end
 
 local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterUnitEvent("UNIT_POWER_FREQUENT", "player")
-eventFrame:RegisterUnitEvent("UNIT_MAXPOWER", "player")
-eventFrame:RegisterEvent("RUNE_POWER_UPDATE")
-eventFrame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
-eventFrame:RegisterEvent("UPDATE_SHAPESHIFT_FORM")
-eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+pcall(eventFrame.RegisterUnitEvent, eventFrame, "UNIT_POWER_FREQUENT", "player")
+pcall(eventFrame.RegisterUnitEvent, eventFrame, "UNIT_MAXPOWER", "player")
+pcall(eventFrame.RegisterEvent, eventFrame, "RUNE_POWER_UPDATE")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_SPECIALIZATION_CHANGED")
+pcall(eventFrame.RegisterEvent, eventFrame, "UPDATE_SHAPESHIFT_FORM")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ENTERING_WORLD")
 eventFrame:SetScript("OnEvent", function(_, event)
     if event == "PLAYER_SPECIALIZATION_CHANGED" or event == "PLAYER_ENTERING_WORLD" then
         playerClass = nil

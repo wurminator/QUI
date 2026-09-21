@@ -63,7 +63,7 @@ local function SuppressBlizzardPetFrame()
         end)
 
         local watcher = CreateFrame("Frame")
-        watcher:RegisterEvent("PLAYER_REGEN_ENABLED")
+        pcall(watcher.RegisterEvent, watcher, "PLAYER_REGEN_ENABLED")
         watcher:SetScript("OnEvent", function()
             if _petReevictPending then
                 _petReevictPending = false

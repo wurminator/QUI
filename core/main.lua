@@ -41,7 +41,7 @@ local function EnsureReloadEventFrame(self)
     end
 
     self.__reloadEventFrame = CreateFrame("Frame")
-    self.__reloadEventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+    pcall(self.__reloadEventFrame.RegisterEvent, self.__reloadEventFrame, "PLAYER_REGEN_ENABLED")
     self.__reloadEventFrame:SetScript("OnEvent", function(frame, event)
         if event == "PLAYER_REGEN_ENABLED" and QUICore.__pendingReload then
             QUICore.__pendingReload = false
@@ -148,7 +148,7 @@ function QUICore:OnInitialize()
     ns._startupTierPassDone = true
 
     if ns.Migrations and ns.Migrations.RunLate then
-        self:RegisterEvent("PLAYER_LOGIN", function(event)
+        pcall(self.RegisterEvent, self, "PLAYER_LOGIN", function(event)
             ns.Migrations.RunLate(self.db)
             self:UnregisterEvent("PLAYER_LOGIN")
         end)
@@ -230,10 +230,10 @@ function QUICore:_ParkProfileChangeDuringChallenge(event, profileKey)
         end)
     end
     local watcher = self._challengeParkWatcher
-    watcher:RegisterEvent("PLAYER_ENTERING_WORLD")
-    watcher:RegisterEvent("CHALLENGE_MODE_COMPLETED")
-    watcher:RegisterEvent("CHALLENGE_MODE_RESET")
-    watcher:RegisterEvent("PLAYER_REGEN_ENABLED")
+    pcall(watcher.RegisterEvent, watcher, "PLAYER_ENTERING_WORLD")
+    pcall(watcher.RegisterEvent, watcher, "CHALLENGE_MODE_COMPLETED")
+    pcall(watcher.RegisterEvent, watcher, "CHALLENGE_MODE_RESET")
+    pcall(watcher.RegisterEvent, watcher, "PLAYER_REGEN_ENABLED")
 
     if not alreadyParked then
         print("|cFF34D399QUI:|r Profile change deferred — it will be applied when you leave the Mythic+ dungeon.")
@@ -318,8 +318,8 @@ function QUICore:OnProfileChanged(event, db, profileKey)
                 end
             end)
         end
-        QUICore._scaleRegenFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-        QUICore._scaleRegenFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+        pcall(QUICore._scaleRegenFrame.RegisterEvent, QUICore._scaleRegenFrame, "PLAYER_REGEN_ENABLED")
+        pcall(QUICore._scaleRegenFrame.RegisterEvent, QUICore._scaleRegenFrame, "PLAYER_ENTERING_WORLD")
     end
     local function ApplyUIScale(scale)
         if InCombatLockdown() then
@@ -710,7 +710,7 @@ function QUICore:HookEditMode()
         end
 
         local suppressFrame = CreateFrame("Frame")
-        suppressFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+        pcall(suppressFrame.RegisterEvent, suppressFrame, "PLAYER_ENTERING_WORLD")
         suppressFrame:SetScript("OnEvent", function(f)
             f:UnregisterAllEvents()
             InstallEditModeSuppression()
@@ -755,7 +755,7 @@ function QUICore:HookEditMode()
     end
 
     local combatEndFrame = CreateFrame("Frame")
-    combatEndFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+    pcall(combatEndFrame.RegisterEvent, combatEndFrame, "PLAYER_REGEN_ENABLED")
     combatEndFrame:SetScript("OnEvent", function(frame, event)
         if event == "PLAYER_REGEN_ENABLED" then
             C_Timer.After(0.3, function()
@@ -844,8 +844,8 @@ function QUICore:SetupEncounterWarningsSecretValuePatch()
     end
 
     local patchFrame = CreateFrame("Frame")
-    patchFrame:RegisterEvent("ADDON_LOADED")
-    patchFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+    pcall(patchFrame.RegisterEvent, patchFrame, "ADDON_LOADED")
+    pcall(patchFrame.RegisterEvent, patchFrame, "PLAYER_ENTERING_WORLD")
     patchFrame:SetScript("OnEvent", function(_, event, addonName)
         if event == "ADDON_LOADED" and addonName == "Blizzard_EncounterWarnings" then
             if TryPatch() then

@@ -543,8 +543,8 @@ end
 -- pull; entering combat force-disables it (DisablePreview re-delivers any
 -- in-flight casts via ResetSubscriber).
 local previewGuard = CreateFrame("Frame")
-previewGuard:RegisterEvent("PLAYER_REGEN_DISABLED")
-previewGuard:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(previewGuard.RegisterEvent, previewGuard, "PLAYER_REGEN_DISABLED")
+pcall(previewGuard.RegisterEvent, previewGuard, "PLAYER_REGEN_ENABLED")
 previewGuard:SetScript("OnEvent", function(_, event)
     if event == "PLAYER_REGEN_ENABLED" then
         if subscribed then

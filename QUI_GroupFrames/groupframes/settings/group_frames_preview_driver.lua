@@ -740,7 +740,7 @@ local function ApplyTargetedSpells(f, targeted, sampleCount, allowed)
                 if ic._cd.SetDrawSwipe then ic._cd:SetDrawSwipe(true) end
                 if ic._cd.SetSwipeColor then ic._cd:SetSwipeColor(0, 0, 0, 0.6) end
                 if ic._cd.SetHideCountdownNumbers then ic._cd:SetHideCountdownNumbers(true) end
-                if ic._cd.SetCooldown then ic._cd:SetCooldown(GetTime and GetTime() or 0, 4 + i * 2) end
+                if ic._cd.SetCooldown then pcall(ic._cd.SetCooldown, ic._cd, GetTime and GetTime() or 0, 4 + i * 2) end
                 ic._cd:Show()
             end
 

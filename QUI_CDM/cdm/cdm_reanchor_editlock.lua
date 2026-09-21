@@ -110,7 +110,7 @@ function CDMReanchorEditLock:_QueueCooldownViewerDataRetry()
     end
 
     local lock = self
-    frame:RegisterEvent("COOLDOWN_VIEWER_DATA_LOADED")
+    pcall(frame.RegisterEvent, frame, "COOLDOWN_VIEWER_DATA_LOADED")
     frame:SetScript("OnEvent", function(f)
         f:UnregisterEvent("COOLDOWN_VIEWER_DATA_LOADED")
         f:SetScript("OnEvent", nil)

@@ -115,9 +115,9 @@ local function RestoreBlizzardArt(base)
     if castBar and castBar.RegisterUnitEvent and castBar.unit then
         local unit = castBar.unit
         for i = 1, #CASTBAR_UNIT_EVENTS do
-            castBar:RegisterUnitEvent(CASTBAR_UNIT_EVENTS[i], unit)
+            pcall(castBar.RegisterUnitEvent, castBar, CASTBAR_UNIT_EVENTS[i], unit)
         end
-        castBar:RegisterEvent("PLAYER_ENTERING_WORLD")
+        pcall(castBar.RegisterEvent, castBar, "PLAYER_ENTERING_WORLD")
     end
     pcall(unitFrame.SetAlpha, unitFrame, 1)
 end
@@ -235,7 +235,7 @@ local function RebindPlate(plate, newUnit)
     plate.unit = newUnit
     plates[newUnit] = plate
     for i = 1, #PLATE_UNIT_EVENTS do
-        plate:RegisterUnitEvent(PLATE_UNIT_EVENTS[i], newUnit)
+        pcall(plate.RegisterUnitEvent, plate, PLATE_UNIT_EVENTS[i], newUnit)
     end
     NP.Castbar.StopCast(plate)
     ComputeUnitState(plate)
@@ -595,7 +595,7 @@ local function SetUnit(plate, unit, base)
     end
 
     for i = 1, #PLATE_UNIT_EVENTS do
-        plate:RegisterUnitEvent(PLATE_UNIT_EVENTS[i], unit)
+        pcall(plate.RegisterUnitEvent, plate, PLATE_UNIT_EVENTS[i], unit)
     end
 
     if base.SetStackingBoundsFrame then
@@ -743,12 +743,12 @@ end
 ns.QUI_RefreshNameplates = NPDriver.Refresh
 
 local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterEvent("NAME_PLATE_UNIT_ADDED")
-eventFrame:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
-eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-eventFrame:RegisterEvent("PLAYER_LOGIN")
-eventFrame:RegisterEvent("UI_SCALE_CHANGED")
-eventFrame:RegisterEvent("DISPLAY_SIZE_CHANGED")
+pcall(eventFrame.RegisterEvent, eventFrame, "NAME_PLATE_UNIT_ADDED")
+pcall(eventFrame.RegisterEvent, eventFrame, "NAME_PLATE_UNIT_REMOVED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ENTERING_WORLD")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_LOGIN")
+pcall(eventFrame.RegisterEvent, eventFrame, "UI_SCALE_CHANGED")
+pcall(eventFrame.RegisterEvent, eventFrame, "DISPLAY_SIZE_CHANGED")
 
 local function ReassertAppearance()
     if not NP.IsEnabled() then return end

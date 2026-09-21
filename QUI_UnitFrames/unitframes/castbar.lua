@@ -2833,32 +2833,32 @@ function QUI_Castbar:SetupCastbar(castbar, unit, unitKey, castSettings)
         end
     end
 
-    castbar:RegisterUnitEvent("UNIT_SPELLCAST_START", unit)
-    castbar:RegisterUnitEvent("UNIT_SPELLCAST_STOP", unit)
-    castbar:RegisterUnitEvent("UNIT_SPELLCAST_FAILED", unit)
-    castbar:RegisterUnitEvent("UNIT_SPELLCAST_INTERRUPTED", unit)
-    castbar:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_START", unit)
-    castbar:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_STOP", unit)
-    castbar:RegisterUnitEvent("UNIT_SPELLCAST_INTERRUPTIBLE", unit)
-    castbar:RegisterUnitEvent("UNIT_SPELLCAST_NOT_INTERRUPTIBLE", unit)
+    pcall(castbar.RegisterUnitEvent, castbar, "UNIT_SPELLCAST_START", unit)
+    pcall(castbar.RegisterUnitEvent, castbar, "UNIT_SPELLCAST_STOP", unit)
+    pcall(castbar.RegisterUnitEvent, castbar, "UNIT_SPELLCAST_FAILED", unit)
+    pcall(castbar.RegisterUnitEvent, castbar, "UNIT_SPELLCAST_INTERRUPTED", unit)
+    pcall(castbar.RegisterUnitEvent, castbar, "UNIT_SPELLCAST_CHANNEL_START", unit)
+    pcall(castbar.RegisterUnitEvent, castbar, "UNIT_SPELLCAST_CHANNEL_STOP", unit)
+    pcall(castbar.RegisterUnitEvent, castbar, "UNIT_SPELLCAST_INTERRUPTIBLE", unit)
+    pcall(castbar.RegisterUnitEvent, castbar, "UNIT_SPELLCAST_NOT_INTERRUPTIBLE", unit)
 
     if isPlayer then
-        castbar:RegisterUnitEvent("UNIT_SPELLCAST_EMPOWER_START", unit)
-        castbar:RegisterUnitEvent("UNIT_SPELLCAST_EMPOWER_UPDATE", unit)
-        castbar:RegisterUnitEvent("UNIT_SPELLCAST_EMPOWER_STOP", unit)
-        castbar:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", unit)
-        castbar:RegisterEvent("SPELL_UPDATE_COOLDOWN")
-        castbar:RegisterEvent("PLAYER_REGEN_ENABLED")
-        castbar:RegisterEvent("PLAYER_ENTERING_WORLD")
+        pcall(castbar.RegisterUnitEvent, castbar, "UNIT_SPELLCAST_EMPOWER_START", unit)
+        pcall(castbar.RegisterUnitEvent, castbar, "UNIT_SPELLCAST_EMPOWER_UPDATE", unit)
+        pcall(castbar.RegisterUnitEvent, castbar, "UNIT_SPELLCAST_EMPOWER_STOP", unit)
+        pcall(castbar.RegisterUnitEvent, castbar, "UNIT_SPELLCAST_SUCCEEDED", unit)
+        pcall(castbar.RegisterEvent, castbar, "SPELL_UPDATE_COOLDOWN")
+        pcall(castbar.RegisterEvent, castbar, "PLAYER_REGEN_ENABLED")
+        pcall(castbar.RegisterEvent, castbar, "PLAYER_ENTERING_WORLD")
     end
 
     if unit == "target" then
-        castbar:RegisterEvent("PLAYER_TARGET_CHANGED")
+        pcall(castbar.RegisterEvent, castbar, "PLAYER_TARGET_CHANGED")
     elseif unit == "focus" then
-        castbar:RegisterEvent("PLAYER_FOCUS_CHANGED")
+        pcall(castbar.RegisterEvent, castbar, "PLAYER_FOCUS_CHANGED")
     elseif unit == "targettarget" then
-        castbar:RegisterEvent("PLAYER_TARGET_CHANGED")
-        castbar:RegisterUnitEvent("UNIT_TARGET", "target")
+        pcall(castbar.RegisterEvent, castbar, "PLAYER_TARGET_CHANGED")
+        pcall(castbar.RegisterUnitEvent, castbar, "UNIT_TARGET", "target")
     end
 
     castbar:SetScript("OnEvent", function(self, event, eventUnit, castGUID, spellID)
@@ -3163,15 +3163,15 @@ function QUI_Castbar:CreateBossCastbar(unitFrame, unit, bossIndex)
         end
     end
 
-    anchorFrame:RegisterUnitEvent("UNIT_SPELLCAST_START", unit)
-    anchorFrame:RegisterUnitEvent("UNIT_SPELLCAST_STOP", unit)
-    anchorFrame:RegisterUnitEvent("UNIT_SPELLCAST_FAILED", unit)
-    anchorFrame:RegisterUnitEvent("UNIT_SPELLCAST_INTERRUPTED", unit)
-    anchorFrame:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_START", unit)
-    anchorFrame:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_STOP", unit)
-    anchorFrame:RegisterUnitEvent("UNIT_SPELLCAST_INTERRUPTIBLE", unit)
-    anchorFrame:RegisterUnitEvent("UNIT_SPELLCAST_NOT_INTERRUPTIBLE", unit)
-    anchorFrame:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", unit)
+    pcall(anchorFrame.RegisterUnitEvent, anchorFrame, "UNIT_SPELLCAST_START", unit)
+    pcall(anchorFrame.RegisterUnitEvent, anchorFrame, "UNIT_SPELLCAST_STOP", unit)
+    pcall(anchorFrame.RegisterUnitEvent, anchorFrame, "UNIT_SPELLCAST_FAILED", unit)
+    pcall(anchorFrame.RegisterUnitEvent, anchorFrame, "UNIT_SPELLCAST_INTERRUPTED", unit)
+    pcall(anchorFrame.RegisterUnitEvent, anchorFrame, "UNIT_SPELLCAST_CHANNEL_START", unit)
+    pcall(anchorFrame.RegisterUnitEvent, anchorFrame, "UNIT_SPELLCAST_CHANNEL_STOP", unit)
+    pcall(anchorFrame.RegisterUnitEvent, anchorFrame, "UNIT_SPELLCAST_INTERRUPTIBLE", unit)
+    pcall(anchorFrame.RegisterUnitEvent, anchorFrame, "UNIT_SPELLCAST_NOT_INTERRUPTIBLE", unit)
+    pcall(anchorFrame.RegisterUnitEvent, anchorFrame, "UNIT_SPELLCAST_SUCCEEDED", unit)
 
     anchorFrame:SetScript("OnEvent", function(self, event, eventUnit)
         if event == "UNIT_SPELLCAST_START" or event == "UNIT_SPELLCAST_CHANNEL_START" then

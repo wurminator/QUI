@@ -571,10 +571,10 @@ eventFrame:SetScript("OnEvent", function(_, event, ...)
     end
 end)
 
-eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-eventFrame:RegisterEvent("BAG_UPDATE_DELAYED")
-eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-eventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ENTERING_WORLD")
+pcall(eventFrame.RegisterEvent, eventFrame, "BAG_UPDATE_DELAYED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_ENABLED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_DISABLED")
 
 if ns.WhenLoggedIn then
     ns.WhenLoggedIn(function()

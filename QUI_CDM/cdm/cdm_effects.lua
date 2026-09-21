@@ -1057,13 +1057,13 @@ local function InvalidateOverrideCacheForProc()
 end
 
 local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterEvent("SPELL_ACTIVATION_OVERLAY_GLOW_SHOW")
-eventFrame:RegisterEvent("SPELL_ACTIVATION_OVERLAY_GLOW_HIDE")
-eventFrame:RegisterEvent("SPELL_ACTIVATION_OVERLAY_SHOW")
-eventFrame:RegisterEvent("SPELL_ACTIVATION_OVERLAY_HIDE")
-eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-eventFrame:RegisterEvent("SPELL_UPDATE_USABLE")
-eventFrame:RegisterEvent("SPELL_UPDATE_COOLDOWN")
+pcall(eventFrame.RegisterEvent, eventFrame, "SPELL_ACTIVATION_OVERLAY_GLOW_SHOW")
+pcall(eventFrame.RegisterEvent, eventFrame, "SPELL_ACTIVATION_OVERLAY_GLOW_HIDE")
+pcall(eventFrame.RegisterEvent, eventFrame, "SPELL_ACTIVATION_OVERLAY_SHOW")
+pcall(eventFrame.RegisterEvent, eventFrame, "SPELL_ACTIVATION_OVERLAY_HIDE")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ENTERING_WORLD")
+pcall(eventFrame.RegisterEvent, eventFrame, "SPELL_UPDATE_USABLE")
+pcall(eventFrame.RegisterEvent, eventFrame, "SPELL_UPDATE_COOLDOWN")
 
 eventFrame:SetScript("OnEvent", function(_, event, spellID)
     if not IsCDMRuntimeEnabled() then

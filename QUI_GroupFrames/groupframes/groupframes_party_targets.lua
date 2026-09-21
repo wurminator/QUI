@@ -273,14 +273,14 @@ local function EnsureEventFrame()
     if PT.eventFrame then return end
     local ef = CreateFrame("Frame")
     ef:SetScript("OnEvent", OnEvent)
-    ef:RegisterEvent("PLAYER_REGEN_ENABLED")
+    pcall(ef.RegisterEvent, ef, "PLAYER_REGEN_ENABLED")
     PT.eventFrame = ef
 end
 
 function SetTargetWatch(active)
     EnsureEventFrame()
     if active and not PT.targetWatch then
-        PT.eventFrame:RegisterUnitEvent("UNIT_TARGET", "party1", "party2", "party3", "party4")
+        pcall(PT.eventFrame.RegisterUnitEvent, PT.eventFrame, "UNIT_TARGET", "party1", "party2", "party3", "party4")
         PT.targetWatch = true
     elseif not active and PT.targetWatch then
         PT.eventFrame:UnregisterEvent("UNIT_TARGET")

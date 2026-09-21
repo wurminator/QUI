@@ -141,7 +141,7 @@ local POWER_COLORS = {
 }
 
 local tocVersion = tonumber((select(4, GetBuildInfo()))) or 0
-local isModern = tocVersion >= 120000 or tocVersion == 16001 or (QUI and QUI.FOREVER)
+local isModern = tocVersion >= 120000 or (tocVersion >= 16000 and tocVersion < 17000) or (QUI and QUI.FOREVER)
 
 local function GetHealthPct(unit, usePredicted)
     if isModern and type(UnitHealthPercent) == "function"
@@ -1821,20 +1821,20 @@ local function CreateBossFrame(unit, frameKey, bossIndex)
         end
     end)
 
-    frame:RegisterUnitEvent("UNIT_HEALTH", unit)
-    frame:RegisterUnitEvent("UNIT_MAXHEALTH", unit)
-    frame:RegisterUnitEvent("UNIT_ABSORB_AMOUNT_CHANGED", unit)
-    frame:RegisterUnitEvent("UNIT_HEAL_ABSORB_AMOUNT_CHANGED", unit)
-    frame:RegisterUnitEvent("UNIT_POWER_UPDATE", unit)
-    frame:RegisterUnitEvent("UNIT_POWER_FREQUENT", unit)
-    frame:RegisterUnitEvent("UNIT_MAXPOWER", unit)
-    frame:RegisterUnitEvent("UNIT_NAME_UPDATE", unit)
-    frame:RegisterUnitEvent("UNIT_LEVEL", unit)
-    frame:RegisterUnitEvent("UNIT_TARGET", unit)
-    frame:RegisterEvent("RAID_TARGET_UPDATE")
+    pcall(frame.RegisterUnitEvent, frame, "UNIT_HEALTH", unit)
+    pcall(frame.RegisterUnitEvent, frame, "UNIT_MAXHEALTH", unit)
+    pcall(frame.RegisterUnitEvent, frame, "UNIT_ABSORB_AMOUNT_CHANGED", unit)
+    pcall(frame.RegisterUnitEvent, frame, "UNIT_HEAL_ABSORB_AMOUNT_CHANGED", unit)
+    pcall(frame.RegisterUnitEvent, frame, "UNIT_POWER_UPDATE", unit)
+    pcall(frame.RegisterUnitEvent, frame, "UNIT_POWER_FREQUENT", unit)
+    pcall(frame.RegisterUnitEvent, frame, "UNIT_MAXPOWER", unit)
+    pcall(frame.RegisterUnitEvent, frame, "UNIT_NAME_UPDATE", unit)
+    pcall(frame.RegisterUnitEvent, frame, "UNIT_LEVEL", unit)
+    pcall(frame.RegisterUnitEvent, frame, "UNIT_TARGET", unit)
+    pcall(frame.RegisterEvent, frame, "RAID_TARGET_UPDATE")
 
     if settings.classificationIcon and settings.classificationIcon.enabled then
-        frame:RegisterUnitEvent("UNIT_CLASSIFICATION_CHANGED", unit)
+        pcall(frame.RegisterUnitEvent, frame, "UNIT_CLASSIFICATION_CHANGED", unit)
     end
 
     if _G.ClickCastFrames then
@@ -2027,7 +2027,7 @@ local function EnsureBossRangeEventFrame()
     for i = 1, 5 do
         local token = "boss" .. i
         local listener = CreateFrame("Frame")
-        listener:RegisterUnitEvent("UNIT_IN_RANGE_UPDATE", token)
+        pcall(listener.RegisterUnitEvent, listener, "UNIT_IN_RANGE_UPDATE", token)
         listener:SetScript("OnEvent", function(_, _, _, isInRange)
             local range = GetBossRangeSettings()
             if not range or range.enabled == false then return end
@@ -2042,9 +2042,9 @@ local function EnsureBossRangeEventFrame()
     end
 
     local eventFrame = CreateFrame("Frame")
-    eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-    eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-    eventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ENTERING_WORLD")
+    pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_ENABLED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_DISABLED")
     eventFrame:SetScript("OnEvent", function()
         UpdateBossRangeAlpha()
     end)
@@ -2337,39 +2337,39 @@ local function CreateUnitFrame(unit, unitKey)
         frame.classificationIcon = classificationIcon
     end
 
-    frame:RegisterEvent("PLAYER_ENTERING_WORLD")
-    frame:RegisterUnitEvent("UNIT_HEALTH", unit)
-    frame:RegisterUnitEvent("UNIT_MAXHEALTH", unit)
-    frame:RegisterUnitEvent("UNIT_HEAL_PREDICTION", unit)
-    frame:RegisterUnitEvent("UNIT_ABSORB_AMOUNT_CHANGED", unit)
-    frame:RegisterUnitEvent("UNIT_HEAL_ABSORB_AMOUNT_CHANGED", unit)
-    frame:RegisterUnitEvent("UNIT_POWER_UPDATE", unit)
-    frame:RegisterUnitEvent("UNIT_POWER_FREQUENT", unit)
-    frame:RegisterUnitEvent("UNIT_MAXPOWER", unit)
-    frame:RegisterUnitEvent("UNIT_NAME_UPDATE", unit)
-    frame:RegisterUnitEvent("UNIT_LEVEL", unit)
-    frame:RegisterEvent("PLAYER_TARGET_CHANGED")
-    frame:RegisterEvent("PLAYER_FOCUS_CHANGED")
+    pcall(frame.RegisterEvent, frame, "PLAYER_ENTERING_WORLD")
+    pcall(frame.RegisterUnitEvent, frame, "UNIT_HEALTH", unit)
+    pcall(frame.RegisterUnitEvent, frame, "UNIT_MAXHEALTH", unit)
+    pcall(frame.RegisterUnitEvent, frame, "UNIT_HEAL_PREDICTION", unit)
+    pcall(frame.RegisterUnitEvent, frame, "UNIT_ABSORB_AMOUNT_CHANGED", unit)
+    pcall(frame.RegisterUnitEvent, frame, "UNIT_HEAL_ABSORB_AMOUNT_CHANGED", unit)
+    pcall(frame.RegisterUnitEvent, frame, "UNIT_POWER_UPDATE", unit)
+    pcall(frame.RegisterUnitEvent, frame, "UNIT_POWER_FREQUENT", unit)
+    pcall(frame.RegisterUnitEvent, frame, "UNIT_MAXPOWER", unit)
+    pcall(frame.RegisterUnitEvent, frame, "UNIT_NAME_UPDATE", unit)
+    pcall(frame.RegisterUnitEvent, frame, "UNIT_LEVEL", unit)
+    pcall(frame.RegisterEvent, frame, "PLAYER_TARGET_CHANGED")
+    pcall(frame.RegisterEvent, frame, "PLAYER_FOCUS_CHANGED")
     if unitKey == "pet" then
-        frame:RegisterUnitEvent("UNIT_PET", "player")
+        pcall(frame.RegisterUnitEvent, frame, "UNIT_PET", "player")
     end
-    frame:RegisterEvent("UNIT_TARGET")
-    frame:RegisterEvent("RAID_TARGET_UPDATE")
+    pcall(frame.RegisterEvent, frame, "UNIT_TARGET")
+    pcall(frame.RegisterEvent, frame, "RAID_TARGET_UPDATE")
 
     if settings.leaderIcon and settings.leaderIcon.enabled and (unitKey == "player" or unitKey == "target" or unitKey == "focus") then
-        frame:RegisterEvent("PARTY_LEADER_CHANGED")
-        frame:RegisterEvent("GROUP_ROSTER_UPDATE")
+        pcall(frame.RegisterEvent, frame, "PARTY_LEADER_CHANGED")
+        pcall(frame.RegisterEvent, frame, "GROUP_ROSTER_UPDATE")
     end
 
     if settings.classificationIcon and settings.classificationIcon.enabled and (unitKey == "target" or unitKey == "focus") then
-        frame:RegisterEvent("UNIT_CLASSIFICATION_CHANGED")
+        pcall(frame.RegisterEvent, frame, "UNIT_CLASSIFICATION_CHANGED")
     end
 
     if unitKey == "player" then
-        frame:RegisterEvent("PLAYER_UPDATE_RESTING")
-        frame:RegisterEvent("PLAYER_REGEN_DISABLED")
-        frame:RegisterEvent("PLAYER_REGEN_ENABLED")
-        frame:RegisterEvent("UPDATE_SHAPESHIFT_FORM")
+        pcall(frame.RegisterEvent, frame, "PLAYER_UPDATE_RESTING")
+        pcall(frame.RegisterEvent, frame, "PLAYER_REGEN_DISABLED")
+        pcall(frame.RegisterEvent, frame, "PLAYER_REGEN_ENABLED")
+        pcall(frame.RegisterEvent, frame, "UPDATE_SHAPESHIFT_FORM")
     end
 
     local _freqPower = QUI_UF.PowerCoalesce.NewState()
@@ -3086,7 +3086,7 @@ function QUI_UF:RefreshFrame(unitKey)
                         local classificationIcon = frame.indicatorFrame:CreateTexture(nil, "OVERLAY")
                         classificationIcon:Hide()
                         frame.classificationIcon = classificationIcon
-                        frame:RegisterUnitEvent("UNIT_CLASSIFICATION_CHANGED", QUI_UF.GetFrameUnit(frame))
+                        pcall(frame.RegisterUnitEvent, frame, "UNIT_CLASSIFICATION_CHANGED", QUI_UF.GetFrameUnit(frame))
                     end
                     local ci = settings.classificationIcon
                     frame.classificationIcon:SetSize(ci.size or 16, ci.size or 16)
@@ -3441,8 +3441,8 @@ function QUI_UF:RefreshFrame(unitKey)
                 local leaderIcon = frame.indicatorFrame:CreateTexture(nil, "OVERLAY")
                 leaderIcon:Hide()
                 frame.leaderIcon = leaderIcon
-                frame:RegisterEvent("PARTY_LEADER_CHANGED")
-                frame:RegisterEvent("GROUP_ROSTER_UPDATE")
+                pcall(frame.RegisterEvent, frame, "PARTY_LEADER_CHANGED")
+                pcall(frame.RegisterEvent, frame, "GROUP_ROSTER_UPDATE")
             end
             frame.leaderIcon:SetSize(leader.size or 16, leader.size or 16)
             frame.leaderIcon:ClearAllPoints()
@@ -3468,9 +3468,9 @@ function QUI_UF:RefreshFrame(unitKey)
                 classificationIcon:Hide()
                 frame.classificationIcon = classificationIcon
                 if unitKey == "target" or unitKey == "focus" then
-                    frame:RegisterEvent("UNIT_CLASSIFICATION_CHANGED")
+                    pcall(frame.RegisterEvent, frame, "UNIT_CLASSIFICATION_CHANGED")
                 else
-                    frame:RegisterUnitEvent("UNIT_CLASSIFICATION_CHANGED", QUI_UF.GetFrameUnit(frame))
+                    pcall(frame.RegisterUnitEvent, frame, "UNIT_CLASSIFICATION_CHANGED", QUI_UF.GetFrameUnit(frame))
                 end
             end
             frame.classificationIcon:SetSize(ci.size or 16, ci.size or 16)
@@ -3625,7 +3625,7 @@ function QUI_UF:Initialize()
         end
 
         local bossTargetEventFrame = CreateFrame("Frame")
-        bossTargetEventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+        pcall(bossTargetEventFrame.RegisterEvent, bossTargetEventFrame, "PLAYER_TARGET_CHANGED")
         bossTargetEventFrame:SetScript("OnEvent", function()
             UpdateBossTargetHighlight()
         end)
@@ -3667,8 +3667,8 @@ function QUI_UF:RegisterWithClique()
 end
 
 local initFrame = CreateFrame("Frame")
-initFrame:RegisterEvent("ADDON_LOADED")
-initFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+pcall(initFrame.RegisterEvent, initFrame, "ADDON_LOADED")
+pcall(initFrame.RegisterEvent, initFrame, "PLAYER_ENTERING_WORLD")
 initFrame:SetScript("OnEvent", function(self, event, arg1)
     if event == "ADDON_LOADED" then
         if arg1 ~= ADDON_NAME then return end

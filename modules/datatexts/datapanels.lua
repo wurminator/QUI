@@ -44,7 +44,7 @@ Datapanels.activePanels = {}
 local rebuildPendingCombat = false
 
 local regenWatcher = CreateFrame("Frame")
-regenWatcher:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(regenWatcher.RegisterEvent, regenWatcher, "PLAYER_REGEN_ENABLED")
 regenWatcher:SetScript("OnEvent", function()
     if rebuildPendingCombat then
         rebuildPendingCombat = false

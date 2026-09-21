@@ -1250,14 +1250,14 @@ local function OnEvent(self, event, ...)
     end
 end
 
-eventFrame:RegisterEvent("ADDON_LOADED")
-eventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-eventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
-eventFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-eventFrame:RegisterEvent("PLAYER_DEAD")
-eventFrame:RegisterEvent("PLAYER_UNGHOST")
-eventFrame:RegisterEvent("UPDATE_SHAPESHIFT_FORM")
+pcall(eventFrame.RegisterEvent, eventFrame, "ADDON_LOADED")
+pcall(eventFrame.RegisterEvent, eventFrame, "GROUP_ROSTER_UPDATE")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_ENABLED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_DISABLED")
+pcall(eventFrame.RegisterEvent, eventFrame, "ZONE_CHANGED_NEW_AREA")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_DEAD")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_UNGHOST")
+pcall(eventFrame.RegisterEvent, eventFrame, "UPDATE_SHAPESHIFT_FORM")
 eventFrame:SetScript("OnEvent", OnEvent)
 
 local function SetupDebugInstrumentation()

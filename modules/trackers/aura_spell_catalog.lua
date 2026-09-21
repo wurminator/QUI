@@ -160,11 +160,11 @@ local eventFrame
 function Catalog.Init()
     if eventFrame then return end
     eventFrame = CreateFrame("Frame")
-    eventFrame:RegisterEvent("UNIT_AURA")
-    eventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
-    eventFrame:RegisterEvent("PLAYER_FOCUS_CHANGED")
-    eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-    eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+    pcall(eventFrame.RegisterEvent, eventFrame, "UNIT_AURA")
+    pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_TARGET_CHANGED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_FOCUS_CHANGED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_ENABLED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ENTERING_WORLD")
     eventFrame:SetScript("OnEvent", function(_, event, arg1)
         if event == "UNIT_AURA" then
             -- A secret unit token can neither index the scan set nor be

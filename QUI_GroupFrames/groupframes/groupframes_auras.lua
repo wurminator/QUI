@@ -957,8 +957,8 @@ end
 
 do
     local f = CreateFrame("Frame")
-    f:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
-    f:RegisterEvent("PLAYER_ENTERING_WORLD")
+    pcall(f.RegisterEvent, f, "PLAYER_SPECIALIZATION_CHANGED")
+    pcall(f.RegisterEvent, f, "PLAYER_ENTERING_WORLD")
     f:SetScript("OnEvent", function(_, event, unit)
         if event == "PLAYER_ENTERING_WORLD" or unit == "player" then
             QUI_GFA._cachedSpecID = nil

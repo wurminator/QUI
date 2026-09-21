@@ -491,9 +491,9 @@ end
 
 do
     local cdEventFrame = CreateFrame("Frame")
-    cdEventFrame:RegisterEvent("SPELL_UPDATE_COOLDOWN")
-    cdEventFrame:RegisterEvent("SPELL_UPDATE_CHARGES")
-    cdEventFrame:RegisterEvent("SPELL_UPDATE_USABLE")
+    pcall(cdEventFrame.RegisterEvent, cdEventFrame, "SPELL_UPDATE_COOLDOWN")
+    pcall(cdEventFrame.RegisterEvent, cdEventFrame, "SPELL_UPDATE_CHARGES")
+    pcall(cdEventFrame.RegisterEvent, cdEventFrame, "SPELL_UPDATE_USABLE")
     cdEventFrame:SetScript("OnEvent", UpdateAllOwnedFlyoutButtonCooldowns)
 end
 

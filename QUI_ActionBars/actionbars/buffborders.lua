@@ -692,8 +692,8 @@ Init = function()
 end
 
 local paRegenFrame = CreateFrame("Frame")
-paRegenFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-paRegenFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+pcall(paRegenFrame.RegisterEvent, paRegenFrame, "PLAYER_REGEN_ENABLED")
+pcall(paRegenFrame.RegisterEvent, paRegenFrame, "PLAYER_ENTERING_WORLD")
 paRegenFrame:SetScript("OnEvent", function(_, event)
     if event == "PLAYER_ENTERING_WORLD" then
         C_Timer.After(0, function()

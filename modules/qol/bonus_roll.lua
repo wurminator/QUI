@@ -317,7 +317,7 @@ end
 local events = CreateFrame("Frame")
 for _, event in ipairs({ "PLAYER_LOGIN", "ADDON_LOADED", "PLAYER_ENTERING_WORLD", "CHALLENGE_MODE_START",
     "CHALLENGE_MODE_COMPLETED", "CHALLENGE_MODE_RESET", "BONUS_ROLL_STARTED", "BONUS_ROLL_FAILED", "BONUS_ROLL_RESULT" }) do
-    events:RegisterEvent(event)
+    pcall(events.RegisterEvent, events, event)
 end
 events:SetScript("OnEvent", function(_, event)
     if event == "PLAYER_LOGIN" or event == "ADDON_LOADED" then

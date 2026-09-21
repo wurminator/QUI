@@ -545,12 +545,12 @@ end
 
 local eventFrame = CreateFrame("Frame")
 
-eventFrame:RegisterEvent("BAG_UPDATE_DELAYED")
-eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-eventFrame:RegisterEvent("MODIFIER_STATE_CHANGED")
-eventFrame:RegisterEvent("TRADE_SKILL_SHOW")
-eventFrame:RegisterEvent("TRADE_SKILL_LIST_UPDATE")
-eventFrame:RegisterEvent("TRADE_SKILL_DATA_SOURCE_CHANGED")
+pcall(eventFrame.RegisterEvent, eventFrame, "BAG_UPDATE_DELAYED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ENTERING_WORLD")
+pcall(eventFrame.RegisterEvent, eventFrame, "MODIFIER_STATE_CHANGED")
+pcall(eventFrame.RegisterEvent, eventFrame, "TRADE_SKILL_SHOW")
+pcall(eventFrame.RegisterEvent, eventFrame, "TRADE_SKILL_LIST_UPDATE")
+pcall(eventFrame.RegisterEvent, eventFrame, "TRADE_SKILL_DATA_SOURCE_CHANGED")
 
 eventFrame:SetScript("OnEvent", function(self, event, ...)
     if event == "BAG_UPDATE_DELAYED" then

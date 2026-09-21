@@ -622,8 +622,8 @@ function QUI_LayoutMode:Open()
             end
         end)
     end
-    self._combatFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
-    self._combatFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+    pcall(self._combatFrame.RegisterEvent, self._combatFrame, "PLAYER_REGEN_DISABLED")
+    pcall(self._combatFrame.RegisterEvent, self._combatFrame, "PLAYER_REGEN_ENABLED")
 
     if not self._firstOpenDone then
         self._firstOpenDone = true
@@ -2647,7 +2647,7 @@ do
             bonusRollFrame:HookScript("OnShow", ScheduleBonusRollAnchor)
 
             local bonusRollCombatFrame = CreateFrame("Frame")
-            bonusRollCombatFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+            pcall(bonusRollCombatFrame.RegisterEvent, bonusRollCombatFrame, "PLAYER_REGEN_ENABLED")
             bonusRollCombatFrame:SetScript("OnEvent", function()
                 if pendingBonusRollAnchor then
                     pendingBonusRollAnchor = false
@@ -3783,8 +3783,8 @@ end)
 
 do
     local startupFrame = CreateFrame("Frame")
-    startupFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-    startupFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+    pcall(startupFrame.RegisterEvent, startupFrame, "PLAYER_ENTERING_WORLD")
+    pcall(startupFrame.RegisterEvent, startupFrame, "PLAYER_REGEN_ENABLED")
     startupFrame:SetScript("OnEvent", function(_, event)
         if event == "PLAYER_ENTERING_WORLD" then
             C_Timer.After(3, function()

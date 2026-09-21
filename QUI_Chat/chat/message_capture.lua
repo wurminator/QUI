@@ -496,18 +496,18 @@ function Capture.Setup()
     for event in pairs(_G.ChatTypeGroupInverted or {}) do
         if event:sub(1, 9) == "CHAT_MSG_"
             and (not valid or valid(event)) then
-            captureFrame:RegisterEvent(event)
+            pcall(captureFrame.RegisterEvent, captureFrame, event)
         end
     end
     for i = 1, #EXTRA_EVENTS do
         local event = EXTRA_EVENTS[i]
         if not valid or valid(event) then
-            captureFrame:RegisterEvent(event)
+            pcall(captureFrame.RegisterEvent, captureFrame, event)
         end
     end
     for event in pairs(SYSTEM_EVENTS) do
         if not valid or valid(event) then
-            captureFrame:RegisterEvent(event)
+            pcall(captureFrame.RegisterEvent, captureFrame, event)
         end
     end
     if not fallbackHooked and _G.hooksecurefunc and _G.DEFAULT_CHAT_FRAME then

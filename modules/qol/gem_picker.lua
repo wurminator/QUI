@@ -117,9 +117,9 @@ local function Refresh()
 end
 
 local frame = CreateFrame("Frame")
-frame:RegisterEvent("SOCKET_INFO_UPDATE")
-frame:RegisterEvent("BAG_UPDATE_DELAYED")
-frame:RegisterEvent("CURSOR_CHANGED")
+pcall(frame.RegisterEvent, frame, "SOCKET_INFO_UPDATE")
+pcall(frame.RegisterEvent, frame, "BAG_UPDATE_DELAYED")
+pcall(frame.RegisterEvent, frame, "CURSOR_CHANGED")
 frame:SetScript("OnEvent", function(_, event)
     local socketFrame = _G.ItemSocketingFrame
     if event == "SOCKET_INFO_UPDATE" then

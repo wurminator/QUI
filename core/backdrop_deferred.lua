@@ -105,7 +105,7 @@ function QUICore.SafeSetBackdrop(frame, backdropInfo, borderColor, bgColor)
 
             if not QUICore.__backdropEventFrame then
                 local eventFrame = CreateFrame("Frame")
-                eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+                pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_ENABLED")
                 eventFrame:SetScript("OnEvent", function(self)
                     self:UnregisterEvent("PLAYER_REGEN_ENABLED")
                     QUICore.__backdropEventListening = false
@@ -138,7 +138,7 @@ function QUICore.SafeSetBackdrop(frame, backdropInfo, borderColor, bgColor)
                         end
                     end
                     if stillPending then
-                        self:RegisterEvent("PLAYER_REGEN_ENABLED")
+                        pcall(self.RegisterEvent, self, "PLAYER_REGEN_ENABLED")
                     else
                         self:UnregisterEvent("PLAYER_REGEN_ENABLED")
                         QUICore.__pendingBackdrops = {}
@@ -151,7 +151,7 @@ function QUICore.SafeSetBackdrop(frame, backdropInfo, borderColor, bgColor)
             QUICore.__pendingBackdrops[frame] = true
             if not QUICore.__backdropEventListening then
                 QUICore.__backdropEventListening = true
-                QUICore.__backdropEventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+                pcall(QUICore.__backdropEventFrame.RegisterEvent, QUICore.__backdropEventFrame, "PLAYER_REGEN_ENABLED")
             end
         end
         return false

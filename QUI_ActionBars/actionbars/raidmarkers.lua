@@ -678,16 +678,16 @@ leaderCoalesce:SetScript("OnUpdate", function(self)
 end)
 
 local leaderWatch = CreateFrame("Frame")
-leaderWatch:RegisterEvent("GROUP_ROSTER_UPDATE")
-leaderWatch:RegisterEvent("PARTY_LEADER_CHANGED")
-leaderWatch:RegisterEvent("PLAYER_ENTERING_WORLD")
+pcall(leaderWatch.RegisterEvent, leaderWatch, "GROUP_ROSTER_UPDATE")
+pcall(leaderWatch.RegisterEvent, leaderWatch, "PARTY_LEADER_CHANGED")
+pcall(leaderWatch.RegisterEvent, leaderWatch, "PLAYER_ENTERING_WORLD")
 leaderWatch:SetScript("OnEvent", function()
     leaderCoalesce:Show()
 end)
 
 local initFrame = CreateFrame("Frame")
-initFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-initFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(initFrame.RegisterEvent, initFrame, "PLAYER_ENTERING_WORLD")
+pcall(initFrame.RegisterEvent, initFrame, "PLAYER_REGEN_ENABLED")
 initFrame:SetScript("OnEvent", function(self, event)
     if event == "PLAYER_REGEN_ENABLED" then
         if pendingReconcile then

@@ -431,7 +431,7 @@ local function SetEnabled(value)
     if enabled then
         EnsureOutputFrame()
         outputFrame:Show()
-        frame:RegisterUnitEvent("UNIT_AURA", "player", "pet")
+        pcall(frame.RegisterUnitEvent, frame, "UNIT_AURA", "player", "pet")
         frame:SetScript("OnEvent", OnUnitAura)
         print(PREFIX .. " on - logging player/pet UNIT_AURA payloads")
     else
@@ -497,7 +497,7 @@ end
 local function EnsureCLEUFrameRegistered()
     if cleuFrameRegistered then return true end
     local ok, err = pcall(function()
-        cleuOwner:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+        pcall(cleuOwner.RegisterEvent, cleuOwner, "COMBAT_LOG_EVENT_UNFILTERED")
         cleuOwner:SetScript("OnEvent", OnCombatLogEvent)
     end)
     if not ok then

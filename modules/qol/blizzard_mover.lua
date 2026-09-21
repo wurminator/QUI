@@ -395,7 +395,7 @@ end
 local function installForegroundTracking()
 	if foregroundWatcher then return end
 	foregroundWatcher = CreateFrame("Frame")
-	foregroundWatcher:RegisterEvent("GLOBAL_MOUSE_DOWN")
+	pcall(foregroundWatcher.RegisterEvent, foregroundWatcher, "GLOBAL_MOUSE_DOWN")
 	foregroundWatcher:SetScript("OnEvent", function()
 		foregroundFrame = nil
 		if not db or not db.enabled or InCombatLockdown() or not GetMouseFoci then return end
@@ -782,7 +782,7 @@ function M.functions.EnsureScaleCaptureFrame()
 	proxy:SetFrameStrata("TOOLTIP")
 	proxy:SetFrameLevel(9999)
 	proxy:EnableMouseWheel(false)
-	proxy:RegisterEvent("MODIFIER_STATE_CHANGED")
+	pcall(proxy.RegisterEvent, proxy, "MODIFIER_STATE_CHANGED")
 	proxy:SetScript("OnEvent", function() M.functions.UpdateScaleWheelCaptureState() end)
 	proxy:SetScript("OnMouseWheel", function(_, d) M.functions.HandleScaleWheel(d) end)
 	M.variables.wheelProxy = proxy
@@ -1488,8 +1488,8 @@ local eventFrame
 local function attachEventFrame()
 	if eventFrame then return end
 	eventFrame = CreateFrame("Frame")
-	eventFrame:RegisterEvent("ADDON_LOADED")
-	eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+	pcall(eventFrame.RegisterEvent, eventFrame, "ADDON_LOADED")
+	pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_ENABLED")
 	eventFrame:SetScript("OnEvent", function(_, ev, a1)
 		syncDbFromProfile()
 		if ev == "ADDON_LOADED" then onAddonLoaded(a1)

@@ -192,12 +192,12 @@ local function PinKickTick(plate)
 end
 
 local kickEventFrame = CreateFrame("Frame")
-kickEventFrame:RegisterEvent("SPELL_UPDATE_COOLDOWN")
-kickEventFrame:RegisterEvent("SPELL_UPDATE_USABLE")
-kickEventFrame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
-kickEventFrame:RegisterEvent("SPELLS_CHANGED")
-kickEventFrame:RegisterEvent("UI_SCALE_CHANGED")
-kickEventFrame:RegisterEvent("DISPLAY_SIZE_CHANGED")
+pcall(kickEventFrame.RegisterEvent, kickEventFrame, "SPELL_UPDATE_COOLDOWN")
+pcall(kickEventFrame.RegisterEvent, kickEventFrame, "SPELL_UPDATE_USABLE")
+pcall(kickEventFrame.RegisterEvent, kickEventFrame, "PLAYER_SPECIALIZATION_CHANGED")
+pcall(kickEventFrame.RegisterEvent, kickEventFrame, "SPELLS_CHANGED")
+pcall(kickEventFrame.RegisterEvent, kickEventFrame, "UI_SCALE_CHANGED")
+pcall(kickEventFrame.RegisterEvent, kickEventFrame, "DISPLAY_SIZE_CHANGED")
 kickEventFrame:SetScript("OnEvent", function(_, event)
     if event == "PLAYER_SPECIALIZATION_CHANGED" or event == "SPELLS_CHANGED" then
         interruptResolved = false
@@ -651,7 +651,7 @@ local CAST_EVENTS = {
 
 local dispatcher = CreateFrame("Frame")
 for i = 1, #CAST_EVENTS do
-    dispatcher:RegisterEvent(CAST_EVENTS[i])
+    pcall(dispatcher.RegisterEvent, dispatcher, CAST_EVENTS[i])
 end
 
 dispatcher:SetScript("OnEvent", function(_, event, unit, arg2, arg3, arg4)

@@ -75,10 +75,10 @@ local function EnsureCache()
 end
 
 local cacheFrame = CreateFrame("Frame")
-cacheFrame:RegisterEvent("SPELLS_CHANGED")
-cacheFrame:RegisterEvent("UPDATE_MACROS")
-cacheFrame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
-cacheFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+pcall(cacheFrame.RegisterEvent, cacheFrame, "SPELLS_CHANGED")
+pcall(cacheFrame.RegisterEvent, cacheFrame, "UPDATE_MACROS")
+pcall(cacheFrame.RegisterEvent, cacheFrame, "PLAYER_SPECIALIZATION_CHANGED")
+pcall(cacheFrame.RegisterEvent, cacheFrame, "PLAYER_ENTERING_WORLD")
 cacheFrame:SetScript("OnEvent", function()
     cacheValid = false
 end)

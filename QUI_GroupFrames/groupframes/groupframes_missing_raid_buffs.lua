@@ -803,14 +803,14 @@ MRB._allyDeltaIsRelevant = AllyDeltaIsRelevant
 local function EnsureEventFrame()
     if snapshotEventFrame then return end
     snapshotEventFrame = CreateFrame("Frame")
-    snapshotEventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
-    snapshotEventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-    snapshotEventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-    snapshotEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-    snapshotEventFrame:RegisterEvent("SPELLS_CHANGED")
-    snapshotEventFrame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
-    snapshotEventFrame:RegisterEvent("UNIT_CONNECTION")
-    snapshotEventFrame:RegisterEvent("UNIT_FLAGS")
+    pcall(snapshotEventFrame.RegisterEvent, snapshotEventFrame, "PLAYER_REGEN_DISABLED")
+    pcall(snapshotEventFrame.RegisterEvent, snapshotEventFrame, "PLAYER_REGEN_ENABLED")
+    pcall(snapshotEventFrame.RegisterEvent, snapshotEventFrame, "GROUP_ROSTER_UPDATE")
+    pcall(snapshotEventFrame.RegisterEvent, snapshotEventFrame, "PLAYER_ENTERING_WORLD")
+    pcall(snapshotEventFrame.RegisterEvent, snapshotEventFrame, "SPELLS_CHANGED")
+    pcall(snapshotEventFrame.RegisterEvent, snapshotEventFrame, "PLAYER_SPECIALIZATION_CHANGED")
+    pcall(snapshotEventFrame.RegisterEvent, snapshotEventFrame, "UNIT_CONNECTION")
+    pcall(snapshotEventFrame.RegisterEvent, snapshotEventFrame, "UNIT_FLAGS")
     do
         local tokens = { "player" }
         for i = 1, 4 do tokens[#tokens + 1] = "party" .. i end
@@ -819,15 +819,15 @@ local function EnsureEventFrame()
         for i = 1, #tokens do
             local token = tokens[i]
             local listener = CreateFrame("Frame")
-            listener:RegisterUnitEvent("UNIT_IN_RANGE_UPDATE", token)
+            pcall(listener.RegisterUnitEvent, listener, "UNIT_IN_RANGE_UPDATE", token)
             listener:SetScript("OnEvent", function()
                 RefreshUnit(token)
             end)
             rangeListenerFrames[i] = listener
         end
     end
-    snapshotEventFrame:RegisterEvent("ENCOUNTER_START")
-    snapshotEventFrame:RegisterEvent("CHALLENGE_MODE_START")
+    pcall(snapshotEventFrame.RegisterEvent, snapshotEventFrame, "ENCOUNTER_START")
+    pcall(snapshotEventFrame.RegisterEvent, snapshotEventFrame, "CHALLENGE_MODE_START")
     pcall(function() snapshotEventFrame:RegisterEvent("COOLDOWN_VIEWER_DATA_LOADED") end)
     pcall(function() snapshotEventFrame:RegisterEvent("HIDDEN_GROUP_BUFFS_CHANGED") end)
     pcall(function() snapshotEventFrame:RegisterEvent("COOLDOWN_VIEWER_TABLE_HOTFIXED") end)

@@ -478,7 +478,7 @@ function QUI_Anchoring:SnapTo(frame, anchorTarget, anchorPoint, offsetX, offsetY
 end
 
 local anchoredFramesCombatFrame = CreateFrame("Frame")
-anchoredFramesCombatFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(anchoredFramesCombatFrame.RegisterEvent, anchoredFramesCombatFrame, "PLAYER_REGEN_ENABLED")
 anchoredFramesCombatFrame:SetScript("OnEvent", function()
     if not pendingAnchoredFrameUpdateAfterCombat
         and next(pendingCombatConsumerOps) == nil then return end
@@ -509,7 +509,7 @@ anchoredFramesCombatFrame:SetScript("OnEvent", function()
 end)
 
 local layoutUpdateFrame = CreateFrame("Frame")
-layoutUpdateFrame:RegisterEvent("EDIT_MODE_LAYOUTS_UPDATED")
+pcall(layoutUpdateFrame.RegisterEvent, layoutUpdateFrame, "EDIT_MODE_LAYOUTS_UPDATED")
 local _layoutUpdatePending = false
 layoutUpdateFrame:SetScript("OnEvent", function()
     if _layoutUpdatePending then return end
@@ -613,7 +613,7 @@ if EditModeManagerFrame then
 end
 
 local anchorGuardInitFrame = CreateFrame("Frame")
-anchorGuardInitFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+pcall(anchorGuardInitFrame.RegisterEvent, anchorGuardInitFrame, "PLAYER_ENTERING_WORLD")
 anchorGuardInitFrame:SetScript("OnEvent", function(f)
     f:UnregisterAllEvents()
     C_Timer.After(1, InstallAllAnchorGuards)
@@ -771,8 +771,8 @@ local function EnsureAllManagedReparents()
 end
 
 local managedReparentInitFrame = CreateFrame("Frame")
-managedReparentInitFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-managedReparentInitFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(managedReparentInitFrame.RegisterEvent, managedReparentInitFrame, "PLAYER_ENTERING_WORLD")
+pcall(managedReparentInitFrame.RegisterEvent, managedReparentInitFrame, "PLAYER_REGEN_ENABLED")
 managedReparentInitFrame:SetScript("OnEvent", function(_, event)
     if event == "PLAYER_REGEN_ENABLED" then
         EnsureAllManagedReparents()

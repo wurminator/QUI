@@ -264,7 +264,7 @@ function D.SetWatchedSpells(list)
     if not snapshotFrame then return end
     -- Nothing to watch means nothing to pay for on every cooldown event.
     if wantEvents then
-        snapshotFrame:RegisterEvent("SPELL_UPDATE_COOLDOWN")
+        pcall(snapshotFrame.RegisterEvent, snapshotFrame, "SPELL_UPDATE_COOLDOWN")
     else
         snapshotFrame:UnregisterEvent("SPELL_UPDATE_COOLDOWN")
     end

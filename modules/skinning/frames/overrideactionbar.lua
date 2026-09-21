@@ -299,11 +299,11 @@ local function HandleBarStateChange()
 end
 
 local frame = CreateFrame("Frame")
-frame:RegisterEvent("ADDON_LOADED")
-frame:RegisterEvent("PLAYER_ENTERING_WORLD")
-frame:RegisterEvent("PLAYER_REGEN_ENABLED")
-frame:RegisterEvent("UPDATE_VEHICLE_ACTIONBAR")
-frame:RegisterEvent("UPDATE_OVERRIDE_ACTIONBAR")
+pcall(frame.RegisterEvent, frame, "ADDON_LOADED")
+pcall(frame.RegisterEvent, frame, "PLAYER_ENTERING_WORLD")
+pcall(frame.RegisterEvent, frame, "PLAYER_REGEN_ENABLED")
+pcall(frame.RegisterEvent, frame, "UPDATE_VEHICLE_ACTIONBAR")
+pcall(frame.RegisterEvent, frame, "UPDATE_OVERRIDE_ACTIONBAR")
 frame:SetScript("OnEvent", function(self, event, addon)
     if event == "ADDON_LOADED" then
         if addon == "Blizzard_OverrideActionBar" then

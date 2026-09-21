@@ -547,7 +547,7 @@ local function BuildPrioritySection(content, db, onResize)
 
     frame.Repaint = Repaint
     -- The page shows one spec's list; follow the player when they switch.
-    frame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
+    pcall(frame.RegisterEvent, frame, "PLAYER_SPECIALIZATION_CHANGED")
     frame:SetScript("OnEvent", function(self)
         if self:IsVisible() then Repaint() end
     end)

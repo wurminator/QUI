@@ -185,8 +185,8 @@ end
 
 local function SetCombatEventsRegistered(shouldRegister)
     if shouldRegister and not combatEventsRegistered then
-        eventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
-        eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+        pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_DISABLED")
+        pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_ENABLED")
         combatEventsRegistered = true
     elseif not shouldRegister and combatEventsRegistered then
         eventFrame:UnregisterEvent("PLAYER_REGEN_DISABLED")

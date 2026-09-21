@@ -74,8 +74,8 @@ end
 hooksecurefunc("MerchantFrame_UpdateMerchantInfo", UpdateMerchant)
 
 local frame = CreateFrame("Frame")
-frame:RegisterEvent("PET_JOURNAL_LIST_UPDATE")
-frame:RegisterEvent("NEW_PET_ADDED")
+pcall(frame.RegisterEvent, frame, "PET_JOURNAL_LIST_UPDATE")
+pcall(frame.RegisterEvent, frame, "NEW_PET_ADDED")
 frame:SetScript("OnEvent", function()
     wipe(collectedCache)
     UpdateMerchant()

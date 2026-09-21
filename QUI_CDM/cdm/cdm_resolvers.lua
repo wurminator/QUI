@@ -101,10 +101,10 @@ end
 
 CDMResolvers._RebuildCatalog = RebuildCatalog
 
-_busEventFrame:RegisterEvent("PLAYER_LOGIN")
-_busEventFrame:RegisterEvent("TRAIT_TREE_CHANGED")
-_busEventFrame:RegisterEvent("SPELLS_CHANGED")
-_busEventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(_busEventFrame.RegisterEvent, _busEventFrame, "PLAYER_LOGIN")
+pcall(_busEventFrame.RegisterEvent, _busEventFrame, "TRAIT_TREE_CHANGED")
+pcall(_busEventFrame.RegisterEvent, _busEventFrame, "SPELLS_CHANGED")
+pcall(_busEventFrame.RegisterEvent, _busEventFrame, "PLAYER_REGEN_ENABLED")
 _busEventFrame:SetScript("OnEvent", function(_, evt)
     if evt == "PLAYER_REGEN_ENABLED" then
         if _rebuildPending then RebuildCatalog() end
@@ -122,11 +122,11 @@ local ResolverIsSecretValue = function(value)
 end
 
 local _runtimeFrame = CreateFrame("Frame")
-_runtimeFrame:RegisterEvent("SPELL_UPDATE_COOLDOWN")
-_runtimeFrame:RegisterEvent("SPELL_UPDATE_CHARGES")
-_runtimeFrame:RegisterEvent("SPELL_UPDATE_USES")
-_runtimeFrame:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "player")
-_runtimeFrame:RegisterUnitEvent("UNIT_SPELLCAST_START", "player")
+pcall(_runtimeFrame.RegisterEvent, _runtimeFrame, "SPELL_UPDATE_COOLDOWN")
+pcall(_runtimeFrame.RegisterEvent, _runtimeFrame, "SPELL_UPDATE_CHARGES")
+pcall(_runtimeFrame.RegisterEvent, _runtimeFrame, "SPELL_UPDATE_USES")
+pcall(_runtimeFrame.RegisterUnitEvent, _runtimeFrame, "UNIT_SPELLCAST_SUCCEEDED", "player")
+pcall(_runtimeFrame.RegisterUnitEvent, _runtimeFrame, "UNIT_SPELLCAST_START", "player")
 
 ns.CDMRuntimeEventTraceHook = nil
 

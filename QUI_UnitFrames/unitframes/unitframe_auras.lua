@@ -225,7 +225,7 @@ local function EnsureBossEngageFrame()
     if bossEngageFrame then return end
 
     bossEngageFrame = CreateFrame("Frame")
-    bossEngageFrame:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+    pcall(bossEngageFrame.RegisterEvent, bossEngageFrame, "INSTANCE_ENCOUNTER_ENGAGE_UNIT")
     bossEngageFrame:SetScript("OnEvent", function()
         local frames = QUI_UF.frames
         if not frames then return end
@@ -242,14 +242,14 @@ local function SetupAuraTracking(frame)
     local unit = QUI_UF.GetFrameUnit(frame)
 
     if unit == "target" then
-        frame:RegisterEvent("PLAYER_TARGET_CHANGED")
+        pcall(frame.RegisterEvent, frame, "PLAYER_TARGET_CHANGED")
     elseif unit == "focus" then
-        frame:RegisterEvent("PLAYER_FOCUS_CHANGED")
+        pcall(frame.RegisterEvent, frame, "PLAYER_FOCUS_CHANGED")
     elseif unit == "pet" then
-        frame:RegisterUnitEvent("UNIT_PET", "player")
+        pcall(frame.RegisterUnitEvent, frame, "UNIT_PET", "player")
     elseif unit == "targettarget" then
-        frame:RegisterEvent("PLAYER_TARGET_CHANGED")
-        frame:RegisterEvent("UNIT_TARGET")
+        pcall(frame.RegisterEvent, frame, "PLAYER_TARGET_CHANGED")
+        pcall(frame.RegisterEvent, frame, "UNIT_TARGET")
     elseif unit:match("^boss%d+$") then
         EnsureBossEngageFrame()
     end

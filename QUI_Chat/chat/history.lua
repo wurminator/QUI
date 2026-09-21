@@ -152,9 +152,9 @@ function ApplyEnabled()
 end
 
 local addonFrame = CreateFrame("Frame")
-addonFrame:RegisterEvent("ADDON_LOADED")
-addonFrame:RegisterEvent("PLAYER_LOGIN")
-addonFrame:RegisterEvent("PLAYER_LOGOUT")
+pcall(addonFrame.RegisterEvent, addonFrame, "ADDON_LOADED")
+pcall(addonFrame.RegisterEvent, addonFrame, "PLAYER_LOGIN")
+pcall(addonFrame.RegisterEvent, addonFrame, "PLAYER_LOGOUT")
 addonFrame:SetScript("OnEvent", function(self, event, name)
     if event == "ADDON_LOADED" and name == ADDON_NAME then
         local Storage = ns.QUI and ns.QUI.Chat and ns.QUI.Chat.HistoryStorage

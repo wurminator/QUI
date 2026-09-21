@@ -187,7 +187,7 @@ end
 local function ApplyCooldownPhase(icon, iconState, phaseName, phaseT)
     if phaseName == "cooldown" then
         if icon.Cooldown and phaseT < 0.05 then
-            icon.Cooldown:SetCooldown(GetTime(), iconState.cooldownDur or 7)
+            pcall(icon.Cooldown.SetCooldown, icon.Cooldown, GetTime(), iconState.cooldownDur or 7)
             ApplyPreviewSwipe(icon, "cooldown")
         end
         if icon.Icon then icon.Icon:SetDesaturated(true) end
@@ -251,7 +251,7 @@ local function ApplyAuraPhase(icon, iconState, phaseName, phaseT)
     elseif phaseName == "ticking_down" then
         if icon.Cooldown then
             if phaseT < 0.05 then
-                icon.Cooldown:SetCooldown(GetTime(), iconState.cooldownDur or 7)
+                pcall(icon.Cooldown.SetCooldown, icon.Cooldown, GetTime(), iconState.cooldownDur or 7)
                 ApplyPreviewSwipe(icon, "aura")
             end
         end

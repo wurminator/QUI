@@ -1048,10 +1048,10 @@ function CDMIcons.EventTraceInstallSourceProbes()
 
     local evFrame = CreateFrame and CreateFrame("Frame")
     if evFrame and evFrame.RegisterEvent and evFrame.SetScript then
-        evFrame:RegisterEvent("SPELL_ACTIVATION_OVERLAY_GLOW_SHOW")
-        evFrame:RegisterEvent("SPELL_ACTIVATION_OVERLAY_GLOW_HIDE")
-        evFrame:RegisterEvent("SPELL_ACTIVATION_OVERLAY_SHOW")
-        evFrame:RegisterEvent("SPELL_ACTIVATION_OVERLAY_HIDE")
+        pcall(evFrame.RegisterEvent, evFrame, "SPELL_ACTIVATION_OVERLAY_GLOW_SHOW")
+        pcall(evFrame.RegisterEvent, evFrame, "SPELL_ACTIVATION_OVERLAY_GLOW_HIDE")
+        pcall(evFrame.RegisterEvent, evFrame, "SPELL_ACTIVATION_OVERLAY_SHOW")
+        pcall(evFrame.RegisterEvent, evFrame, "SPELL_ACTIVATION_OVERLAY_HIDE")
         evFrame:SetScript("OnEvent", function(_, event, spellID)
             if not CDMIcons._eventTraceSpellID then return end
             CDMIcons.EventTracePrintSource("glow-event", CDMIcons._eventTraceSpellID,
@@ -2166,12 +2166,12 @@ local function RunCDMDebugNative(msg)
         "PLAYER_TARGET_CHANGED", "PLAYER_SOFT_ENEMY_CHANGED", "PLAYER_SOFT_FRIEND_CHANGED",
         "SPELL_UPDATE_COOLDOWN", "SPELL_UPDATE_CHARGES", "SPELL_UPDATE_USES",
     }) do
-        eventFrame:RegisterEvent(event)
+        pcall(eventFrame.RegisterEvent, eventFrame, event)
     end
     if eventFrame.RegisterUnitEvent then
-        eventFrame:RegisterUnitEvent("UNIT_AURA", "player", "target")
+        pcall(eventFrame.RegisterUnitEvent, eventFrame, "UNIT_AURA", "player", "target")
     else
-        eventFrame:RegisterEvent("UNIT_AURA")
+        pcall(eventFrame.RegisterEvent, eventFrame, "UNIT_AURA")
     end
     eventFrame:SetScript("OnEvent", function(_, event, unit, updateInfo)
         if not nativeWatch.active then return end

@@ -317,12 +317,12 @@ local function SetupCursorFollowing()
 end
 
 local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-eventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
-eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-eventFrame:RegisterEvent("SPELL_UPDATE_COOLDOWN")
-eventFrame:RegisterEvent("ACTIONBAR_UPDATE_COOLDOWN")
-eventFrame:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "player")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ENTERING_WORLD")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_DISABLED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_ENABLED")
+pcall(eventFrame.RegisterEvent, eventFrame, "SPELL_UPDATE_COOLDOWN")
+pcall(eventFrame.RegisterEvent, eventFrame, "ACTIONBAR_UPDATE_COOLDOWN")
+pcall(eventFrame.RegisterUnitEvent, eventFrame, "UNIT_SPELLCAST_SUCCEEDED", "player")
 
 eventFrame:SetScript("OnEvent", function(self, event, _, _, spellID)
     if event == "PLAYER_ENTERING_WORLD" then

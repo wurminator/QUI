@@ -3341,7 +3341,7 @@ function SkinBase.OnAddOnLoaded(addonName, callback, delay)
     end
 
     local watcher = CreateFrame("Frame")
-    watcher:RegisterEvent("ADDON_LOADED")
+    pcall(watcher.RegisterEvent, watcher, "ADDON_LOADED")
     watcher:SetScript("OnEvent", function(self, _, name)
         if name == addonName then
             self:UnregisterEvent("ADDON_LOADED")

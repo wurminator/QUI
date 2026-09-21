@@ -50,7 +50,7 @@ end
 ns.GetAudioDeviceOptions = GetAudioDeviceOptions
 
 local watcher = CreateFrame("Frame")
-watcher:RegisterEvent("SOUND_DEVICE_UPDATE")
+pcall(watcher.RegisterEvent, watcher, "SOUND_DEVICE_UPDATE")
 watcher:SetScript("OnEvent", function()
     ApplyPreferredDevice()
 end)

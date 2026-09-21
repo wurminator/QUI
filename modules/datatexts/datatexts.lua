@@ -158,7 +158,7 @@ local function RebuildLockoutCache()
 end
 
 local lockoutWatcher = CreateFrame("Frame")
-lockoutWatcher:RegisterEvent("UPDATE_INSTANCE_INFO")
+pcall(lockoutWatcher.RegisterEvent, lockoutWatcher, "UPDATE_INSTANCE_INFO")
 lockoutWatcher:SetScript("OnEvent", RebuildLockoutCache)
 
 local function RefreshLockoutCache()
@@ -325,7 +325,7 @@ local function QueueCombatTeardown(frame)
     combatDeferredTeardown[#combatDeferredTeardown + 1] = frame
     if not combatTeardownWatcher then
         combatTeardownWatcher = CreateFrame("Frame")
-        combatTeardownWatcher:RegisterEvent("PLAYER_REGEN_ENABLED")
+        pcall(combatTeardownWatcher.RegisterEvent, combatTeardownWatcher, "PLAYER_REGEN_ENABLED")
         combatTeardownWatcher:SetScript("OnEvent", function()
             local list = combatDeferredTeardown
             combatDeferredTeardown = nil
@@ -1126,9 +1126,9 @@ Datatexts:Register("gold", {
 
         frame.Update = Update
 
-        frame:RegisterEvent("PLAYER_MONEY")
-        frame:RegisterEvent("PLAYER_ENTERING_WORLD")
-        frame:RegisterEvent("TOKEN_MARKET_PRICE_UPDATED")
+        pcall(frame.RegisterEvent, frame, "PLAYER_MONEY")
+        pcall(frame.RegisterEvent, frame, "PLAYER_ENTERING_WORLD")
+        pcall(frame.RegisterEvent, frame, "TOKEN_MARKET_PRICE_UPDATED")
         frame:SetScript("OnEvent", Update)
 
         Update()
@@ -1298,7 +1298,7 @@ Datatexts:Register("alts", {
             end
         end
 
-        frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+        pcall(frame.RegisterEvent, frame, "PLAYER_ENTERING_WORLD")
         frame:SetScript("OnEvent", Update)
 
         Update()
@@ -1445,8 +1445,8 @@ Datatexts:Register("durability", {
 
         frame.Update = Update
 
-        frame:RegisterEvent("UPDATE_INVENTORY_DURABILITY")
-        frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+        pcall(frame.RegisterEvent, frame, "UPDATE_INVENTORY_DURABILITY")
+        pcall(frame.RegisterEvent, frame, "PLAYER_ENTERING_WORLD")
         frame:SetScript("OnEvent", Update)
 
         slotFrame:EnableMouse(true)
@@ -1757,13 +1757,13 @@ Datatexts:Register("friends", {
 
         frame.Update = Update
 
-        frame:RegisterEvent("FRIENDLIST_UPDATE")
-        frame:RegisterEvent("CHAT_MSG_SYSTEM")
-        frame:RegisterEvent("BN_FRIEND_ACCOUNT_ONLINE")
-        frame:RegisterEvent("BN_FRIEND_ACCOUNT_OFFLINE")
-        frame:RegisterEvent("BN_FRIEND_INFO_CHANGED")
-        frame:RegisterEvent("BN_CONNECTED")
-        frame:RegisterEvent("BN_DISCONNECTED")
+        pcall(frame.RegisterEvent, frame, "FRIENDLIST_UPDATE")
+        pcall(frame.RegisterEvent, frame, "CHAT_MSG_SYSTEM")
+        pcall(frame.RegisterEvent, frame, "BN_FRIEND_ACCOUNT_ONLINE")
+        pcall(frame.RegisterEvent, frame, "BN_FRIEND_ACCOUNT_OFFLINE")
+        pcall(frame.RegisterEvent, frame, "BN_FRIEND_INFO_CHANGED")
+        pcall(frame.RegisterEvent, frame, "BN_CONNECTED")
+        pcall(frame.RegisterEvent, frame, "BN_DISCONNECTED")
         frame:SetScript("OnEvent", function(_, event)
             if event == "MODIFIER_STATE_CHANGED" then return end
             friendsCache.lastUpdate = 0
@@ -1930,7 +1930,7 @@ Datatexts:Register("friends", {
         end)
         slotFrame:SetScript("OnLeave", function() GameTooltip:Hide() end)
 
-        frame:RegisterEvent("MODIFIER_STATE_CHANGED")
+        pcall(frame.RegisterEvent, frame, "MODIFIER_STATE_CHANGED")
         frame.friendsDatatextEnabled = true
         if not frame.friendsModifierHooked then
             frame:HookScript("OnEvent", function(self, event, key)
@@ -2179,8 +2179,8 @@ Datatexts:Register("guild", {
 
         frame.Update = Update
 
-        frame:RegisterEvent("GUILD_ROSTER_UPDATE")
-        frame:RegisterEvent("PLAYER_GUILD_UPDATE")
+        pcall(frame.RegisterEvent, frame, "GUILD_ROSTER_UPDATE")
+        pcall(frame.RegisterEvent, frame, "PLAYER_GUILD_UPDATE")
         frame:SetScript("OnEvent", function(self, event, unit)
             if event == "MODIFIER_STATE_CHANGED" then return end
             if event == "PLAYER_GUILD_UPDATE" and unit and unit ~= "player" then
@@ -2300,7 +2300,7 @@ Datatexts:Register("guild", {
         end)
         slotFrame:SetScript("OnLeave", function() GameTooltip:Hide() end)
 
-        frame:RegisterEvent("MODIFIER_STATE_CHANGED")
+        pcall(frame.RegisterEvent, frame, "MODIFIER_STATE_CHANGED")
         frame.guildDatatextEnabled = true
         if not frame.guildModifierHooked then
             frame:HookScript("OnEvent", function(self, event, key)
@@ -2450,10 +2450,10 @@ Datatexts:Register("lootspec", {
 
         frame.Update = Update
 
-        frame:RegisterEvent("PLAYER_ENTERING_WORLD")
-        frame:RegisterEvent("PLAYER_LOOT_SPEC_UPDATED")
-        frame:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
-        frame:RegisterEvent("PLAYER_TALENT_UPDATE")
+        pcall(frame.RegisterEvent, frame, "PLAYER_ENTERING_WORLD")
+        pcall(frame.RegisterEvent, frame, "PLAYER_LOOT_SPEC_UPDATED")
+        pcall(frame.RegisterEvent, frame, "ACTIVE_TALENT_GROUP_CHANGED")
+        pcall(frame.RegisterEvent, frame, "PLAYER_TALENT_UPDATE")
         frame:SetScript("OnEvent", function(self, event)
             if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" then
                 C_Timer.After(0.1, Update)
@@ -2604,8 +2604,8 @@ Datatexts:Register("bags", {
 
         frame.Update = Update
 
-        frame:RegisterEvent("BAG_UPDATE")
-        frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+        pcall(frame.RegisterEvent, frame, "BAG_UPDATE")
+        pcall(frame.RegisterEvent, frame, "PLAYER_ENTERING_WORLD")
         frame:SetScript("OnEvent", Update)
 
         slotFrame:EnableMouse(true)
@@ -2869,8 +2869,8 @@ Datatexts:Register("currencies", {
 
         activeCurrenciesFrame = frame
 
-        frame:RegisterEvent("CURRENCY_DISPLAY_UPDATE")
-        frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+        pcall(frame.RegisterEvent, frame, "CURRENCY_DISPLAY_UPDATE")
+        pcall(frame.RegisterEvent, frame, "PLAYER_ENTERING_WORLD")
         frame:SetScript("OnEvent", Update)
 
         if BackpackTokenFrame and BackpackTokenFrame.Update and not currenciesHookApplied then
@@ -2987,9 +2987,9 @@ Datatexts:Register("mythickey", {
 
         frame.Update = Update
 
-        frame:RegisterEvent("PLAYER_ENTERING_WORLD")
-        frame:RegisterEvent("CHALLENGE_MODE_MAPS_UPDATE")
-        frame:RegisterEvent("BAG_UPDATE")
+        pcall(frame.RegisterEvent, frame, "PLAYER_ENTERING_WORLD")
+        pcall(frame.RegisterEvent, frame, "CHALLENGE_MODE_MAPS_UPDATE")
+        pcall(frame.RegisterEvent, frame, "BAG_UPDATE")
         frame:SetScript("OnEvent", Update)
 
         slotFrame:EnableMouse(true)
@@ -3169,13 +3169,13 @@ Datatexts:Register("playerspec", {
 
         frame.Update = Update
 
-        frame:RegisterEvent("PLAYER_ENTERING_WORLD")
-        frame:RegisterEvent("PLAYER_TALENT_UPDATE")
-        frame:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
-        frame:RegisterEvent("PLAYER_LOOT_SPEC_UPDATED")
-        frame:RegisterEvent("TRAIT_CONFIG_UPDATED")
-        frame:RegisterEvent("TRAIT_CONFIG_DELETED")
-        frame:RegisterEvent("TRAIT_CONFIG_LIST_UPDATED")
+        pcall(frame.RegisterEvent, frame, "PLAYER_ENTERING_WORLD")
+        pcall(frame.RegisterEvent, frame, "PLAYER_TALENT_UPDATE")
+        pcall(frame.RegisterEvent, frame, "ACTIVE_TALENT_GROUP_CHANGED")
+        pcall(frame.RegisterEvent, frame, "PLAYER_LOOT_SPEC_UPDATED")
+        pcall(frame.RegisterEvent, frame, "TRAIT_CONFIG_UPDATED")
+        pcall(frame.RegisterEvent, frame, "TRAIT_CONFIG_DELETED")
+        pcall(frame.RegisterEvent, frame, "TRAIT_CONFIG_LIST_UPDATED")
         frame:SetScript("OnEvent", function(self, event)
             if event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE"
                or event == "TRAIT_CONFIG_UPDATED" or event == "TRAIT_CONFIG_LIST_UPDATED" then
@@ -3482,9 +3482,9 @@ Datatexts:Register("experience", {
 
         frame:RegisterForClicks("AnyUp")
 
-        frame:RegisterEvent("PLAYER_XP_UPDATE")
-        frame:RegisterEvent("PLAYER_LEVEL_UP")
-        frame:RegisterEvent("UPDATE_EXHAUSTION")
+        pcall(frame.RegisterEvent, frame, "PLAYER_XP_UPDATE")
+        pcall(frame.RegisterEvent, frame, "PLAYER_LEVEL_UP")
+        pcall(frame.RegisterEvent, frame, "UPDATE_EXHAUSTION")
         frame:SetScript("OnEvent", function()
             Update()
         end)

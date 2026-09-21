@@ -358,21 +358,21 @@ function UpdateUsabilityPolling()
     local checkFrame = usabilityState.checkFrame
 
     if usabilityEnabled or rangeEnabled then
-        checkFrame:RegisterEvent("SPELL_UPDATE_CHARGES")
-        checkFrame:RegisterUnitEvent("UNIT_POWER_UPDATE", "player")
-        checkFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
-        checkFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
-        checkFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-        checkFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-        checkFrame:RegisterEvent("ZONE_CHANGED_INDOORS")
+        pcall(checkFrame.RegisterEvent, checkFrame, "SPELL_UPDATE_CHARGES")
+        pcall(checkFrame.RegisterUnitEvent, checkFrame, "UNIT_POWER_UPDATE", "player")
+        pcall(checkFrame.RegisterEvent, checkFrame, "PLAYER_TARGET_CHANGED")
+        pcall(checkFrame.RegisterEvent, checkFrame, "PLAYER_REGEN_DISABLED")
+        pcall(checkFrame.RegisterEvent, checkFrame, "PLAYER_REGEN_ENABLED")
+        pcall(checkFrame.RegisterEvent, checkFrame, "ZONE_CHANGED_NEW_AREA")
+        pcall(checkFrame.RegisterEvent, checkFrame, "ZONE_CHANGED_INDOORS")
 
         if rangeEnabled then
-            checkFrame:RegisterEvent("ACTION_RANGE_CHECK_UPDATE")
+            pcall(checkFrame.RegisterEvent, checkFrame, "ACTION_RANGE_CHECK_UPDATE")
         else
             checkFrame:UnregisterEvent("ACTION_RANGE_CHECK_UPDATE")
         end
         if usabilityEnabled then
-            checkFrame:RegisterEvent("ACTION_USABLE_CHANGED")
+            pcall(checkFrame.RegisterEvent, checkFrame, "ACTION_USABLE_CHANGED")
         else
             checkFrame:UnregisterEvent("ACTION_USABLE_CHANGED")
         end

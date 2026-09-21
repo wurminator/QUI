@@ -585,7 +585,7 @@ local function ApplyPhase(pb, bs, phaseName, phaseT)
     elseif phaseName == "cooldown" then
         if phaseT < 0.05 then
             pb.cooldown:Show()
-            pb.cooldown:SetCooldown(GetTime(), bs.cooldownDur or 7)
+            pcall(pb.cooldown.SetCooldown, pb.cooldown, GetTime(), bs.cooldownDur or 7)
         end
         pb.icon:SetDesaturated(true)
     elseif phaseName == "ready_glow" then

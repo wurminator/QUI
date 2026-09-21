@@ -541,13 +541,13 @@ local function ApplyHideSettings()
             if hideErrors then
                 UIErrorsFrame:UnregisterEvent("UI_ERROR_MESSAGE")
             else
-                UIErrorsFrame:RegisterEvent("UI_ERROR_MESSAGE")
+                pcall(UIErrorsFrame.RegisterEvent, UIErrorsFrame, "UI_ERROR_MESSAGE")
             end
 
             if hideInfo then
                 UIErrorsFrame:UnregisterEvent("UI_INFO_MESSAGE")
             else
-                UIErrorsFrame:RegisterEvent("UI_INFO_MESSAGE")
+                pcall(UIErrorsFrame.RegisterEvent, UIErrorsFrame, "UI_INFO_MESSAGE")
             end
         end
     end
@@ -583,22 +583,22 @@ local function ApplyHideSettings()
 end
 
 local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-eventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-eventFrame:RegisterEvent("PLAYER_ROLES_ASSIGNED")
-eventFrame:RegisterEvent("ADDON_LOADED")
-eventFrame:RegisterEvent("CHALLENGE_MODE_START")
-eventFrame:RegisterEvent("CHALLENGE_MODE_RESET")
-eventFrame:RegisterEvent("SCENARIO_UPDATE")
-eventFrame:RegisterEvent("SCENARIO_COMPLETED")
-eventFrame:RegisterEvent("ACTIVE_DELVE_DATA_UPDATE")
-eventFrame:RegisterEvent("UNIT_ENTERED_VEHICLE")
-eventFrame:RegisterEvent("UNIT_EXITED_VEHICLE")
+pcall(eventFrame.RegisterEvent, eventFrame, "ZONE_CHANGED_NEW_AREA")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ENTERING_WORLD")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_ENABLED")
+pcall(eventFrame.RegisterEvent, eventFrame, "GROUP_ROSTER_UPDATE")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ROLES_ASSIGNED")
+pcall(eventFrame.RegisterEvent, eventFrame, "ADDON_LOADED")
+pcall(eventFrame.RegisterEvent, eventFrame, "CHALLENGE_MODE_START")
+pcall(eventFrame.RegisterEvent, eventFrame, "CHALLENGE_MODE_RESET")
+pcall(eventFrame.RegisterEvent, eventFrame, "SCENARIO_UPDATE")
+pcall(eventFrame.RegisterEvent, eventFrame, "SCENARIO_COMPLETED")
+pcall(eventFrame.RegisterEvent, eventFrame, "ACTIVE_DELVE_DATA_UPDATE")
+pcall(eventFrame.RegisterEvent, eventFrame, "UNIT_ENTERED_VEHICLE")
+pcall(eventFrame.RegisterEvent, eventFrame, "UNIT_EXITED_VEHICLE")
 if C_PetBattles then
-    eventFrame:RegisterEvent("PET_BATTLE_OPENING_START")
-    eventFrame:RegisterEvent("PET_BATTLE_CLOSE")
+    pcall(eventFrame.RegisterEvent, eventFrame, "PET_BATTLE_OPENING_START")
+    pcall(eventFrame.RegisterEvent, eventFrame, "PET_BATTLE_CLOSE")
 end
 eventFrame:SetScript("OnEvent", function(self, event, addon)
     local settings = GetSettings()
@@ -770,10 +770,10 @@ local function ShowAllHiddenForEditMode()
             UIErrorsFrame:Show()
         end
         if settings.hideErrorMessages then
-            UIErrorsFrame:RegisterEvent("UI_ERROR_MESSAGE")
+            pcall(UIErrorsFrame.RegisterEvent, UIErrorsFrame, "UI_ERROR_MESSAGE")
         end
         if settings.hideInfoMessages then
-            UIErrorsFrame:RegisterEvent("UI_INFO_MESSAGE")
+            pcall(UIErrorsFrame.RegisterEvent, UIErrorsFrame, "UI_INFO_MESSAGE")
         end
     end
 end

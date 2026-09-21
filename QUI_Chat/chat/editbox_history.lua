@@ -352,8 +352,8 @@ SyncPreSendCallback()
 InitializeForAllFrames()
 
 local addonFrame = CreateFrame("Frame")
-addonFrame:RegisterEvent("ADDON_LOADED")
-addonFrame:RegisterEvent("PLAYER_LOGIN")
+pcall(addonFrame.RegisterEvent, addonFrame, "ADDON_LOADED")
+pcall(addonFrame.RegisterEvent, addonFrame, "PLAYER_LOGIN")
 addonFrame:SetScript("OnEvent", function(self, event, name)
     if event == "ADDON_LOADED" and name == ADDON_NAME then
         SyncPreSendCallback()

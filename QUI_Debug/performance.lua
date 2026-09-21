@@ -819,8 +819,8 @@ end
 _G.QUI_TogglePerfMonitor = Toggle
 
 local bootstrap = CreateFrame("Frame")
-bootstrap:RegisterEvent("PLAYER_LOGIN")
-bootstrap:RegisterEvent("ADDON_LOADED")
+pcall(bootstrap.RegisterEvent, bootstrap, "PLAYER_LOGIN")
+pcall(bootstrap.RegisterEvent, bootstrap, "ADDON_LOADED")
 bootstrap:SetScript("OnEvent", function(self, event, addonName)
     if event == "ADDON_LOADED" then
         if IsQUIAddon(addonName) then

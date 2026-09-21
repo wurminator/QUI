@@ -1038,7 +1038,7 @@ if ns.DebugRegister then
 else
     SetupDebugInstrumentation()
 end
-eventFrame:RegisterEvent("ADDON_LOADED")
+pcall(eventFrame.RegisterEvent, eventFrame, "ADDON_LOADED")
 eventFrame:SetScript("OnEvent", function(self, event, arg1)
     if event == "ADDON_LOADED" and initialized then
         QueueExtraTooltipDiscovery()
@@ -1086,7 +1086,7 @@ local function InitializeTooltipSkinning()
     SetupHealthBarHook()
     SetupPostProcessor()
     DiscoverExtraTooltips()
-    eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+    pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_ENABLED")
     initialized = true
 end
 

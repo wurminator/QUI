@@ -195,8 +195,8 @@ local function SyncWhisperMode()
     end
     if not whisperModeWatcher then
         whisperModeWatcher = CreateFrame("Frame")
-        whisperModeWatcher:RegisterEvent("CVAR_UPDATE")
-        whisperModeWatcher:RegisterEvent("PLAYER_LOGOUT")
+        pcall(whisperModeWatcher.RegisterEvent, whisperModeWatcher, "CVAR_UPDATE")
+        pcall(whisperModeWatcher.RegisterEvent, whisperModeWatcher, "PLAYER_LOGOUT")
         whisperModeWatcher:SetScript("OnEvent", function(_, event, name, value)
             if event == "CVAR_UPDATE" and name == "whisperMode"
                 and pendingWhisperMode == (value or _G.GetCVar("whisperMode")) then
@@ -245,7 +245,7 @@ local function QueueParentForRegen(region, parent)
             end
         end)
     end
-    regenFlushFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+    pcall(regenFlushFrame.RegisterEvent, regenFlushFrame, "PLAYER_REGEN_ENABLED")
 end
 
 SafeSetParent = function(region, parent)
@@ -301,7 +301,7 @@ local function EnsureChannelRefreshWatcher()
     for i = 1, #CHANNEL_REFRESH_EVENTS do
         local event = CHANNEL_REFRESH_EVENTS[i]
         if not valid or valid(event) then
-            channelRefreshFrame:RegisterEvent(event)
+            pcall(channelRefreshFrame.RegisterEvent, channelRefreshFrame, event)
         end
     end
     channelRefreshFrame:SetScript("OnEvent", RefreshSuppressedChannels)
@@ -556,7 +556,7 @@ function Suppress.Apply()
     end
     if not pewFrame and _G.CreateFrame then
         pewFrame = CreateFrame("Frame")
-        pewFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+        pcall(pewFrame.RegisterEvent, pewFrame, "PLAYER_ENTERING_WORLD")
         pewFrame:SetScript("OnEvent", function(self)
             self:UnregisterAllEvents()
             pewSeen = true

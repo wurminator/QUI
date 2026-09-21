@@ -485,7 +485,7 @@ local function SetRunning(enabled)
 
     for i = 1, #WATCHED_EVENTS do
         if enabled then
-            eventFrame:RegisterEvent(WATCHED_EVENTS[i])
+            pcall(eventFrame.RegisterEvent, eventFrame, WATCHED_EVENTS[i])
         else
             eventFrame:UnregisterEvent(WATCHED_EVENTS[i])
         end

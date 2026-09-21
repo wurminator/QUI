@@ -6054,7 +6054,7 @@ function GUI:Show()
                 print("|cff60A5FAQUI:|r Settings closed (combat).")
             end
         end)
-        self._combatFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
+        pcall(self._combatFrame.RegisterEvent, self._combatFrame, "PLAYER_REGEN_DISABLED")
     end
     self.MainFrame:Show()
     self.MainFrame:Raise()

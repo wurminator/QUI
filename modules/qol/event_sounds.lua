@@ -43,14 +43,14 @@ local hadMail = false
 local mailReady = false
 
 local frame = CreateFrame("Frame")
-frame:RegisterEvent("CHAT_MSG_WHISPER")
-frame:RegisterEvent("CHAT_MSG_BN_WHISPER")
-frame:RegisterEvent("READY_CHECK")
-frame:RegisterEvent("LFG_PROPOSAL_SHOW")
-frame:RegisterEvent("RESURRECT_REQUEST")
-frame:RegisterEvent("UPDATE_PENDING_MAIL")
-frame:RegisterEvent("LOOT_ITEM_ROLL_WON")
-frame:RegisterEvent("SHOW_LOOT_TOAST_UPGRADE")
+pcall(frame.RegisterEvent, frame, "CHAT_MSG_WHISPER")
+pcall(frame.RegisterEvent, frame, "CHAT_MSG_BN_WHISPER")
+pcall(frame.RegisterEvent, frame, "READY_CHECK")
+pcall(frame.RegisterEvent, frame, "LFG_PROPOSAL_SHOW")
+pcall(frame.RegisterEvent, frame, "RESURRECT_REQUEST")
+pcall(frame.RegisterEvent, frame, "UPDATE_PENDING_MAIL")
+pcall(frame.RegisterEvent, frame, "LOOT_ITEM_ROLL_WON")
+pcall(frame.RegisterEvent, frame, "SHOW_LOOT_TOAST_UPGRADE")
 
 frame:SetScript("OnEvent", function(_, event)
     if event == "UPDATE_PENDING_MAIL" then

@@ -91,7 +91,7 @@ local function Apply()
 end
 
 local frame = CreateFrame("Frame")
-frame:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(frame.RegisterEvent, frame, "PLAYER_REGEN_ENABLED")
 frame:SetScript("OnEvent", function()
     if pendingApply then Apply() end
 end)

@@ -2,7 +2,9 @@
 --data for midnight expansion
 do
 	local versionString, revision, launchDate, gameVersion = GetBuildInfo()
-	if (gameVersion >= 130000 or (gameVersion < 120000 and gameVersion ~= 16001)) then
+	local isMidnight = (gameVersion >= 120000 and gameVersion < 130000)
+	local isForever = (gameVersion >= 16000 and gameVersion < 17000)
+	if not (isMidnight or isForever) then
 		return
 	end
 

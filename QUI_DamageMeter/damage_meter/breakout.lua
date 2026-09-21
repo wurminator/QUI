@@ -913,7 +913,7 @@ function Breakout.New()
     frame:SetScript("OnEvent", function(_, event)
         if event == "PLAYER_REGEN_DISABLED" then FinishInteraction() end
     end)
-    frame:RegisterEvent("PLAYER_REGEN_DISABLED")
+    pcall(frame.RegisterEvent, frame, "PLAYER_REGEN_DISABLED")
     frame:SetScript("OnHide", function()
         FinishInteraction()
         self:_ClearContext()

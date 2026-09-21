@@ -130,6 +130,7 @@ local function BuildFlyout(frame, slotFrame)
         flyout:SetFixedFrameStrata(true)
     end
 
+    -- pcall: Beta secure-snippet bug workaround, recheck at launch
     pcall(function()
         flyout:SetAttribute("_onstate-combat", [[
             if newstate == "true" then
@@ -299,9 +300,9 @@ Datatexts:Register("travel", {
         end
         if slotFrame._quiOnWidthDirty then slotFrame._quiOnWidthDirty() end
 
-        frame:RegisterEvent("LEARNED_SPELL_IN_SKILL_LINE")
-        frame:RegisterEvent("CHALLENGE_MODE_MAPS_UPDATE")
-        frame:RegisterEvent("SPELL_UPDATE_COOLDOWN")
+        pcall(frame.RegisterEvent, frame, "LEARNED_SPELL_IN_SKILL_LINE")
+        pcall(frame.RegisterEvent, frame, "CHALLENGE_MODE_MAPS_UPDATE")
+        pcall(frame.RegisterEvent, frame, "SPELL_UPDATE_COOLDOWN")
         frame:SetScript("OnEvent", function(self, event)
             if event == "LEARNED_SPELL_IN_SKILL_LINE" or event == "CHALLENGE_MODE_MAPS_UPDATE" then
                 self._flyoutDirty = true
@@ -318,7 +319,7 @@ Datatexts:Register("travel", {
         end)
 
         if InCombatLockdown() and not ns._inInitSafeWindow then
-            frame:RegisterEvent("PLAYER_REGEN_ENABLED")
+            pcall(frame.RegisterEvent, frame, "PLAYER_REGEN_ENABLED")
         else
             BuildSecureWidgets(frame, slotFrame, size)
         end
@@ -336,7 +337,7 @@ Datatexts:Register("travel", {
         end
         if frame._flyout then
             if InCombatLockdown() then
-                frame:RegisterEvent("PLAYER_REGEN_ENABLED")
+                pcall(frame.RegisterEvent, frame, "PLAYER_REGEN_ENABLED")
                 frame:SetScript("OnEvent", function(self)
                     self:UnregisterAllEvents()
                     self:SetScript("OnEvent", nil)

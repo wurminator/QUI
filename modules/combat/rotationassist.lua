@@ -501,14 +501,14 @@ RefreshIconFrame = function()
 end
 
 local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-eventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
-eventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
-eventFrame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
-eventFrame:RegisterEvent("TRAIT_CONFIG_UPDATED")
-eventFrame:RegisterEvent("SPELL_UPDATE_COOLDOWN")
-eventFrame:RegisterEvent("ACTIONBAR_UPDATE_COOLDOWN")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ENTERING_WORLD")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_ENABLED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_DISABLED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_TARGET_CHANGED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_SPECIALIZATION_CHANGED")
+pcall(eventFrame.RegisterEvent, eventFrame, "TRAIT_CONFIG_UPDATED")
+pcall(eventFrame.RegisterEvent, eventFrame, "SPELL_UPDATE_COOLDOWN")
+pcall(eventFrame.RegisterEvent, eventFrame, "ACTIONBAR_UPDATE_COOLDOWN")
 
 if EventRegistry and EventRegistry.RegisterCallback then
     EventRegistry:RegisterCallback("AssistedCombatManager.OnSetActionSpell", function()

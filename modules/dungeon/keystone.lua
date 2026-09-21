@@ -48,7 +48,7 @@ local function InsertKeystone()
 end
 
 local frame = CreateFrame("Frame")
-frame:RegisterEvent("ADDON_LOADED")
+pcall(frame.RegisterEvent, frame, "ADDON_LOADED")
 frame:SetScript("OnEvent", function(self, event, addon)
     if addon == "Blizzard_ChallengesUI" then
         if ChallengesKeystoneFrame then

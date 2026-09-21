@@ -1527,21 +1527,21 @@ local function RemapPressedSpellCandidates()
     end
 end
 
-eventFrame:RegisterEvent("ACTIONBAR_SLOT_CHANGED")
-eventFrame:RegisterEvent("UPDATE_BINDINGS")
-eventFrame:RegisterEvent("UPDATE_MACROS")
-eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-eventFrame:RegisterEvent("SPELLS_CHANGED")
-eventFrame:RegisterEvent("ACTIONBAR_PAGE_CHANGED")
-eventFrame:RegisterEvent("UPDATE_BONUS_ACTIONBAR")
-eventFrame:RegisterEvent("UPDATE_SHAPESHIFT_FORM")
-eventFrame:RegisterEvent("UPDATE_SHAPESHIFT_FORMS")
-eventFrame:RegisterEvent("UPDATE_STEALTH")
-eventFrame:RegisterEvent("UPDATE_VEHICLE_ACTIONBAR")
-eventFrame:RegisterEvent("UPDATE_OVERRIDE_ACTIONBAR")
-eventFrame:RegisterEvent("UPDATE_POSSESS_BAR")
-eventFrame:RegisterEvent("UPDATE_MULTI_CAST_ACTIONBAR")
-eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(eventFrame.RegisterEvent, eventFrame, "ACTIONBAR_SLOT_CHANGED")
+pcall(eventFrame.RegisterEvent, eventFrame, "UPDATE_BINDINGS")
+pcall(eventFrame.RegisterEvent, eventFrame, "UPDATE_MACROS")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ENTERING_WORLD")
+pcall(eventFrame.RegisterEvent, eventFrame, "SPELLS_CHANGED")
+pcall(eventFrame.RegisterEvent, eventFrame, "ACTIONBAR_PAGE_CHANGED")
+pcall(eventFrame.RegisterEvent, eventFrame, "UPDATE_BONUS_ACTIONBAR")
+pcall(eventFrame.RegisterEvent, eventFrame, "UPDATE_SHAPESHIFT_FORM")
+pcall(eventFrame.RegisterEvent, eventFrame, "UPDATE_SHAPESHIFT_FORMS")
+pcall(eventFrame.RegisterEvent, eventFrame, "UPDATE_STEALTH")
+pcall(eventFrame.RegisterEvent, eventFrame, "UPDATE_VEHICLE_ACTIONBAR")
+pcall(eventFrame.RegisterEvent, eventFrame, "UPDATE_OVERRIDE_ACTIONBAR")
+pcall(eventFrame.RegisterEvent, eventFrame, "UPDATE_POSSESS_BAR")
+pcall(eventFrame.RegisterEvent, eventFrame, "UPDATE_MULTI_CAST_ACTIONBAR")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_ENABLED")
 
 eventFrame:SetScript("OnEvent", function(self, event)
     if event ~= "PLAYER_ENTERING_WORLD" and event ~= "PLAYER_REGEN_ENABLED" then
@@ -1596,8 +1596,8 @@ local function HookViewerLayout(viewerName)
 end
 
 local initFrame = CreateFrame("Frame")
-initFrame:RegisterEvent("ADDON_LOADED")
-initFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+pcall(initFrame.RegisterEvent, initFrame, "ADDON_LOADED")
+pcall(initFrame.RegisterEvent, initFrame, "PLAYER_ENTERING_WORLD")
 
 local function HookAllViewerLayouts()
     HookViewerLayout("essential")
@@ -1890,7 +1890,7 @@ local function RefreshRotationHelper()
 end
 
 local rotationHelperInitFrame = CreateFrame("Frame")
-rotationHelperInitFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+pcall(rotationHelperInitFrame.RegisterEvent, rotationHelperInitFrame, "PLAYER_ENTERING_WORLD")
 rotationHelperInitFrame:SetScript("OnEvent", function()
     C_Timer.After(1.0, RefreshRotationHelper)
 end)
@@ -2066,10 +2066,10 @@ do
     AssistedCombatNext._Tick = Tick
 
     local resetFrame = CreateFrame("Frame")
-    resetFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-    resetFrame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
-    resetFrame:RegisterEvent("TRAIT_CONFIG_UPDATED")
-    resetFrame:RegisterEvent("CVAR_UPDATE")
+    pcall(resetFrame.RegisterEvent, resetFrame, "PLAYER_ENTERING_WORLD")
+    pcall(resetFrame.RegisterEvent, resetFrame, "PLAYER_SPECIALIZATION_CHANGED")
+    pcall(resetFrame.RegisterEvent, resetFrame, "TRAIT_CONFIG_UPDATED")
+    pcall(resetFrame.RegisterEvent, resetFrame, "CVAR_UPDATE")
     resetFrame:SetScript("OnEvent", function(_, event, cvarName)
         if event == "CVAR_UPDATE" then
             if cvarName ~= "assistedCombatIconUpdateRate" then return end

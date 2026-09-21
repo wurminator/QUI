@@ -233,9 +233,9 @@ end
 CDMIndex.Notify = Notify
 
 local _eventFrame = CreateFrame("Frame")
-_eventFrame:RegisterEvent("COOLDOWN_VIEWER_DATA_LOADED")
-_eventFrame:RegisterEvent("COOLDOWN_VIEWER_TABLE_HOTFIXED")
-_eventFrame:RegisterEvent("COOLDOWN_VIEWER_SPELL_OVERRIDE_UPDATED")
+pcall(_eventFrame.RegisterEvent, _eventFrame, "COOLDOWN_VIEWER_DATA_LOADED")
+pcall(_eventFrame.RegisterEvent, _eventFrame, "COOLDOWN_VIEWER_TABLE_HOTFIXED")
+pcall(_eventFrame.RegisterEvent, _eventFrame, "COOLDOWN_VIEWER_SPELL_OVERRIDE_UPDATED")
 _eventFrame:SetScript("OnEvent", function(_, event, arg1, arg2)
     if event == "COOLDOWN_VIEWER_DATA_LOADED" then
         Notify("data_loaded")

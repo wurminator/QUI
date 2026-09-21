@@ -250,7 +250,7 @@ ns.WhenLoggedIn(function()
     running = true
     ns.RunAfterFirstFrame(function()
         if not running then return end
-        for _, ev in ipairs(SCAN_EVENTS) do eventFrame:RegisterEvent(ev) end
+        for _, ev in ipairs(SCAN_EVENTS) do pcall(eventFrame.RegisterEvent, eventFrame, ev) end
         Storage.ScanBags.MarkAllDirty()
         Storage.ScanEquipped.MarkAllDirty()
         Storage.ScanCurrencies.MarkAllDirty()

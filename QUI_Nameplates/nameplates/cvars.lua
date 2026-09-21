@@ -18,7 +18,7 @@ local pendingActions = {}
 local hasPending = false
 
 local replayFrame = CreateFrame("Frame")
-replayFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(replayFrame.RegisterEvent, replayFrame, "PLAYER_REGEN_ENABLED")
 
 local function WriteCVar(name, value)
     pcall(SetCVar, name, value)

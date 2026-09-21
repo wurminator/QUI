@@ -8,7 +8,7 @@ end
 
 if CreateFrame then
     local f = CreateFrame("Frame")
-    f:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
+    pcall(f.RegisterEvent, f, "PLAYER_SPECIALIZATION_CHANGED")
     f:SetScript("OnEvent", function(_, _, arg1)
         if arg1 == "player" or arg1 == nil then
             local pins = ns.Settings and ns.Settings.Pins

@@ -74,8 +74,8 @@ if QUI_GF then
 end
 
 local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterEvent("PLAYER_LOGIN")
-eventFrame:RegisterEvent("ADDON_LOADED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_LOGIN")
+pcall(eventFrame.RegisterEvent, eventFrame, "ADDON_LOADED")
 eventFrame:SetScript("OnEvent", function(self)
     if TryRegister() then
         self:UnregisterEvent("ADDON_LOADED")

@@ -273,7 +273,7 @@ end
 local function SetRuntimeEventsRegistered(shouldRegister)
     if shouldRegister and not runtimeEventsRegistered then
         for eventName in pairs(RUNTIME_EVENTS) do
-            eventFrame:RegisterEvent(eventName)
+            pcall(eventFrame.RegisterEvent, eventFrame, eventName)
         end
         runtimeEventsRegistered = true
     elseif not shouldRegister and runtimeEventsRegistered then

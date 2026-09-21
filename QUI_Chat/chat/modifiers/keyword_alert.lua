@@ -180,8 +180,8 @@ end
 ApplyEnabled()
 
 local loginFrame = CreateFrame("Frame")
-loginFrame:RegisterEvent("PLAYER_LOGIN")
-loginFrame:RegisterEvent("PLAYER_GUILD_UPDATE")
+pcall(loginFrame.RegisterEvent, loginFrame, "PLAYER_LOGIN")
+pcall(loginFrame.RegisterEvent, loginFrame, "PLAYER_GUILD_UPDATE")
 loginFrame:SetScript("OnEvent", function(self, event)
     if event == "PLAYER_LOGIN" then
         ApplyEnabled()

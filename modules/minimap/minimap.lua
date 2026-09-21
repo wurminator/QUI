@@ -81,7 +81,7 @@ if not InCombatLockdown() then
     InstallMinimapLayoutNoop()
 else
     local layoutRetryFrame = CreateFrame("Frame")
-    layoutRetryFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+    pcall(layoutRetryFrame.RegisterEvent, layoutRetryFrame, "PLAYER_REGEN_ENABLED")
     layoutRetryFrame:SetScript("OnEvent", function(self)
         if InstallMinimapLayoutNoop() then
             self:UnregisterEvent("PLAYER_REGEN_ENABLED")
@@ -873,9 +873,9 @@ local function CreateZoneText()
         MinimapCluster.BorderTop:SetParent(hiddenBorder)
     end
 
-    zoneTextFrame:RegisterEvent("ZONE_CHANGED")
-    zoneTextFrame:RegisterEvent("ZONE_CHANGED_INDOORS")
-    zoneTextFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+    pcall(zoneTextFrame.RegisterEvent, zoneTextFrame, "ZONE_CHANGED")
+    pcall(zoneTextFrame.RegisterEvent, zoneTextFrame, "ZONE_CHANGED_INDOORS")
+    pcall(zoneTextFrame.RegisterEvent, zoneTextFrame, "ZONE_CHANGED_NEW_AREA")
 
     zoneTextFrame:SetScript("OnEvent", function()
         UpdateZoneTextDisplay()
@@ -3663,14 +3663,14 @@ local function RefreshMinimapButtonsAfterTransition()
 end
 
 local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterEvent("ADDON_LOADED")
-eventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-eventFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-eventFrame:RegisterEvent("PLAYER_DIFFICULTY_CHANGED")
-eventFrame:RegisterEvent("UPDATE_INSTANCE_INFO")
-eventFrame:RegisterEvent("EDIT_MODE_LAYOUTS_UPDATED")
-eventFrame:RegisterEvent("VARIABLES_LOADED")
+pcall(eventFrame.RegisterEvent, eventFrame, "ADDON_LOADED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_REGEN_ENABLED")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_ENTERING_WORLD")
+pcall(eventFrame.RegisterEvent, eventFrame, "ZONE_CHANGED_NEW_AREA")
+pcall(eventFrame.RegisterEvent, eventFrame, "PLAYER_DIFFICULTY_CHANGED")
+pcall(eventFrame.RegisterEvent, eventFrame, "UPDATE_INSTANCE_INFO")
+pcall(eventFrame.RegisterEvent, eventFrame, "EDIT_MODE_LAYOUTS_UPDATED")
+pcall(eventFrame.RegisterEvent, eventFrame, "VARIABLES_LOADED")
 
 eventFrame:SetScript("OnEvent", function(self, event, arg1)
     if event == "ADDON_LOADED" then
@@ -3737,8 +3737,8 @@ if ns.WhenLoggedIn then
 end
 
 local calendarFrame = CreateFrame("Frame")
-calendarFrame:RegisterEvent("CALENDAR_UPDATE_PENDING_INVITES")
-calendarFrame:RegisterEvent("CALENDAR_ACTION_PENDING")
+pcall(calendarFrame.RegisterEvent, calendarFrame, "CALENDAR_UPDATE_PENDING_INVITES")
+pcall(calendarFrame.RegisterEvent, calendarFrame, "CALENDAR_ACTION_PENDING")
 calendarFrame:SetScript("OnEvent", function()
     local settings = GetSettings()
     if not settings then return end
@@ -3754,8 +3754,8 @@ calendarFrame:SetScript("OnEvent", function()
 end)
 
 local petBattleFrame = CreateFrame("Frame")
-petBattleFrame:RegisterEvent("PET_BATTLE_OPENING_START")
-petBattleFrame:RegisterEvent("PET_BATTLE_CLOSE")
+pcall(petBattleFrame.RegisterEvent, petBattleFrame, "PET_BATTLE_OPENING_START")
+pcall(petBattleFrame.RegisterEvent, petBattleFrame, "PET_BATTLE_CLOSE")
 petBattleFrame:SetScript("OnEvent", function(self, event)
     if event == "PET_BATTLE_OPENING_START" then
         Minimap:Hide()

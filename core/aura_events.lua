@@ -236,7 +236,7 @@ end
 local rosterFrames = {}
 for unit in pairs(rosterUnits) do
     local f = CreateFrame("Frame")
-    f:RegisterUnitEvent("UNIT_AURA", unit)
+    pcall(f.RegisterUnitEvent, f, "UNIT_AURA", unit)
     f:SetScript("OnEvent", function(_, _, _, updateInfo)
         QueueAuraEvent(unit, updateInfo)
     end)
@@ -249,7 +249,7 @@ EnsureNameplateFrames = function()
     nameplateFrames = {}
     for unit in pairs(nameplateUnits) do
         local f = CreateFrame("Frame")
-        f:RegisterUnitEvent("UNIT_AURA", unit)
+        pcall(f.RegisterUnitEvent, f, "UNIT_AURA", unit)
         f:SetScript("OnEvent", function(_, _, _, updateInfo)
             QueueAuraEvent(unit, updateInfo)
         end)
@@ -258,7 +258,7 @@ EnsureNameplateFrames = function()
 end
 
 local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterEvent("UNIT_AURA")
+pcall(eventFrame.RegisterEvent, eventFrame, "UNIT_AURA")
 eventFrame:SetScript("OnEvent", function(self, event, unit, updateInfo)
     if issecretvalue and issecretvalue(unit) then
         return
@@ -284,7 +284,7 @@ eventFrame:SetScript("OnEvent", function(self, event, unit, updateInfo)
 end)
 
 local liftFrame = CreateFrame("Frame")
-liftFrame:RegisterEvent("ADDON_RESTRICTION_STATE_CHANGED")
+pcall(liftFrame.RegisterEvent, liftFrame, "ADDON_RESTRICTION_STATE_CHANGED")
 liftFrame:SetScript("OnEvent", function()
     local C_Secrets = _G.C_Secrets
     if C_Secrets and C_Secrets.ShouldAurasBeSecret and C_Secrets.ShouldAurasBeSecret() then

@@ -423,7 +423,7 @@ if type(CreateFrame) == "function" then
     local soundKitFrame = CreateFrame("Frame")
     for _, event in ipairs({ "ADDON_LOADED", "PLAYER_ENTERING_WORLD", "PLAYER_REGEN_ENABLED",
         "PLAYER_SPECIALIZATION_CHANGED", "PLAYER_EQUIPMENT_CHANGED", "COOLDOWN_VIEWER_DATA_LOADED" }) do
-        soundKitFrame:RegisterEvent(event)
+        pcall(soundKitFrame.RegisterEvent, soundKitFrame, event)
     end
     soundKitFrame:SetScript("OnEvent", function(self, event)
         if not soundKitsLoaded then RefreshSoundKits() end

@@ -417,7 +417,7 @@ function QUI_GFB:RestoreBlizzardFrames()
 end
 
 local combatFrame = CreateFrame("Frame")
-combatFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(combatFrame.RegisterEvent, combatFrame, "PLAYER_REGEN_ENABLED")
 combatFrame:SetScript("OnEvent", function()
     if QUI_GFB.pendingHide then
         QUI_GFB.pendingHide = false
@@ -430,12 +430,12 @@ combatFrame:SetScript("OnEvent", function()
 end)
 
 local blizzardEventFrame = CreateFrame("Frame")
-blizzardEventFrame:RegisterEvent("ADDON_LOADED")
-blizzardEventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-blizzardEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-blizzardEventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-blizzardEventFrame:RegisterEvent("PARTY_MEMBER_ENABLE")
-blizzardEventFrame:RegisterEvent("PARTY_MEMBER_DISABLE")
+pcall(blizzardEventFrame.RegisterEvent, blizzardEventFrame, "ADDON_LOADED")
+pcall(blizzardEventFrame.RegisterEvent, blizzardEventFrame, "GROUP_ROSTER_UPDATE")
+pcall(blizzardEventFrame.RegisterEvent, blizzardEventFrame, "PLAYER_ENTERING_WORLD")
+pcall(blizzardEventFrame.RegisterEvent, blizzardEventFrame, "PLAYER_REGEN_ENABLED")
+pcall(blizzardEventFrame.RegisterEvent, blizzardEventFrame, "PARTY_MEMBER_ENABLE")
+pcall(blizzardEventFrame.RegisterEvent, blizzardEventFrame, "PARTY_MEMBER_DISABLE")
 blizzardEventFrame:SetScript("OnEvent", function(_, event, addonName)
     if event == "ADDON_LOADED" then
         if addonName == ADDON_NAME then

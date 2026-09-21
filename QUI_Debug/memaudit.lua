@@ -860,8 +860,8 @@ autoFrame:SetScript("OnUpdate", function(self, elapsed)
     autoLastSnap = snap
 end)
 
-autoFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
-autoFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+pcall(autoFrame.RegisterEvent, autoFrame, "PLAYER_REGEN_DISABLED")
+pcall(autoFrame.RegisterEvent, autoFrame, "PLAYER_REGEN_ENABLED")
 autoFrame:SetScript("OnEvent", function(self, event)
     if event == "PLAYER_REGEN_DISABLED" then
         autoElapsed = 0

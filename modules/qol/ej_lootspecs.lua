@@ -172,7 +172,7 @@ local function Initialize()
 end
 
 local frame = CreateFrame("Frame")
-frame:RegisterEvent("ADDON_LOADED")
+pcall(frame.RegisterEvent, frame, "ADDON_LOADED")
 frame:SetScript("OnEvent", function(_, _, addonName)
     if addonName == "Blizzard_EncounterJournal" then
         Initialize()
