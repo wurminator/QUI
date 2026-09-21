@@ -207,16 +207,18 @@ local function WrapFrameSecureHandlers(frame)
     if InCombatLockdown() then return end
 
     local header = GetBindingHeader()
-    SecureHandlerWrapScript(frame, "OnEnter", header, ENTER_SNIPPET)
-    SecureHandlerWrapScript(frame, "OnLeave", header, LEAVE_SNIPPET)
+    local ok1 = pcall(SecureHandlerWrapScript, frame, "OnEnter", header, ENTER_SNIPPET)
+    local ok2 = pcall(SecureHandlerWrapScript, frame, "OnLeave", header, LEAVE_SNIPPET)
 
-    secureWrappedFrames[frame] = true
+    if ok1 and ok2 then
+        secureWrappedFrames[frame] = true
+    end
 end
 
 local function ClearHeaderOverrideBindings()
     if InCombatLockdown() then return end
     if bindingHeader and bindingHeader.Execute then
-        bindingHeader:Execute(CLEAR_HEADER_BINDINGS_SNIPPET)
+        pcall(bindingHeader.Execute, bindingHeader, CLEAR_HEADER_BINDINGS_SNIPPET)
     end
 end
 

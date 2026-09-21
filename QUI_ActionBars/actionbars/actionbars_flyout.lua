@@ -324,7 +324,7 @@ function EnsureOwnedFlyoutButton(index)
     ApplySpellFlyoutButtonStateTextures(btn)
     if btn.Name then btn.Name:SetText("") end
     if btn.Count then btn.Count:SetText("") end
-    SecureHandlerWrapScript(btn, "OnClick", flyout, [[
+    pcall(SecureHandlerWrapScript, btn, "OnClick", flyout, [[
         if not down then
             owner:SetAttribute("flyoutID", nil)
             owner:Hide()

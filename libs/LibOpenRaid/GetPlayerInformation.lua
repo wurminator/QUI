@@ -82,13 +82,13 @@ local isTimewalkWoW = function()
 end
 
 local IsTWWExpansion = function()
-    if (buildInfo >= 110000) then
+    if (buildInfo >= 110000 or buildInfo == 16001) then
         return true
     end
 end
 
 local IsDragonflight = function() --and beyond
-	return buildInfo >= 100000 and buildInfo < 120000
+	return (buildInfo >= 100000 and buildInfo < 120000) or buildInfo == 16001
 end
 
 local IsShadowlands = function()
@@ -131,6 +131,10 @@ end
 --default player class-spec talent system
 function openRaidLib.GetTalentVersion()
     local _, _, _, buildInfo = GetBuildInfo()
+
+    if (buildInfo == 16001) then
+        return CONST_TALENT_VERSION_DRAGONFLIGHT
+    end
 
     if (buildInfo >= 1 and buildInfo <= 40000) then --vanilla tbc wotlk cataclysm
         return CONST_TALENT_VERSION_CLASSIC

@@ -448,8 +448,10 @@ local function InstallOverrideOnButton(buttonName, sequenceName, suppressRefresh
 
     local handler = GetSHBT()
     if not wrappedButtons[buttonName] then
-        handler:WrapScript(btn, "OnClick", BAR_SWAP_ONCLICK)
-        handler:WrapScript(btn, "OnAttributeChanged", BAR_SWAP_OAC)
+        pcall(function()
+            handler:WrapScript(btn, "OnClick", BAR_SWAP_ONCLICK)
+            handler:WrapScript(btn, "OnAttributeChanged", BAR_SWAP_OAC)
+        end)
         wrappedButtons[buttonName] = true
     end
 

@@ -1179,7 +1179,7 @@ end
 local function EnsureChannelTickEventRegistration()
     if not CHANNEL_TICK_CLEU_SANCTIONED then return end
     if not EventRegistry or type(EventRegistry.RegisterFrameEventAndCallback) ~= "function" then return end
-    EventRegistry:RegisterFrameEventAndCallback("COMBAT_LOG_EVENT_UNFILTERED", OnChannelTickCombatLogEvent, CHANNEL_TICK_EVENT_FRAME)
+    pcall(EventRegistry.RegisterFrameEventAndCallback, EventRegistry, "COMBAT_LOG_EVENT_UNFILTERED", OnChannelTickCombatLogEvent, CHANNEL_TICK_EVENT_FRAME)
 end
 
 local function StartChannelTickObservation(bar, spellID, spellName, startTime, endTime)

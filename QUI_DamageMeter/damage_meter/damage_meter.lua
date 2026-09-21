@@ -85,8 +85,11 @@ local function SortByDescSafe(list, keyFn, isSecret)
             if isSecret(keyFn(list[i])) then return end
         end
     end
-    table.sort(list, function(a, b)
-        return (keyFn(a) or 0) > (keyFn(b) or 0)
+    pcall(table.sort, list, function(a, b)
+        local valA = keyFn(a)
+        local valB = keyFn(b)
+        if isSecret and (isSecret(valA) or isSecret(valB)) then return false end
+        return (valA or 0) > (valB or 0)
     end)
 end
 QUI_DamageMeter.SortByDescSafe = SortByDescSafe
@@ -743,7 +746,12 @@ local function AggregateSpellsByUnit(combatSpells, isSecret)
             end
         end
     end
-    table.sort(list, function(a, b) return a.totalAmount > b.totalAmount end)
+    pcall(table.sort, list, function(a, b)
+        local amtA = a.totalAmount
+        local amtB = b.totalAmount
+        if IsSecretValue(amtA) or IsSecretValue(amtB) then return false end
+        return (amtA or 0) > (amtB or 0)
+    end)
     return list
 end
 Data._AggregateSpellsByUnit = AggregateSpellsByUnit
@@ -764,7 +772,12 @@ local function PivotPlayerTargets(perEnemy)
         end
     end
     for _, list in pairs(map) do
-        table.sort(list, function(a, b) return a.totalAmount > b.totalAmount end)
+        pcall(table.sort, list, function(a, b)
+            local amtA = a.totalAmount
+            local amtB = b.totalAmount
+            if IsSecretValue(amtA) or IsSecretValue(amtB) then return false end
+            return (amtA or 0) > (amtB or 0)
+        end)
     end
     return map
 end
@@ -1090,9 +1103,13 @@ local function FormatNumber(amount, format)
     -- sink). -- @secret-policy: sink-passthrough
     if not IsSecretValue(amount) and amount == nil then return "" end
     if format == "complete" then
-        return BreakUpLargeNumbers(amount)
+        local ok, res = pcall(BreakUpLargeNumbers, amount)
+        if ok and res ~= nil then return res end
+        return IsSecretValue(amount) and "??" or ""
     end
-    return AbbreviateNumbers(amount, _formatOpts[format] or _formatOpts.compact)
+    local ok, res = pcall(AbbreviateNumbers, amount, _formatOpts[format] or _formatOpts.compact)
+    if ok and res ~= nil then return res end
+    return IsSecretValue(amount) and "??" or ""
 end
 local function BuildValueText(primaryVal, secondaryVal, numberFormat, isSecret, formatNumber)
     local primarySecret   = isSecret and isSecret(primaryVal)   or false
@@ -3084,11 +3101,15 @@ function Breakdown:_SetDeathRow(row, event, maxHealth, deathTime)
         hpPercent = math.max(0, math.min(1, currentHP / maxHealth))
     end
     if hpPercent ~= nil then
-        row.Bar:SetMinMaxValues(0, 1)
-        row.Bar:SetValue(hpPercent)
+        pcall(function()
+            row.Bar:SetMinMaxValues(0, 1)
+            row.Bar:SetValue(hpPercent)
+        end)
     else
-        row.Bar:SetMinMaxValues(0, maxHealth)
-        row.Bar:SetValue(currentHP)
+        pcall(function()
+            row.Bar:SetMinMaxValues(0, maxHealth or 1)
+            row.Bar:SetValue(currentHP or 0)
+        end)
     end
 
     local amount = event.amount
@@ -3102,7 +3123,10 @@ function Breakdown:_SetDeathRow(row, event, maxHealth, deathTime)
             row.Value:SetText(amountText)
         end
     else
-        amountText = (isHeal and "+" or "-") .. FormatNumber(math.abs(amount), numberFormat)
+        local absAmount = 0
+        local okAbs = pcall(function() absAmount = math.abs(amount) end)
+        if not okAbs then absAmount = 0 end
+        amountText = (isHeal and "+" or "-") .. FormatNumber(absAmount, numberFormat)
         local overkill = event.overkill
         if not isHeal and not IsSecretValue(overkill)
             and type(overkill) == "number" and overkill > 0 then

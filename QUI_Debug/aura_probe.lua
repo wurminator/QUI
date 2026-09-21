@@ -488,7 +488,8 @@ local function EnsureCLEURegistered()
     if not (EventRegistry and EventRegistry.RegisterCallback) then
         return false
     end
-    EventRegistry:RegisterCallback("COMBAT_LOG_EVENT_UNFILTERED", OnCombatLogEvent, cleuOwner)
+    local ok = pcall(EventRegistry.RegisterCallback, EventRegistry, "COMBAT_LOG_EVENT_UNFILTERED", OnCombatLogEvent, cleuOwner)
+    if not ok then return false end
     cleuRegistered = true
     return true
 end

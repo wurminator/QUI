@@ -141,9 +141,10 @@ local POWER_COLORS = {
 }
 
 local tocVersion = tonumber((select(4, GetBuildInfo()))) or 0
+local isModern = tocVersion >= 120000 or tocVersion == 16001 or (QUI and QUI.FOREVER)
 
 local function GetHealthPct(unit, usePredicted)
-    if tocVersion >= 120000 and type(UnitHealthPercent) == "function"
+    if isModern and type(UnitHealthPercent) == "function"
        and CurveConstants and CurveConstants.ScaleTo100 then
         local ok, pct = pcall(UnitHealthPercent, unit, usePredicted, CurveConstants.ScaleTo100)
         if ok then return pct end
@@ -156,7 +157,7 @@ local function GetHealthPct(unit, usePredicted)
 end
 
 local function GetPowerPct(unit, powerType, usePredicted)
-    if tocVersion >= 120000 and type(UnitPowerPercent) == "function" then
+    if isModern and type(UnitPowerPercent) == "function" then
         local ok, pct
         if CurveConstants and CurveConstants.ScaleTo100 then
             ok, pct = pcall(UnitPowerPercent, unit, powerType, usePredicted, CurveConstants.ScaleTo100)
@@ -492,38 +493,41 @@ local function FormatHealthText(hp, hpPct, style, divider, maxHp, hidePercentSym
     local pctSecret = IsSecretValue(hpPct)
     local maxSecret = IsSecretValue(maxHp)
 
-    local success, hpStr = pcall(function()
+    local hpStr = "??"
+    local success = pcall(function()
         local abbr = AbbreviateNumbers or AbbreviateLargeNumbers
-        return abbr and abbr(hp) or tostring(hp)
+        hpStr = abbr and abbr(hp) or tostring(hp)
     end)
-    if not success then hpStr = "" end
+    if not success or not hpStr then hpStr = "??" end
 
     if style == "percent" then
         if pctSecret or hpPct then
             local success, result = pcall(function() return string_format("%d%s", hpPct, pctSuffix) end)
-            return success and result or ""
+            return (success and result) and result or ("??" .. pctSuffix)
         end
         return ""
     elseif style == "absolute" then
-        return hpStr or ""
+        return (hpStr ~= "") and hpStr or "??"
     elseif style == "both" then
         if pctSecret or hpPct then
-            local success, result = pcall(function() return string_format("%s%s%d%s", hpStr or "", divider, hpPct, pctSuffix) end)
-            return success and result or hpStr or ""
+            local success, result = pcall(function() return string_format("%s%s%d%s", hpStr or "??", divider, hpPct, pctSuffix) end)
+            return (success and result) and result or (hpStr or "??")
         end
-        return hpStr or ""
+        return (hpStr ~= "") and hpStr or "??"
     elseif style == "both_reverse" then
         if pctSecret or hpPct then
-            local success, result = pcall(function() return string_format("%d%s%s%s", hpPct, pctSuffix, divider, hpStr or "") end)
-            return success and result or hpStr or ""
+            local success, result = pcall(function() return string_format("%d%s%s%s", hpPct, pctSuffix, divider, hpStr or "??") end)
+            return (success and result) and result or (hpStr or "??")
         end
-        return hpStr or ""
+        return (hpStr ~= "") and hpStr or "??"
     elseif style == "missing_percent" then
         if pctSecret or hpPct then
             local success, missing = pcall(function() return 100 - hpPct end)
-            if not success then return "" end
-            if missing > 0 then
-                return string_format("-%d%s", missing, pctSuffix)
+            if not success then return "??" .. pctSuffix end
+            local compOk, isPos = pcall(function() return missing > 0 end)
+            if compOk and isPos then
+                local fmtOk, res = pcall(string_format, "-%d%s", missing, pctSuffix)
+                return fmtOk and res or ("??" .. pctSuffix)
             end
             return "0" .. pctSuffix
         end
@@ -531,10 +535,12 @@ local function FormatHealthText(hp, hpPct, style, divider, maxHp, hidePercentSym
     elseif style == "missing_value" then
         if (hpSecret or hp) and (maxSecret or maxHp) then
             local success, missing = pcall(function() return maxHp - hp end)
-            if not success then return "" end
-            if missing > 0 then
+            if not success then return "??" end
+            local compOk, isPos = pcall(function() return missing > 0 end)
+            if compOk and isPos then
                 local abbr = AbbreviateNumbers or AbbreviateLargeNumbers
-                local missingStr = abbr and abbr(missing) or tostring(missing)
+                local okAbbr, missingStr = pcall(function() return abbr and abbr(missing) or tostring(missing) end)
+                if not okAbbr or not missingStr then missingStr = "??" end
                 return "-" .. missingStr
             end
             return "0"
@@ -542,7 +548,7 @@ local function FormatHealthText(hp, hpPct, style, divider, maxHp, hidePercentSym
         return ""
     end
 
-    return hpStr or ""
+    return (hpStr ~= "") and hpStr or "??"
 end
 
 local function FormatPowerText(power, powerPct, style, divider, hidePercentSymbol)
@@ -550,34 +556,37 @@ local function FormatPowerText(power, powerPct, style, divider, hidePercentSymbo
     divider = divider or " | "
     local pctSuffix = hidePercentSymbol and "" or "%"
 
-    local powerStr = ""
-    pcall(function()
+    local powerStr = "??"
+    local success = pcall(function()
         local abbr = AbbreviateNumbers or AbbreviateLargeNumbers
         powerStr = abbr and abbr(power) or tostring(power)
     end)
+    if not success or not powerStr then powerStr = "??" end
 
-    local result = ""
+    local result = "??"
 
     if style == "percent" then
         local fmtOk = pcall(function()
             if powerPct then
                 result = string_format("%d%s", powerPct, pctSuffix)
+            else
+                result = ""
             end
         end)
-        if not fmtOk then result = "" end
+        if not fmtOk then result = "??" .. pctSuffix end
     elseif style == "current" then
-        result = powerStr or ""
+        result = (powerStr ~= "") and powerStr or "??"
     elseif style == "both" then
         local fmtOk = pcall(function()
             if powerPct then
-                result = string_format("%s%s%d%s", powerStr or "", divider, powerPct, pctSuffix)
+                result = string_format("%s%s%d%s", powerStr or "??", divider, powerPct, pctSuffix)
             else
-                result = powerStr or ""
+                result = powerStr or "??"
             end
         end)
-        if not fmtOk then result = "" end
+        if not fmtOk then result = (powerStr or "??") .. divider .. "??" .. pctSuffix end
     else
-        result = powerStr or ""
+        result = (powerStr ~= "") and powerStr or "??"
     end
 
     return result
@@ -656,8 +665,10 @@ local function UpdateHealth(frame)
     local hp = UnitHealth(unit)
     local maxHP = UnitHealthMax(unit)
 
-    frame.healthBar:SetMinMaxValues(0, maxHP)
-    frame.healthBar:SetValue(hp)
+    pcall(function()
+        frame.healthBar:SetMinMaxValues(0, maxHP or 1)
+        frame.healthBar:SetValue(hp or 0)
+    end)
 
     if frame.healthText then
         if settings and settings.showHealth == false then
@@ -687,35 +698,40 @@ local function UpdateHealth(frame)
                 local hpPct = GetHealthPct(unit, true)
                 local abbr = AbbreviateNumbers or AbbreviateLargeNumbers
                 local pctFmt = hidePercentSymbol and "%.0f" or "%.0f%%"
+                local abbrHp = nil
+                if abbr then
+                    local okAbbr, res = pcall(abbr, hp)
+                    if okAbbr and res then abbrHp = res end
+                end
                 local ok
                 if displayStyle == "percent" then
                     ok = ns.SafeCallMethod("sink-forward", frame.healthText, "SetFormattedText", pctFmt, hpPct)
                 elseif displayStyle == "absolute" then
-                    if abbr then
-                        ok = ns.SafeCallMethod("sink-forward", frame.healthText, "SetText", abbr(hp))
+                    if abbrHp then
+                        ok = ns.SafeCallMethod("sink-forward", frame.healthText, "SetText", abbrHp)
                     else
-                        ok = ns.SafeCallMethod("sink-forward", frame.healthText, "SetFormattedText", "%s", hp)
+                        ok = ns.SafeCallMethod("sink-forward", frame.healthText, "SetFormattedText", "%s", hp or "??")
                     end
                 elseif displayStyle == "both" then
                     local bothFmt = hidePercentSymbol and ("%s" .. divider .. "%.0f") or ("%s" .. divider .. "%.0f%%")
-                    if abbr then
-                        ok = ns.SafeCallMethod("sink-forward", frame.healthText, "SetFormattedText", bothFmt, abbr(hp), hpPct)
+                    if abbrHp then
+                        ok = ns.SafeCallMethod("sink-forward", frame.healthText, "SetFormattedText", bothFmt, abbrHp, hpPct)
                     else
-                        ok = ns.SafeCallMethod("sink-forward", frame.healthText, "SetFormattedText", bothFmt, hp, hpPct)
+                        ok = ns.SafeCallMethod("sink-forward", frame.healthText, "SetFormattedText", bothFmt, hp or "??", hpPct)
                     end
                 elseif displayStyle == "both_reverse" then
                     local revFmt = hidePercentSymbol and ("%.0f" .. divider .. "%s") or ("%.0f%%" .. divider .. "%s")
-                    if abbr then
-                        ok = ns.SafeCallMethod("sink-forward", frame.healthText, "SetFormattedText", revFmt, hpPct, abbr(hp))
+                    if abbrHp then
+                        ok = ns.SafeCallMethod("sink-forward", frame.healthText, "SetFormattedText", revFmt, hpPct, abbrHp)
                     else
-                        ok = ns.SafeCallMethod("sink-forward", frame.healthText, "SetFormattedText", revFmt, hpPct, hp)
+                        ok = ns.SafeCallMethod("sink-forward", frame.healthText, "SetFormattedText", revFmt, hpPct, hp or "??")
                     end
                 else
                     local healthStr = FormatHealthText(hp, hpPct, displayStyle, divider, maxHP, hidePercentSymbol)
                     ok = ns.SafeCallMethod("sink-forward", frame.healthText, "SetText", healthStr)
                 end
                 if not ok then
-                    frame.healthText:SetText("")
+                    frame.healthText:SetText(IsSecretValue(hp) and "??" or "")
                 end
                 frame.healthText:Show()
             else
@@ -998,8 +1014,10 @@ local function UpdatePower(frame)
     local p = UnitPower(unit)
     local pMax = UnitPowerMax(unit)
 
-    frame.powerBar:SetMinMaxValues(0, pMax)
-    frame.powerBar:SetValue(p)
+    pcall(function()
+        frame.powerBar:SetMinMaxValues(0, pMax or 1)
+        frame.powerBar:SetValue(p or 0)
+    end)
     frame.powerBar:Show()
 
     if settings.powerBarUsePowerColor ~= false then

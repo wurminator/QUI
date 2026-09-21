@@ -727,10 +727,11 @@ local function AdvanceRenewingMistRecharge(seconds)
 end
 
 local tocVersion = select(4, GetBuildInfo())
+local isModern = (tonumber(tocVersion) or 0) >= 120000 or tocVersion == 16001 or (QUI and QUI.FOREVER)
 local HAS_UNIT_POWER_PERCENT = type(UnitPowerPercent) == "function"
 
 local function GetPowerPct(unit, powerType, usePredicted)
-    if (tonumber(tocVersion) or 0) >= 120000 and HAS_UNIT_POWER_PERCENT then
+    if isModern and HAS_UNIT_POWER_PERCENT then
         local ok, pct
         if CurveConstants and CurveConstants.ScaleTo100 then
             ok, pct = pcall(UnitPowerPercent, unit, powerType, usePredicted, CurveConstants.ScaleTo100)

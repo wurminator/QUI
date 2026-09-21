@@ -660,7 +660,7 @@ local function securePlace(frame, point, x, y, scale)
 	poser:SetAttribute("offX", x or 0)
 	poser:SetAttribute("offY", y or 0)
 	poser:SetAttribute("scale", scale or false)
-	poser:Execute([[
+	local ok = pcall(poser.Execute, poser, [[
 		local f = self:GetFrameRef("frame")
 		if not f then return end
 		local point = self:GetAttribute("point")
@@ -672,7 +672,7 @@ local function securePlace(frame, point, x, y, scale)
 		local s = self:GetAttribute("scale")
 		if s then f:SetScale(s) end
 	]])
-	return true
+	return ok
 end
 
 function M.functions.applyFrameSettings(f, entry)

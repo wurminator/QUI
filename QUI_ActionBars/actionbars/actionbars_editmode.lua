@@ -173,49 +173,53 @@ function SetupBar1Paging(container)
     if bar1PagingInitialized then return end
     bar1PagingInitialized = true
 
-    container:Execute([[self:SetAttribute("qui-action-page", 1)]])
-    container:SetAttribute("_onstate-page", [[
-        local page = newstate
-        if page == "override" then
-            if HasVehicleActionBar and HasVehicleActionBar() then
-                page = GetVehicleBarIndex()
-            elseif HasOverrideActionBar and HasOverrideActionBar() then
-                page = GetOverrideBarIndex()
-            elseif HasTempShapeshiftActionBar and HasTempShapeshiftActionBar() then
-                page = GetTempShapeshiftBarIndex()
-            else
-                page = 1
+    pcall(function()
+        container:Execute([[self:SetAttribute("qui-action-page", 1)]])
+        container:SetAttribute("_onstate-page", [[
+            local page = newstate
+            if page == "override" then
+                if HasVehicleActionBar and HasVehicleActionBar() then
+                    page = GetVehicleBarIndex()
+                elseif HasOverrideActionBar and HasOverrideActionBar() then
+                    page = GetOverrideBarIndex()
+                elseif HasTempShapeshiftActionBar and HasTempShapeshiftActionBar() then
+                    page = GetTempShapeshiftBarIndex()
+                else
+                    page = 1
+                end
+            elseif page == "possess" then
+                if HasVehicleActionBar and HasVehicleActionBar() then
+                    page = GetVehicleBarIndex()
+                elseif HasOverrideActionBar and HasOverrideActionBar() then
+                    page = GetOverrideBarIndex()
+                elseif HasTempShapeshiftActionBar and HasTempShapeshiftActionBar() then
+                    page = GetTempShapeshiftBarIndex()
+                elseif HasBonusActionBar and HasBonusActionBar() then
+                    page = GetBonusBarIndex()
+                else
+                    page = 1
+                end
             end
-        elseif page == "possess" then
-            if HasVehicleActionBar and HasVehicleActionBar() then
-                page = GetVehicleBarIndex()
-            elseif HasOverrideActionBar and HasOverrideActionBar() then
-                page = GetOverrideBarIndex()
-            elseif HasTempShapeshiftActionBar and HasTempShapeshiftActionBar() then
-                page = GetTempShapeshiftBarIndex()
-            elseif HasBonusActionBar and HasBonusActionBar() then
-                page = GetBonusBarIndex()
-            else
-                page = 1
-            end
-        end
-        page = tonumber(page) or 1
-        self:SetAttribute("qui-action-page", page)
-        local offset = (page - 1) * 12
-        control:ChildUpdate("offset", offset)
-    ]])
-    RegisterStateDriver(container, "page", BuildPagingCondition())
+            page = tonumber(page) or 1
+            self:SetAttribute("qui-action-page", page)
+            local offset = (page - 1) * 12
+            control:ChildUpdate("offset", offset)
+        ]])
+        RegisterStateDriver(container, "page", BuildPagingCondition())
+    end)
 end
 
 function SetupSecureActionFlagRefresh(container)
     if not container or container._quiActionFlagRefreshSetup then return end
     container._quiActionFlagRefreshSetup = true
-    container:SetAttribute("qui-refresh-target", nil)
-    container:SetAttribute("_onattributechanged", [[
-        if name ~= "qui-refresh-target" then return end
-        local ref = value and self:GetFrameRef(value)
-        if ref then
-            ref:RunAttribute("QUI_UpdateActionFlags")
-        end
-    ]])
+    pcall(function()
+        container:SetAttribute("qui-refresh-target", nil)
+        container:SetAttribute("_onattributechanged", [[
+            if name ~= "qui-refresh-target" then return end
+            local ref = value and self:GetFrameRef(value)
+            if ref then
+                ref:RunAttribute("QUI_UpdateActionFlags")
+            end
+        ]])
+    end)
 end

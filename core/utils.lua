@@ -13,6 +13,10 @@ local LSM = LibStub("LibSharedMedia-3.0", true)
 ns.LSM = LSM
 
 Helpers.AssetPath = "Interface\\AddOns\\" .. ADDON_NAME .. "\\assets\\"
+Helpers.FOREVER = select(4, GetBuildInfo()) == 16001
+function Helpers.IsForeverClient()
+    return Helpers.FOREVER
+end
 
 local issecretvalue = _G.issecretvalue
 local canaccesstable = _G.canaccesstable

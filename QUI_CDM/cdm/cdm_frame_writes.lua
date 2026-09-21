@@ -47,29 +47,29 @@ function CDMRenderers.ApplyNumericCooldown(cd, startTime, duration, reverse)
     end
 
     if cd.SetReverse then
-        cd.SetReverse(cd, reverse and true or false)
+        pcall(cd.SetReverse, cd, reverse and true or false)
     end
-    cd.SetCooldown(cd, startTime, duration)
-    return true
+    local ok = pcall(cd.SetCooldown, cd, startTime, duration)
+    return ok
 end
 
 function CDMRenderers.ClearCooldown(cd, reverse)
     if not cd then return end
     if reverse ~= nil and cd.SetReverse then
-        cd.SetReverse(cd, reverse and true or false)
+        pcall(cd.SetReverse, cd, reverse and true or false)
     end
     if cd.Clear then
-        cd.Clear(cd)
+        pcall(cd.Clear, cd)
     end
 end
 
 function CDMRenderers.SetStatusBarValue(statusBar, value, minValue, maxValue)
     if not statusBar then return false end
     if statusBar.SetMinMaxValues then
-        statusBar.SetMinMaxValues(statusBar, minValue or 0, maxValue or 1)
+        pcall(statusBar.SetMinMaxValues, statusBar, minValue or 0, maxValue or 1)
     end
     if statusBar.SetValue then
-        statusBar.SetValue(statusBar, value)
+        pcall(statusBar.SetValue, statusBar, value)
     end
     return true
 end

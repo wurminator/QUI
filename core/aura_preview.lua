@@ -133,7 +133,7 @@ local function ApplyIconSample(frame, element, profile, index, opts)
     local cd = frame._quiCooldown
     if cd then
         SetRegionShown(cd, true)
-        if cd.SetCooldown then cd:SetCooldown(now - duration * 0.35, duration) end
+        if cd.SetCooldown then pcall(cd.SetCooldown, cd, now - duration * 0.35, duration) end
     end
     if frame._quiDuration and frame._quiDuration.SetText then
         frame._quiDuration:SetText(tostring(math.floor(duration * 0.65)))

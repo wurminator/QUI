@@ -57,6 +57,58 @@ function ns.WhenLoggedIn(callback)
     end)
 end
 
+-- Hook Frame:RegisterEvent and Frame:RegisterUnitEvent to safely catch unknown events on beta clients
+do
+    local testFrame = CreateFrame and CreateFrame("Frame")
+    if testFrame then
+        local frameMt = getmetatable(testFrame)
+        local frameIndex = frameMt and frameMt.__index
+        if frameIndex and type(frameIndex.RegisterEvent) == "function" and not frameIndex._quiRegisterEventHooked then
+            local origRegisterEvent = frameIndex.RegisterEvent
+            frameIndex.RegisterEvent = function(self, event, ...)
+                local ok, ret = pcall(origRegisterEvent, self, event, ...)
+                if not ok then
+                    return false
+                end
+                return ret
+            end
+            frameIndex._quiRegisterEventHooked = true
+        end
+        if frameIndex and type(frameIndex.RegisterUnitEvent) == "function" and not frameIndex._quiRegisterUnitEventHooked then
+            local origRegisterUnitEvent = frameIndex.RegisterUnitEvent
+            frameIndex.RegisterUnitEvent = function(self, event, ...)
+                local ok, ret = pcall(origRegisterUnitEvent, self, event, ...)
+                if not ok then
+                    return false
+                end
+                return ret
+            end
+            frameIndex._quiRegisterUnitEventHooked = true
+        end
+    end
+
+    local testCd = CreateFrame and CreateFrame("Cooldown")
+    if testCd then
+        local cdMt = getmetatable(testCd)
+        local cdIndex = cdMt and cdMt.__index
+        if cdIndex and type(cdIndex.SetCooldown) == "function" and not cdIndex._quiSetCooldownHooked then
+            local origSetCooldown = cdIndex.SetCooldown
+            cdIndex.SetCooldown = function(self, start, duration, ...)
+                local isSecret = _G.issecretvalue
+                if isSecret and (isSecret(start) or isSecret(duration)) then
+                    return false
+                end
+                local ok, ret = pcall(origSetCooldown, self, start, duration, ...)
+                if not ok then
+                    return false
+                end
+                return ret
+            end
+            cdIndex._quiSetCooldownHooked = true
+        end
+    end
+end
+
 if CreateFrame then
     local firstFrameFrame = CreateFrame("Frame")
     firstFrameFrame:RegisterEvent("FIRST_FRAME_RENDERED")
@@ -83,6 +135,10 @@ QUI = LibStub("AceAddon-3.0"):NewAddon("QUI", "AceConsole-3.0", "AceEvent-3.0")
 QUI._ns = ns
 QUI.DEBUG_MODE = false
 QUI.pullAliasOwned = false
+QUI.FOREVER = select(4, GetBuildInfo()) == 16001
+function QUI.IsForeverClient()
+    return QUI.FOREVER
+end
 
 local QUI_PULL_SLASH_KEY = "QUIPULL_ALIAS"
 local QUI_OPTIONS_ADDON = "QUI_Options"

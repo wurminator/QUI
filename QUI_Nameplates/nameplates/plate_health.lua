@@ -301,20 +301,24 @@ function NPHealth.UpdateHealth(plate)
     end
 
     local ok
+    local abbrHp = nil
+    local abbr = AbbreviateNumbers or AbbreviateLargeNumbers
+    if abbr then
+        local okAbbr, res = pcall(abbr, hp)
+        if okAbbr and res then abbrHp = res end
+    end
     if style == "absolute" then
-        local abbr = AbbreviateNumbers or AbbreviateLargeNumbers
-        if abbr then
-            ok = pcall(healthText.SetText, healthText, abbr(hp))
+        if abbrHp then
+            ok = pcall(healthText.SetText, healthText, abbrHp)
         else
-            ok = pcall(healthText.SetFormattedText, healthText, "%s", hp)
+            ok = pcall(healthText.SetFormattedText, healthText, "%s", hp or "??")
         end
     elseif style == "both" then
         local pct = GetHealthPct(unit)
-        local abbr = AbbreviateNumbers or AbbreviateLargeNumbers
-        if abbr then
-            ok = pcall(healthText.SetFormattedText, healthText, plate.npBothFmt, abbr(hp), pct)
+        if abbrHp then
+            ok = pcall(healthText.SetFormattedText, healthText, plate.npBothFmt, abbrHp, pct)
         else
-            ok = pcall(healthText.SetFormattedText, healthText, plate.npBothFmt, hp, pct)
+            ok = pcall(healthText.SetFormattedText, healthText, plate.npBothFmt, hp or "??", pct)
         end
     else
         local pct = GetHealthPct(unit)

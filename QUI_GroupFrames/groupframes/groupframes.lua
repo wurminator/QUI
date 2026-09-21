@@ -940,19 +940,29 @@ local function UpdateHealth(frame)
                 ok = ns.SafeCallMethod("sink-forward", frame.healthText, "SetFormattedText", pctFmt, pct)
             elseif style == "absolute" then
                 local hp = UnitHealth(unit, true)
+                local abbrHp = nil
                 if abbr then
-                    ok = ns.SafeCallMethod("sink-forward", frame.healthText, "SetText", abbr(hp))
+                    local okAbbr, res = pcall(abbr, hp)
+                    if okAbbr and res then abbrHp = res end
+                end
+                if abbrHp then
+                    ok = ns.SafeCallMethod("sink-forward", frame.healthText, "SetText", abbrHp)
                 else
-                    ok = ns.SafeCallMethod("sink-forward", frame.healthText, "SetFormattedText", "%s", hp)
+                    ok = ns.SafeCallMethod("sink-forward", frame.healthText, "SetFormattedText", "%s", hp or "??")
                 end
             elseif style == "both" then
                 local hp = UnitHealth(unit, true)
                 local pct = GetHealthPct(unit)
                 local bothFmt = healthSettings.hideHealthPercentSymbol and "%s | %.0f" or "%s | %.0f%%"
+                local abbrHp = nil
                 if abbr then
-                    ok = ns.SafeCallMethod("sink-forward", frame.healthText, "SetFormattedText", bothFmt, abbr(hp), pct)
+                    local okAbbr, res = pcall(abbr, hp)
+                    if okAbbr and res then abbrHp = res end
+                end
+                if abbrHp then
+                    ok = ns.SafeCallMethod("sink-forward", frame.healthText, "SetFormattedText", bothFmt, abbrHp, pct)
                 else
-                    ok = ns.SafeCallMethod("sink-forward", frame.healthText, "SetFormattedText", bothFmt, hp, pct)
+                    ok = ns.SafeCallMethod("sink-forward", frame.healthText, "SetFormattedText", bothFmt, hp or "??", pct)
                 end
             elseif style == "deficit" then
                 local miss = UnitHealthMissing(unit, true)
@@ -3151,7 +3161,7 @@ function _state.EnsureRaidHeaders()
             end
             header:SetAttribute("template", "SecureUnitButtonTemplate,BackdropTemplate,PingableUnitFrameTemplate")
             header.QUI_OnChildCreated = QUI_GF.HeaderChildCreated
-            header:SetAttribute("initialConfigFunction", ns.QUI_GroupFrameIconLayout.HEADER_INIT_CONFIG_FUNC)
+            pcall(header.SetAttribute, header, "initialConfigFunction", ns.QUI_GroupFrameIconLayout.HEADER_INIT_CONFIG_FUNC)
             header:SetMovable(true)
             header:SetClampedToScreen(true)
             header:SetSize(w, h)
@@ -3214,7 +3224,7 @@ local function CreateHeaders()
     local partyHeader = CreateFrame("Frame", "QUI_PartyHeader", partyRoot, "SecureGroupHeaderTemplate")
     partyHeader:SetAttribute("template", "SecureUnitButtonTemplate,BackdropTemplate,PingableUnitFrameTemplate")
     partyHeader.QUI_OnChildCreated = QUI_GF.HeaderChildCreated
-    partyHeader:SetAttribute("initialConfigFunction", initConfigFunc)
+    pcall(partyHeader.SetAttribute, partyHeader, "initialConfigFunction", initConfigFunc)
     QUI_GF.headers.party = partyHeader
     ConfigurePartyHeader(partyHeader)
 
@@ -3257,7 +3267,7 @@ local function CreateHeaders()
     local selfHeader = CreateFrame("Frame", "QUI_SelfHeader", partyRoot, "SecureGroupHeaderTemplate")
     selfHeader:SetAttribute("template", "SecureUnitButtonTemplate,BackdropTemplate,PingableUnitFrameTemplate")
     selfHeader.QUI_OnChildCreated = QUI_GF.HeaderChildCreated
-    selfHeader:SetAttribute("initialConfigFunction", initConfigFunc)
+    pcall(selfHeader.SetAttribute, selfHeader, "initialConfigFunction", initConfigFunc)
     QUI_GF.headers.self = selfHeader
     selfHeader:SetAttribute("showPlayer", true)
     selfHeader:SetAttribute("showParty", false)
@@ -3348,7 +3358,7 @@ local function ApplySpotlightHeaderConfig(container, header, spot)
 
     header:SetAttribute("template", "SecureUnitButtonTemplate,BackdropTemplate,PingableUnitFrameTemplate")
     header.QUI_OnChildCreated = QUI_GF.HeaderChildCreated
-    header:SetAttribute("initialConfigFunction", initConfigFunc)
+    pcall(header.SetAttribute, header, "initialConfigFunction", initConfigFunc)
     header:SetAttribute("showRaid", true)
     header:SetAttribute("showParty", false)
     header:ClearAllPoints()

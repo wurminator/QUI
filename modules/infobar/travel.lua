@@ -130,12 +130,14 @@ local function BuildFlyout(frame, slotFrame)
         flyout:SetFixedFrameStrata(true)
     end
 
-    flyout:SetAttribute("_onstate-combat", [[
-        if newstate == "true" then
-            self:Hide()
-        end
-    ]])
-    RegisterStateDriver(flyout, "combat", "[combat] true; false")
+    pcall(function()
+        flyout:SetAttribute("_onstate-combat", [[
+            if newstate == "true" then
+                self:Hide()
+            end
+        ]])
+        RegisterStateDriver(flyout, "combat", "[combat] true; false")
+    end)
 
     local bg = flyout:CreateTexture(nil, "BACKGROUND")
     bg:SetAllPoints()

@@ -562,7 +562,7 @@ local function StartCooldown(cooldown, durationObject, startMS, endMS)
     end
 
     if cooldown.SetCooldown then
-        cooldown:SetCooldown(start, duration)
+        pcall(cooldown.SetCooldown, cooldown, start, duration)
         cooldown:Show()
     else
         StopCooldown(cooldown)

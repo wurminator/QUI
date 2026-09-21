@@ -776,13 +776,15 @@ function CreateBarContainer(barKey)
     container:SetClampedToScreen(true)
 
     container:SetAttribute("qui-user-shown", true)
-    container:SetAttribute("_onstate-quioverride", [[
-        if newstate == "hide" then
-            self:Hide()
-        elseif self:GetAttribute("qui-user-shown") then
-            self:Show()
-        end
-    ]])
+    pcall(function()
+        container:SetAttribute("_onstate-quioverride", [[
+            if newstate == "hide" then
+                self:Hide()
+            elseif self:GetAttribute("qui-user-shown") then
+                self:Show()
+            end
+        ]])
+    end)
     local driver = "[overridebar][vehicleui][possessbar][petbattle] hide; show"
     if barKey == "bar1" then
         driver = "[overridebar][vehicleui][petbattle] hide; show"
@@ -796,7 +798,7 @@ function CreateBarContainer(barKey)
         container:HookScript("OnShow", notifyAnchor)
         container:HookScript("OnHide", notifyAnchor)
     end
-    RegisterStateDriver(container, "quioverride", driver)
+    pcall(RegisterStateDriver, container, "quioverride", driver)
 
     return container
 end

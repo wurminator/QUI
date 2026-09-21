@@ -241,7 +241,7 @@ function SetupStandardOwnedButtonRuntime(container, btn)
 
     if not btn.quiSecureHooksInstalled then
         btn.quiSecureHooksInstalled = true
-        SecureHandlerWrapScript(btn, "OnAttributeChanged", btn, [[
+        pcall(SecureHandlerWrapScript, btn, "OnAttributeChanged", btn, [[
             if name == "action" and IsPressHoldReleaseSpell and type(value) == "number" then
                 self:RunAttribute("QUI_UpdateActionFlags")
             end
@@ -268,7 +268,7 @@ function SetupStandardOwnedButtonRuntime(container, btn)
         end)
 
         if container then
-            SecureHandlerWrapScript(btn, "OnClick", container, [[
+            pcall(SecureHandlerWrapScript, btn, "OnClick", container, [[
                 local flyoutHandler = owner:GetFrameRef("qui-flyout-handler")
                 if self:GetAttribute("type") == "action" then
                     local action = self:GetAttribute("action")
@@ -318,28 +318,28 @@ function SetupStandardOwnedButtonRuntime(container, btn)
         end
 
         btn:SetScript("OnDragStart", nil)
-        SecureHandlerWrapScript(btn, "OnDragStart", btn, [[
+        pcall(SecureHandlerWrapScript, btn, "OnDragStart", btn, [[
             if (self:GetAttribute("buttonlock") and not IsModifiedClick("PICKUPACTION"))
                 or self:GetAttribute("LABdisableDragNDrop") then
                 return false
             end
             return "action", self:GetAttribute("action")
         ]])
-        SecureHandlerWrapScript(btn, "OnDragStart", btn, [[
+        pcall(SecureHandlerWrapScript, btn, "OnDragStart", btn, [[
             return "message", "update"
         ]], [[
             self:CallMethod("QUI_PostDrag")
         ]])
 
         btn:SetScript("OnReceiveDrag", nil)
-        SecureHandlerWrapScript(btn, "OnReceiveDrag", btn, [[
+        pcall(SecureHandlerWrapScript, btn, "OnReceiveDrag", btn, [[
             if (self:GetAttribute("buttonlock") and not IsModifiedClick("PICKUPACTION"))
                 or self:GetAttribute("LABdisableDragNDrop") then
                 return false
             end
             return "action", self:GetAttribute("action")
         ]])
-        SecureHandlerWrapScript(btn, "OnReceiveDrag", btn, [[
+        pcall(SecureHandlerWrapScript, btn, "OnReceiveDrag", btn, [[
             return "message", "update"
         ]], [[
             self:CallMethod("QUI_PostDrag")
